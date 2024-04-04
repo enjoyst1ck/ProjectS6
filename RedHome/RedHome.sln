@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedHome", "RedHome.csproj", "{FD2FA31E-8133-473A-8BDC-B73ECCBDD09D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD2FA31E-8133-473A-8BDC-B73ECCBDD09D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD2FA31E-8133-473A-8BDC-B73ECCBDD09D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD2FA31E-8133-473A-8BDC-B73ECCBDD09D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD2FA31E-8133-473A-8BDC-B73ECCBDD09D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {702DB97D-5B7F-4BF3-9DC6-351FE60B8702}
+	EndGlobalSection
+EndGlobal
