@@ -1,18 +1,19 @@
 ﻿using RedHome.Dtos;
-using RedHome.Repositories;
+using RedHome.Repositories.IRepositories;
+using RedHome.Services.IServices;
 
 namespace RedHome.Services
 {
-    public class ReviewService
+    public class ReviewService : IReviewService
     {
-        private readonly ReviewRepository _reviewRepository;
+        private readonly IReviewRepository _reviewRepository;
 
-        public ReviewService(ReviewRepository reviewRepository)
+        public ReviewService(IReviewRepository reviewRepository)
         {
             _reviewRepository = reviewRepository;
         }
 
-        public IEnumerable<ReviewDto> GetReviewUser(string userId)
+        public IEnumerable<ReviewDto> GetUserReview(string userId)
         {
             if (userId is null)
             {

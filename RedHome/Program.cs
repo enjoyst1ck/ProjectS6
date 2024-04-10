@@ -1,7 +1,10 @@
 
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using RedHome.Database;
+using RedHome.Repositories;
+using RedHome.Repositories.IRepositories;
+using RedHome.Services;
+using RedHome.Services.IServices;
 
 namespace RedHome
 {
@@ -47,6 +50,8 @@ namespace RedHome
                 options.UseMySql(configuration.GetConnectionString("DefaultConnection"), serverVersion)
             );
 
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<IReviewService, ReviewService>();
         }
     }
 }
