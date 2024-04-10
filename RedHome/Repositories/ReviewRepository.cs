@@ -13,9 +13,22 @@ namespace RedHome.Repositories
             _context = context;
         }
 
-        public IEnumerable<Review> GetReviews(string userId)
+        public IEnumerable<Review> GetReviewsSendToUser(string userId)
         {
-            return _context.Reviews.Where(w => w.UserIdBy == userId).ToList();
+            return _context.Reviews
+                .Include(b => b.UserBy)
+                .Include(t => t.UserTo)
+                .Where(w => w.UserIdTo == userId)
+                .ToList();
+        }
+
+        public IEnumerable<Review> GetReviewsSendByUser(string userId)
+        {
+            return _context.Reviews
+                .Include(b => b.UserBy)
+                .Include(t => t.UserTo)
+                .Where(w => w.UserIdBy == userId)
+                .ToList();
         }
 
         public void Insert(Review review)
