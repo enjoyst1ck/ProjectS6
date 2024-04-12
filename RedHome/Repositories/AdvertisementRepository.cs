@@ -15,7 +15,8 @@ namespace RedHome.Repositories
         }
         public IEnumerable<Advertisement> GetAll()
         {
-            return _context.Advertisements.Include(i => i.User).ToList();
+            //return _context.Advertisements.Include(i => i.User).ToList();
+            return _context.Advertisements?.ToList();
         }
 
         public Advertisement GetById(int advertisementId)

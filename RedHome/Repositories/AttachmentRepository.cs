@@ -16,7 +16,14 @@ namespace RedHome.Repositories
 
         public IEnumerable<Attachment> GetByAdvertisement(int advertisementId)
         {
-            return _context.Attachments.Where(w => w.AdvertisementId == advertisementId).ToList();
+            var attachments = _context.Attachments?.Where(w => w.AdvertisementId == advertisementId).ToList();
+            
+            if (attachments == null)
+            {
+                return new List<Attachment>();
+            }
+
+            return attachments;
         }
 
         public void Insert(Attachment attachment)

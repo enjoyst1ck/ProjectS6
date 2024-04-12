@@ -16,6 +16,11 @@ namespace RedHome.Services
         {
             var advertisements = _advertisementRepository.GetAll();
 
+            if (advertisements == null)
+            {
+                return new List<AdvertisementDto>();
+            }
+
             return advertisements.Select(s => new AdvertisementDto
             {
                 Id = s.Id,
