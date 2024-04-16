@@ -95,14 +95,14 @@ namespace RedHome.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Advertisement",
+                name: "Advertisements",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Price = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Title = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: false)
@@ -118,14 +118,14 @@ namespace RedHome.Migrations
                     Floor = table.Column<int>(type: "int", nullable: false),
                     DevelopmentType = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Deposite = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    Deposite = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     IsForSell = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Advertisement", x => x.Id);
+                    table.PrimaryKey("PK_Advertisements", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Advertisement_AspNetUsers_UserId",
+                        name: "FK_Advertisements_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -236,7 +236,7 @@ namespace RedHome.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Review",
+                name: "Reviews",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -251,15 +251,15 @@ namespace RedHome.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Review", x => x.Id);
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Review_AspNetUsers_UserIdBy",
+                        name: "FK_Reviews_AspNetUsers_UserIdBy",
                         column: x => x.UserIdBy,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Review_AspNetUsers_UserIdTo",
+                        name: "FK_Reviews_AspNetUsers_UserIdTo",
                         column: x => x.UserIdTo,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -268,7 +268,7 @@ namespace RedHome.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Attachment",
+                name: "Attachments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -280,19 +280,19 @@ namespace RedHome.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Attachment", x => x.Id);
+                    table.PrimaryKey("PK_Attachments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Attachment_Advertisement_AdvertisementId",
+                        name: "FK_Attachments_Advertisements_AdvertisementId",
                         column: x => x.AdvertisementId,
-                        principalTable: "Advertisement",
+                        principalTable: "Advertisements",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Advertisement_UserId",
-                table: "Advertisement",
+                name: "IX_Advertisements_UserId",
+                table: "Advertisements",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -333,18 +333,18 @@ namespace RedHome.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attachment_AdvertisementId",
-                table: "Attachment",
+                name: "IX_Attachments_AdvertisementId",
+                table: "Attachments",
                 column: "AdvertisementId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_UserIdBy",
-                table: "Review",
+                name: "IX_Reviews_UserIdBy",
+                table: "Reviews",
                 column: "UserIdBy");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_UserIdTo",
-                table: "Review",
+                name: "IX_Reviews_UserIdTo",
+                table: "Reviews",
                 column: "UserIdTo");
         }
 
@@ -367,16 +367,16 @@ namespace RedHome.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Attachment");
+                name: "Attachments");
 
             migrationBuilder.DropTable(
-                name: "Review");
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Advertisement");
+                name: "Advertisements");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

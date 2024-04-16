@@ -12,7 +12,7 @@ using RedHome.Database;
 namespace RedHome.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20240409093726_InitMigration")]
+    [Migration("20240416125626_InitMigration")]
     partial class InitMigration
     {
         /// <inheritdoc />
@@ -242,7 +242,8 @@ namespace RedHome.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<decimal>("Deposite")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -262,7 +263,8 @@ namespace RedHome.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("RoomQuantity")
                         .HasColumnType("int");
@@ -279,7 +281,7 @@ namespace RedHome.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Advertisement");
+                    b.ToTable("Advertisements");
                 });
 
             modelBuilder.Entity("RedHome.Database.Models.Attachment", b =>
@@ -304,7 +306,7 @@ namespace RedHome.Migrations
 
                     b.HasIndex("AdvertisementId");
 
-                    b.ToTable("Attachment");
+                    b.ToTable("Attachments");
                 });
 
             modelBuilder.Entity("RedHome.Database.Models.Review", b =>
@@ -336,7 +338,7 @@ namespace RedHome.Migrations
 
                     b.HasIndex("UserIdTo");
 
-                    b.ToTable("Review");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

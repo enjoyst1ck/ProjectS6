@@ -21,7 +21,8 @@ namespace RedHome.Services
             { 
                 Id = s.Id,
                 Title = s.Title,
-                AdvertisementId = s.AdvertisementId
+                AdvertisementId = s.AdvertisementId,
+                Image = s.Image
             }).ToList();
         }
     }

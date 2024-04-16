@@ -5,10 +5,10 @@ namespace RedHome.Database.Models
 {
     public class Advertisement : BaseEntity
     {
-        public required string UserId { get; set; }
+        public string UserId { get; set; }
 
         [ForeignKey("UserId")]
-        public required IdentityUser User { get; set; }
+        public IdentityUser User { get; set; }
 
         public decimal Price { get; set; }
 
