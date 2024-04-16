@@ -6,15 +6,15 @@ namespace RedHome.Database.Models
 {
     public class Review : BaseEntity
     {
-        public required string UserIdBy { get; set; }
+        public string UserIdBy { get; set; }
 
         [ForeignKey("UserIdBy")]
-        public required IdentityUser UserBy { get; set; }
+        public IdentityUser UserBy { get; set; }
 
-        public required string UserIdTo { get; set; }
+        public string UserIdTo { get; set; }
 
         [ForeignKey("UserIdTo")]
-        public required IdentityUser UserTo { get; set; }
+        public IdentityUser UserTo { get; set; }
 
         [Required]
         public int Rate { get; set; }

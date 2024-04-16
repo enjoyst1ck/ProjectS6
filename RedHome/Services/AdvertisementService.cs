@@ -37,7 +37,13 @@ namespace RedHome.Services
                 Floor = s.Floor,
                 DevelopmentType = s.DevelopmentType,
                 Deposite = s.Deposite,
-                IsForSell = s.IsForSell
+                IsForSell = s.IsForSell,
+                Attachments = s.Attachments.Select(a => new AttachmentDto
+                {
+                    Id = a.Id,
+                    Title = a.Title,
+                    Image = a.Image,
+                }).ToList()
             }).ToList();
         }
     }

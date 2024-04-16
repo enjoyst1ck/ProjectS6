@@ -1,0 +1,32 @@
+[
+  {
+    "Id": 1,
+    "Rate": 4,
+    "Comment": "Great communication and very reliable."
+  },
+  {
+    "Id": 2,
+    "Rate": 3,
+    "Comment": "Prompt and efficient service."
+  },
+  {
+    "Id": 3,
+    "Rate": 5,
+    "Comment": "Highly recommended, would work with again."
+  },
+  {
+    "Id": 4,
+    "Rate": 4,
+    "Comment": "Exceeded expectations, very professional."
+  },
+  {
+    "Id": 5,
+    "Rate": 3,
+    "Comment": "Good experience overall, minor issues."
+  },
+  {
+    "Id": 6,
+    "Rate": 4,
+    "Comment": "Friendly and cooperative, would recommend."
+  }
+]

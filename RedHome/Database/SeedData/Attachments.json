@@ -1,0 +1,181 @@
+[
+  {
+    "Id": 1,
+    "Title": "Charming suburban home with a lush garden",
+    "AdvertisementId": 1
+  },
+
+  {
+    "Id": 2,
+    "Title": "Modern loft with industrial accents",
+    "AdvertisementId": 2
+  },
+
+  {
+    "Id": 3,
+    "Title": "Cozy cottage nestled by a serene lake",
+    "AdvertisementId": 2
+  },
+
+  {
+    "Id": 4,
+    "Title": "Luxury penthouse with panoramic city views",
+    "AdvertisementId": 1
+  },
+
+  {
+    "Id": 5,
+    "Title": "Stylish townhouse in the heart of the city",
+    "AdvertisementId": 1
+  },
+
+  {
+    "Id": 6,
+    "Title": "Spacious family home with a backyard oasis",
+    "AdvertisementId": 3
+  },
+
+  {
+    "Id": 7,
+    "Title": "Quaint bungalow with a picturesque garden",
+    "AdvertisementId": 19
+  },
+
+  {
+    "Id": 8,
+    "Title": "Elegant waterfront mansion with luxurious amenities",
+    "AdvertisementId": 3
+  },
+
+  {
+    "Id": 9,
+    "Title": "Historic brownstone townhouse with modern comforts",
+    "AdvertisementId": 5
+  },
+
+  {
+    "Id": 10,
+    "Title": "Scenic mountain retreat with breathtaking views",
+    "AdvertisementId": 1
+  },
+
+  {
+    "Id": 11,
+    "Title": "Sunny suburban condo with modern amenities",
+    "AdvertisementId": 1
+  },
+
+  {
+    "Id": 12,
+    "Title": "Riverside retreat offering tranquility and natural beauty",
+    "AdvertisementId": 2
+  },
+
+  {
+    "Id": 13,
+    "Title": "Urban loft living with stylish interior",
+    "AdvertisementId": 1
+  },
+
+  {
+    "Id": 14,
+    "Title": "Family-friendly suburban home in a quiet neighborhood",
+    "AdvertisementId": 6
+  },
+
+  {
+    "Id": 15,
+    "Title": "Exclusive beachfront villa with unparalleled luxury",
+    "AdvertisementId": 7
+  },
+
+  {
+    "Id": 16,
+    "Title": "Chic city loft in a vibrant downtown area",
+    "AdvertisementId": 11
+  },
+
+  {
+    "Id": 17,
+    "Title": "Scenic lakefront cabin perfect for relaxation",
+    "AdvertisementId": 8
+  },
+
+  {
+    "Id": 18,
+    "Title": "Luxury condo with stunning city views",
+    "AdvertisementId": 9
+  },
+
+  {
+    "Id": 19,
+    "Title": "Elegant suburban home with a spacious backyard",
+    "AdvertisementId": 19
+  },
+
+  {
+    "Id": 20,
+    "Title": "Charming cottage with a garden retreat",
+    "AdvertisementId": 10
+  },
+
+  {
+    "Id": 21,
+    "Title": "Rustic countryside farmhouse with scenic views",
+    "AdvertisementId": 11
+  },
+
+  {
+    "Id": 22,
+    "Title": "Modern urban apartment with sleek design",
+    "AdvertisementId": 5
+  },
+
+  {
+    "Id": 23,
+    "Title": "Quaint cottage by the sea, perfect for a getaway",
+    "AdvertisementId": 12
+  },
+
+  {
+    "Id": 24,
+    "Title": "Cozy mountain cabin with fireplace and hot tub",
+    "AdvertisementId": 13
+  },
+
+  {
+    "Id": 25,
+    "Title": "Spacious suburban home with backyard pool",
+    "AdvertisementId": 14
+  },
+
+  {
+    "Id": 26,
+    "Title": "Luxury penthouse with panoramic skyline views",
+    "AdvertisementId": 15
+  },
+
+  {
+    "Id": 27,
+    "Title": "Charming historic home in a quaint village",
+    "AdvertisementId": 17
+  },
+
+  {
+    "Id": 28,
+    "Title": "Modern city apartment with balcony",
+    "AdvertisementId": 16
+  },
+
+  {
+    "Id": 29,
+    "Title": "Secluded lakeside cabin with private dock",
+    "AdvertisementId": 20
+  },
+
+  {
+    "Id": 30,
+    "Title": "Family-friendly suburban house with spacious yard",
+    "AdvertisementId": 18
+  }
+]

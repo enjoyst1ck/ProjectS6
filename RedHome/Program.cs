@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RedHome.Database;
 using RedHome.Repositories;
@@ -10,7 +11,7 @@ namespace RedHome
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,23 @@ namespace RedHome
 
             app.MapControllers();
 
+            using var scope = app.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            var context = services.GetRequiredService<ApiDbContext>();
+            var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+            var logger = services.GetRequiredService<ILogger<Program>>();
+            try
+            {
+                await context.Database.MigrateAsync();
+
+                var dbContextSeed = new DbContextSeed(context, userManager);
+                await dbContextSeed.SeedAsync();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Migration error");
+            }
+
             app.Run();
         }
 
@@ -49,6 +67,10 @@ namespace RedHome
             services.AddDbContext<ApiDbContext>(options => 
                 options.UseMySql(configuration.GetConnectionString("DefaultConnection"), serverVersion)
             );
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<ApiDbContext>()
+                    .AddDefaultTokenProviders();
 
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<IReviewService, ReviewService>();

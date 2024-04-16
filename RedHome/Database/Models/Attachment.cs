@@ -10,8 +10,8 @@ namespace RedHome.Database.Models
         public int AdvertisementId { get; set; }
 
         [ForeignKey("AdvertisementId")]
-        public required Advertisement Advertisement { get; set; }
+        public Advertisement Advertisement { get; set; }
 
-        public required byte[] Image { get; set; }
+        public byte[] Image { get; set; }
     }
 }
