@@ -35,6 +35,9 @@ namespace RedHome
 
             app.UseHttpsRedirection();
 
+            app.UseCors("CorsPolicy");
+
+
             app.UseAuthorization();
 
 
@@ -79,7 +82,15 @@ namespace RedHome
             services.AddScoped<IAdvertisementService, AdvertisementService>();
 
             services.AddScoped<IAttachmentRepository, AttachmentRepository>();
-            services.AddScoped<IAttachmentService, AttachmentService>();        
+            services.AddScoped<IAttachmentService, AttachmentService>();
+
+            services.AddCors(o =>
+            {
+                o.AddPolicy("CorsPolicy", p =>
+                {
+                    p.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173");
+                });
+            });
         }
     }
 }
