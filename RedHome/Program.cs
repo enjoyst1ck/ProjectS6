@@ -37,9 +37,7 @@ namespace RedHome
 
             app.UseCors("CorsPolicy");
 
-
             app.UseAuthorization();
-
 
             app.MapControllers();
 
@@ -74,6 +72,8 @@ namespace RedHome
             services.AddIdentity<IdentityUser, IdentityRole>()
                     .AddEntityFrameworkStores<ApiDbContext>()
                     .AddDefaultTokenProviders();
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<IReviewService, ReviewService>();

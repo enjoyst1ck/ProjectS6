@@ -20,5 +20,23 @@ namespace RedHome.Controllers
         {
             return _reviewService.GetUserReview(userId);
         }
+
+        [HttpPost]
+        public IEnumerable<ReviewDto> InsertReview(ReviewDto reviewDto)
+        {
+            return _reviewService.InsertReview(reviewDto);
+        }
+
+        [HttpPut]
+        public IEnumerable<ReviewDto> EditReview(ReviewDto reviewDto)
+        {
+            return _reviewService.EditReview(reviewDto);
+        }
+
+        [HttpDelete]
+        public IEnumerable<ReviewDto> DeleteReview(int id)
+        {
+            return _reviewService.DeleteReview(id);
+        }
     }
 }
