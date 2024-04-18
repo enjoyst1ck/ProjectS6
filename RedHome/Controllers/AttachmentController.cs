@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RedHome.Dtos;
-using RedHome.Services;
 using RedHome.Services.IServices;
 
 namespace RedHome.Controllers
@@ -21,6 +19,22 @@ namespace RedHome.Controllers
         public IEnumerable<AttachmentDto> GetByAdvertisement(int id)
         {
             return _attachmentService.GetByAdvertisement(id);
+        }
+
+        [HttpPost]
+        public IEnumerable<AttachmentDto> Insert(AttachmentDto attachmentDto)
+        {
+            _attachmentService.Insert(attachmentDto);
+
+            return _attachmentService.GetByAdvertisement(attachmentDto.AdvertisementId);
+        }
+
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+            _attachmentService.Delete(id);
+
+            return Ok();
         }
     }
 }

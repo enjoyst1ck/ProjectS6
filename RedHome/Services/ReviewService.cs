@@ -1,4 +1,5 @@
-﻿using RedHome.Dtos;
+﻿using RedHome.Database.Models;
+using RedHome.Dtos;
 using RedHome.Repositories.IRepositories;
 using RedHome.Services.IServices;
 
@@ -17,7 +18,7 @@ namespace RedHome.Services
         {
             if (userId is null)
             {
-                throw new Exception("UserId not found");
+                throw new Exception("UserId is null");
             }
 
             var reviews = _reviewRepository.GetReviewsSendToUser(userId);
@@ -32,6 +33,52 @@ namespace RedHome.Services
                 Rate = r.Rate,
                 Comment = r.Comment
             }).ToList();
+        }
+
+        public IEnumerable<ReviewDto> InsertReview(ReviewDto reviewDto)
+        {
+            var review = new Review
+            {
+                Id = reviewDto.Id,
+                UserIdBy = reviewDto.UserIdBy,
+                UserIdTo = reviewDto.UserIdTo,
+                Rate = reviewDto.Rate,
+                Comment = reviewDto.Comment
+            };
+
+            _reviewRepository.Insert(review);
+
+            var reviews = GetUserReview(reviewDto.UserIdTo);
+
+            return reviews;
+        }
+
+        public IEnumerable<ReviewDto> EditReview(ReviewDto reviewDto)
+        {
+            var review = new Review
+            {
+                Id = reviewDto.Id,
+                UserIdBy = reviewDto.UserIdBy,
+                UserIdTo = reviewDto.UserIdTo,
+                Rate = reviewDto.Rate,
+                Comment = reviewDto.Comment
+            };
+
+            _reviewRepository.Edit(review);
+
+            var reviews = GetUserReview(reviewDto.UserIdTo);
+
+            return reviews;
+        }
+
+        public IEnumerable<ReviewDto> DeleteReview(int id)
+        {
+            _reviewRepository.Delete(id);
+
+            var reviews = GetUserReview("");
+            //tutaj pobrac id usera!
+
+            return reviews;
         }
     }
 }
