@@ -17,6 +17,7 @@ export default function LoginFrom() {
         </form>
 
         <button className='mt-12 w-full bg-red-600 p-2 text-white text-xl font-bold rounded-xl hover:bg-red-700 transition-all'>Log in</button>
+        <a href='#' className='text-sm font-semibold text-black text-opacity-50'>You dont have an account yet? <span className='text-red-600 font-semibold text-opacity-75 underline'>Create account</span></a>
       </div>
     </div>
   )
