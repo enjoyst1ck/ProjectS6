@@ -32,7 +32,7 @@ export default function RegisterForm() {
           {/* Password match check */}
           <label className='text-xl font-semibold text-black text-opacity-50 '>Password:</label>
           <input name='password' className='w-full border-red-600 border-2 py-1 px-2 h-10 rounded-xl border-opacity-50 focus:border-opacity-100 outline-none transition-all mb-6'
-            type='password' {...register("password", { required: true})} />
+            type='password' {...register("password", { required: true, minLength: {value: 8} })} />
              
           <label className='text-xl font-semibold text-black text-opacity-50 '>Repeat password:</label>
           <input name='passwordrepeat' className='w-full border-red-600 border-2 py-1 px-2 h-10 rounded-xl border-opacity-50 focus:border-opacity-100 outline-none transition-all'
