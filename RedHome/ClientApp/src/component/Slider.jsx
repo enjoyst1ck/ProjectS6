@@ -32,7 +32,7 @@ export default function Slider() {
   };
 
   return (
-    <div className='w-[60%] h-screen bg-[#C44455] relative'>
+    <div className='w-[100%] xl:w-[60%] lg:w-[50%] sm:w-[100%] absolute xl:relative lg:relative sm:absolute z-0 h-screen bg-[#C44455] overflow-hidden'>
       <div className='absolute bottom-0'>
         <svg width="551" height="896" viewBox="0 0 551 896" xmlns="http://www.w3.org/2000/svg">
           <path fill="#B03F55" d="M300.5 688.5C326.5 840.1 478.333 889.667 551 895.5H0V746.5V162.5V54.5V6.5V0C24.5 42.5 65 151 93 235C121 319 143 316 210 370C277 424 268 499 300.5 688.5Z" />
@@ -45,19 +45,19 @@ export default function Slider() {
         </svg>
       </div>
 
-      <div className='w-full h-full text-white absolute flex justify-center items-center'>
+      <div className='w-full h-full text-white absolute  justify-center items-center hidden xl:flex lg:flex'>
         <div className='w-[65%]'>
           <div className='w-full aspect-[2/1] rounded-2xl mb-5'>
             <img className='rounded-2xl' src={currentContent.img}/>
           </div>
 
 
-          <div className='flex flex-col text-justify'>
+          <div className='flex-col text-justify hidden xl:flex lg:flex'>
             <span className='font-bold text-xl mb-2'>{currentContent.title}</span>
             <span>{currentContent.description}</span>
           </div>
 
-          <div className='w-full mt-5 flex justify-center'>
+          <div className='w-full mt-5 justify-center hidden xl:flex lg:flex'>
             {sliderContent.map((item, index) => (
               <button onClick={() => handlerChangeSlide(index)} className={item.title === currentContent.title ? 
                 "size-4 rounded-full border-4 border-[#872341] bg-[#872341] hover:bg-[#872341] transition-all mx-1" : 
