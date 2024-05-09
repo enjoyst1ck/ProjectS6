@@ -1,3 +1,6 @@
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+
 function App() {
   async function logAdvertisement() {
     const response = await fetch("http://localhost:5242/Advertisement");
@@ -9,9 +12,7 @@ function App() {
   
   return (
     <>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
+      <RegisterPage/>
     </>
   )
 }
