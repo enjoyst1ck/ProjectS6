@@ -1,4 +1,6 @@
-﻿using RedHome.Dtos;
+﻿using RedHome.Database.Models;
+using RedHome.Dtos;
+using RedHome.Helpers;
 
 namespace RedHome.Services.IServices
 {
@@ -9,5 +11,7 @@ namespace RedHome.Services.IServices
         public AdvertisementDto Insert(AdvertisementDto advertisementDto);
         public AdvertisementDto Edit(AdvertisementDto advertisementDto);
         public IEnumerable<AdvertisementDto> Delete(int id);
+        public int Count(AdvertisementCountSpecification specification);
+        public IEnumerable<AdvertisementDto> List(AdvertisementSpecification specification);
     }
 }

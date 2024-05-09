@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RedHome.Dtos;
+using RedHome.Helpers;
 using RedHome.Services.IServices;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RedHome.Controllers
 {
@@ -15,10 +17,25 @@ namespace RedHome.Controllers
             _advertisementService = advertisementService;
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public IEnumerable<AdvertisementDto> GetAll()
         {
             return _advertisementService.GetAll();
+        }*/
+
+        [HttpGet]
+        public Pagination<AdvertisementDto> GetAll([FromQuery]AdvertisementParameters parameters)
+        {
+
+            var specification = new AdvertisementSpecification(parameters);
+
+            var specificationForCount = new AdvertisementCountSpecification(parameters);
+
+            var totalItems = _advertisementService.Count(specificationForCount);
+
+            var advertisementDto = _advertisementService.List(specification);
+
+            return new Pagination<AdvertisementDto>(parameters.PageIndex, parameters.PageSize, totalItems, advertisementDto);
         }
 
         [HttpGet("{id}")]

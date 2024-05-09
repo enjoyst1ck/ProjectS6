@@ -1,5 +1,6 @@
 ﻿using RedHome.Database.Models;
 using RedHome.Dtos;
+using RedHome.Helpers;
 using RedHome.Repositories.IRepositories;
 using RedHome.Services.IServices;
 
@@ -143,6 +144,41 @@ namespace RedHome.Services
             _advertisementRepository.Delete(id);
 
             return GetAll();
+        }
+
+        public int Count(AdvertisementCountSpecification specification)
+        {
+            return _advertisementRepository.Count(specification);
+        }
+
+        public IEnumerable<AdvertisementDto> List(AdvertisementSpecification specification)
+        {
+            var advertisements = _advertisementRepository.List(specification);
+            
+            return advertisements.Select(s => new AdvertisementDto
+            {
+                Id = s.Id,
+                UserId = s.UserId,
+                UserEmail = s.User.Email ?? string.Empty,
+                Price = s.Price,
+                Title = s.Title,
+                Description = s.Description,
+                City = s.City,
+                Address = s.Address,
+                Area = s.Area,
+                RoomQuantity = s.RoomQuantity,
+                FloorQuantity = s.FloorQuantity,
+                Floor = s.Floor,
+                DevelopmentType = s.DevelopmentType,
+                Deposite = s.Deposite,
+                IsForSell = s.IsForSell,
+                Attachments = s.Attachments.Select(a => new AttachmentDto
+                {
+                    Id = a.Id,
+                    Title = a.Title,
+                    Image = a.Image,
+                }).ToList()
+            }).ToList();
         }
     }
 }
