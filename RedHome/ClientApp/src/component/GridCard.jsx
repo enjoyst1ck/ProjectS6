@@ -8,7 +8,7 @@ export default function GridCard({ item }) {
   return (
     <div className='w-[358px] h-[441px] rounded-2xl relative'>
       <div className='absolute top-3 right-3 rounded-full bg-red-700 p-2 hover:scale-110 transition-all cursor-pointer'><FaRegHeart color='white' size={22} /></div>
-        <img className='w-full h-full bg-red-400 rounded-2xl object-cover' src={item.attachments.length > 0 ? `data:image/jpg;base64, ${item.attachments[0].image}`: imagePlaceholder} /> 
+        <img className='w-full h-full bg-red-400 rounded-2xl object-cover' alt={item.title} src={item.attachments.length > 0 ? `data:image/jpg;base64, ${item.attachments[0].image}`: imagePlaceholder} /> 
       <div className='w-full absolute bottom-0 rounded-xl p-2 bg-white bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-40'>
         <div className='flex items-center justify-between'>
           <div>

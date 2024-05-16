@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { CiGrid2H } from "react-icons/ci"
 import { IoGridOutline } from "react-icons/io5";
 import GridCard from './GridCard';
+import ListCard from './ListCard'
 
 export default function SearchSection() {
   const [data, setData] = useState([]);
@@ -23,7 +24,6 @@ export default function SearchSection() {
         setError(err.message);
       })
   }, []);
-
 
 
   return (
@@ -49,9 +49,12 @@ export default function SearchSection() {
         </select>
       </div>
 
-      <div className='flex'>
+      <div className='flex flex-col'>
         <div className='grid grid-cols-3 gap-4'>
-          {data.map((item, index) => (<GridCard key={index} item={item} />))}
+          {/* {data.map((item, index) => (<GridCard key={index} item={item} />))} */}
+        </div>
+        <div className='grid grid-cols-1 gap-4'>
+          {data.map((item, index) => (<ListCard item={item} key={index}/>))}
         </div>
       </div>
 
