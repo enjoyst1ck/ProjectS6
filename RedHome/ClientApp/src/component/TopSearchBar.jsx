@@ -53,7 +53,38 @@ export default function MenuHomePage() {
                 </ul>
             </div>
             </nav>
-            
+            <div className='h-[8vh] w-[100%] p-4 pt-14 flex items-center justify-between'>      
+                <select className="bg-gray-800 text-white w-40">
+                    <option className="text-lg" disabled selected hidden>Buy</option>
+                    <option className="text-lg"></option>
+                    <option className="text-lg"></option>
+                </select>
+                <select className="bg-gray-800 text-white w-40 ">
+                    <option className="text-lg" disabled selected hidden>Price</option>
+                    <option className="text-lg"></option>
+                    <option className="text-lg"></option>
+                </select>
+                <select className="bg-gray-800 text-white w-40">
+                    <option className="text-lg" disabled selected hidden>No. of rooms</option>
+                    <option className="text-lg"></option>
+                    <option className="text-lg"></option>
+                </select>
+                <select className="bg-gray-800 text-white w-40">
+                    <option className="text-lg" disabled selected hidden>Square footage</option>
+                    <option className="text-lg"></option>
+                    <option className="text-lg"></option>
+                </select>
+                <select className="bg-gray-800 text-white w-40">
+                    <option className="text-lg" disabled selected hidden>Building type</option>
+                    <option className="text-lg"></option>
+                    <option className="text-lg"></option>
+                </select>
+                <select className="bg-gray-800 text-white w-40">
+                    <option className="text-lg" disabled selected hidden>More filters</option>
+                    <option className="text-lg"></option>
+                    <option className="text-lg"></option>
+                </select>
+            </div> 
     </div>
   )
 }
