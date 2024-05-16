@@ -1,17 +1,10 @@
-function App() {
-  async function logAdvertisement() {
-    const response = await fetch("http://localhost:5242/Advertisement");
-    const advertisement = await response.json();
-    console.table(advertisement[1].city);
-  }
+import SearchPage from './pages/SearchPage'
 
-  logAdvertisement();
-  
+function App() {
+
   return (
     <>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
+      <SearchPage/>
     </>
   )
 }
