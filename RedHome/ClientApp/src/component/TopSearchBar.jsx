@@ -22,7 +22,8 @@ export default function MenuHomePage() {
 
   return (
     <div>
-            <nav className='h-[5vh] w-[100%] p-3 pt-5 flex items-center justify-between'>
+        <div className='bg-white drop-shadow-xl'>
+            <nav className='h-[5vh] w-[100%] p-4 pt-7 flex items-center justify-between'>
             <div className='text-3xl font-bold'>
                 <span className='text-red-600'>Red</span><span>Home</span>
             </div>
@@ -53,38 +54,63 @@ export default function MenuHomePage() {
                 </ul>
             </div>
             </nav>
-            <div className='h-[8vh] w-[100%] p-4 pt-14 flex items-center justify-between'>      
-                <select className="bg-gray-800 text-white w-40">
+            <div className='block'>
+            <div className='h-[8vh] w-[100%] p-4 pt-12 flex items-center justify-between pl-24 pr-24'>      
+                <select className="bg-gray-800 text-white w-40 h-7">
                     <option className="text-lg" disabled selected hidden>Buy</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
-                <select className="bg-gray-800 text-white w-40 ">
+                <select className="bg-gray-800 text-white w-40 h-7 ">
                     <option className="text-lg" disabled selected hidden>Price</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
-                <select className="bg-gray-800 text-white w-40">
+                <select className="bg-gray-800 text-white w-40 h-7">
                     <option className="text-lg" disabled selected hidden>No. of rooms</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
-                <select className="bg-gray-800 text-white w-40">
+                <select className="bg-gray-800 text-white w-40 h-7">
                     <option className="text-lg" disabled selected hidden>Square footage</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
-                <select className="bg-gray-800 text-white w-40">
+                <select className="bg-gray-800 text-white w-40 h-7">
                     <option className="text-lg" disabled selected hidden>Building type</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
-                <select className="bg-gray-800 text-white w-40">
+                <select className="bg-gray-800 text-white w-40 h-7">
                     <option className="text-lg" disabled selected hidden>More filters</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
             </div> 
+            <div className='h-[8vh] w-[100%] p-4 pt-10 pb-10 flex items-center justify-between pl-24 pr-24'>  
+                <div>  
+                    <select className="bg-gray-800 text-white w-40 h-7">
+                        <option className="text-lg" disabled selected hidden>Buy</option>
+                        <option className="text-lg"></option>
+                        <option className="text-lg"></option>
+                    </select>
+                </div>  
+                <div className="flex justify-between w-72">  
+                    <select className="bg-gray-800 text-white w-32 h-7">
+                        <option className="text-lg" disabled selected hidden>Building type</option>
+                        <option className="text-lg"></option>
+                        <option className="text-lg"></option>
+                    </select>
+                    <select className="bg-gray-800 text-white w-32 h-7">
+                        <option className="text-lg" disabled selected hidden>More filters</option>
+                        <option className="text-lg"></option>
+                        <option className="text-lg"></option>
+                    </select>
+                </div>  
+                </div> 
+                </div>
+            </div>
+        <div className="w-100vh bg-amber-50 h-screen"></div>
     </div>
   )
 }
