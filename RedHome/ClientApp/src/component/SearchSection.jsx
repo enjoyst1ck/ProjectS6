@@ -8,6 +8,7 @@ export default function SearchSection() {
   const [data, setData] = useState([]);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
+  const [gridView, setGridView] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:5242/Advertisement")
@@ -25,6 +26,9 @@ export default function SearchSection() {
       })
   }, []);
 
+  const handleView = (e) => {
+    setGridView(e);
+  };
 
   return (
     <div className='w-[75%] mx-auto mt-24'>
@@ -34,8 +38,14 @@ export default function SearchSection() {
           <p className='text-xl font-semibold text-black text-opacity-75'>1241 announcements</p>
         </div>
         <div className='flex'>
-          <div className='size-11 rounded-xl border-[3px] flex justify-center items-center border-red-700 bg-red-700'><CiGrid2H color='white' size={22} /></div>
-          <div className='size-11 rounded-xl border-[3px] flex justify-center items-center border-red-700 ml-4'><IoGridOutline color='rgb(185 28 28)' size={22} /></div>
+          <div className={gridView === false ? 'size-11 rounded-xl border-[3px] flex justify-center items-center border-red-700 bg-red-700 ml-2' : 'size-11 rounded-xl border-[3px] flex justify-center items-center border-red-700 ml-2'}
+            onClick={() => handleView(false)}>
+            <CiGrid2H color={gridView === true ? 'rgb(185 28 28)' : 'white'} size={22} />
+          </div>
+          <div className={gridView === true ? 'size-11 rounded-xl border-[3px] flex justify-center items-center border-red-700 bg-red-700 ml-2' : 'size-11 rounded-xl border-[3px] flex justify-center items-center border-red-700 ml-2'}
+            onClick={() => handleView(true)}>
+            <IoGridOutline color={gridView === false ? 'rgb(185 28 28)' : 'white'} size={22} />
+          </div>
         </div>
       </div>
 
@@ -49,13 +59,15 @@ export default function SearchSection() {
         </select>
       </div>
 
-      <div className='flex flex-col'>
-        <div className='grid grid-cols-3 gap-4'>
-          {/* {data.map((item, index) => (<GridCard key={index} item={item} />))} */}
-        </div>
-        <div className='grid grid-cols-1 gap-4'>
-          {data.map((item, index) => (<ListCard item={item} key={index}/>))}
-        </div>
+      <div className={gridView === true ? 'flex ' : 'flex flex-col'}>
+        {gridView === true ?
+          (<div className='grid grid-cols-3 gap-4'>
+            {data.map((item, index) => (<GridCard key={index} item={item} />))}
+          </div>)
+          :
+          (<div className='grid grid-cols-1 gap-4'>
+            {data.map((item, index) => (<ListCard item={item} key={index} />))}
+          </div>)}
       </div>
 
     </div>
