@@ -1,19 +1,14 @@
 import React from 'react'
 import { FaRegHeart } from "react-icons/fa"
 import { FaArrowRightLong } from "react-icons/fa6"
+import imagePlaceholder from "./../assets/imageplaceholder.png"
 
 export default function GridCard({ item }) {
-
+  console.log(item.attachments.length > 0 ? true : false)
   return (
     <div className='w-[358px] h-[441px] rounded-2xl relative'>
       <div className='absolute top-3 right-3 rounded-full bg-red-700 p-2 hover:scale-110 transition-all cursor-pointer'><FaRegHeart color='white' size={22} /></div>
-      {console.log(item.attachments)
-      /* <img className='w-full h-full bg-red-400 rounded-2xl' src={`data:image/jpg;base64, ${item.attachments[0].image}`} /> */}
-      {/* {
-      item.attachments[0].image ? 
-       <img className='w-full h-full bg-red-400 rounded-2xl' src={`data:image/jpg;base64, ${item.attachments[0].image}`} />
-       : null
-      } */}
+        <img className='w-full h-full bg-red-400 rounded-2xl object-cover' src={item.attachments.length > 0 ? `data:image/jpg;base64, ${item.attachments[0].image}`: imagePlaceholder} /> 
       <div className='w-full absolute bottom-0 rounded-xl p-2 bg-white bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-40'>
         <div className='flex items-center justify-between'>
           <div>

@@ -27,7 +27,7 @@ export default function SearchSection() {
 
 
   return (
-    <div className='w-[75%] mx-auto mt-24 border border-red-700'>
+    <div className='w-[75%] mx-auto mt-24'>
       <div className='flex items-center justify-between'>
         <div>
           <h1 className='text-3xl font-semibold'>Flats for sale: Opole</h1>
