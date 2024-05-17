@@ -3,7 +3,7 @@ import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   async function logAdvertisement() {
-    const response = await fetch("http://localhost:5242/Advertisement");
+    const response = await fetch("http://localhost:7004/Advertisement");
     const advertisement = await response.json();
     console.table(advertisement[1].city);
   }
