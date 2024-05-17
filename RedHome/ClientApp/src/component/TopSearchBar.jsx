@@ -28,7 +28,7 @@ export default function MenuHomePage() {
                 <span className='text-red-600'>Red</span><span>Home</span>
             </div>
 
-
+            
             <div>
                 <ul className='lg:flex md:flex hidden items-center p-1 h-full font-semibold text-lg bg-red-600 text-white rounded-lg'>
                 {centerLinks.map((item, index) => (
@@ -56,32 +56,32 @@ export default function MenuHomePage() {
             </nav>
             <div className='block'>
             <div className='h-[8vh] w-[100%] p-4 pt-12 flex items-center justify-between pl-24 pr-24'>      
-                <select className="bg-gray-800 text-white w-40 h-7">
+                <select className="bg-slate-800 text-white w-40 h-7 appearance-none">
                     <option className="text-lg" disabled selected hidden>Buy</option>
-                    <option className="text-lg"></option>
-                    <option className="text-lg"></option>
+                    <option className="text-lg">Buy</option>
+                    <option className="text-lg">Rent</option>
                 </select>
-                <select className="bg-gray-800 text-white w-40 h-7 ">
+                <select className="bg-slate-800 text-white w-40 h-7 appearance-none">
                     <option className="text-lg" disabled selected hidden>Price</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
-                <select className="bg-gray-800 text-white w-40 h-7">
+                <select className="bg-slate-800 text-white w-40 h-7 appearance-none">
                     <option className="text-lg" disabled selected hidden>No. of rooms</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
-                <select className="bg-gray-800 text-white w-40 h-7">
+                <select className="bg-slate-800 text-white w-40 h-7 appearance-none">
                     <option className="text-lg" disabled selected hidden>Square footage</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
-                <select className="bg-gray-800 text-white w-40 h-7">
+                <select className="bg-slate-800 text-white w-40 h-7 appearance-none">
                     <option className="text-lg" disabled selected hidden>Building type</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
-                <select className="bg-gray-800 text-white w-40 h-7">
+                <select className="bg-slate-800 text-white w-40 h-7 appearance-none">
                     <option className="text-lg" disabled selected hidden>More filters</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
@@ -89,23 +89,19 @@ export default function MenuHomePage() {
             </div> 
             <div className='h-[8vh] w-[100%] p-4 pt-10 pb-10 flex items-center justify-between pl-24 pr-24'>  
                 <div>  
-                    <select className="bg-gray-800 text-white w-40 h-7">
-                        <option className="text-lg" disabled selected hidden>Buy</option>
+                    <select className="bg-slate-800 text-white w-72 h-7 appearance-none">
+                        <option className="text-lg" disabled selected hidden>Location</option>
                         <option className="text-lg"></option>
                         <option className="text-lg"></option>
                     </select>
                 </div>  
                 <div className="flex justify-between w-72">  
-                    <select className="bg-gray-800 text-white w-32 h-7">
-                        <option className="text-lg" disabled selected hidden>Building type</option>
-                        <option className="text-lg"></option>
-                        <option className="text-lg"></option>
-                    </select>
-                    <select className="bg-gray-800 text-white w-32 h-7">
-                        <option className="text-lg" disabled selected hidden>More filters</option>
-                        <option className="text-lg"></option>
-                        <option className="text-lg"></option>
-                    </select>
+                    <button className="bg-slate-800 text-white w-32 h-7 appearance-none rounded-md">
+                        Clear filters
+                    </button>
+                    <button className="bg-slate-800 text-white w-32 h-7 appearance-none rounded-md">
+                        Search
+                    </button>
                 </div>  
                 </div> 
                 </div>
