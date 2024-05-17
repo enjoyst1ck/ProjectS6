@@ -4,7 +4,7 @@ import React from 'react'
 export default function MenuHomePage() {
   const centerLinks = [
     {
-      name: "Advertisement",
+      name: "Advertisements",
       href: "#"
     },
     {
@@ -56,50 +56,50 @@ export default function MenuHomePage() {
             </nav>
             <div className='block'>
             <div className='h-[8vh] w-[100%] p-4 pt-12 flex items-center justify-between pl-24 pr-24'>      
-                <select className="bg-slate-800 text-white w-40 h-7 appearance-none">
+                <select className="py-1 px-2 w-40 h-7 bg-slate-800 text-white outline-none">
                     <option className="text-lg" disabled selected hidden>Buy</option>
                     <option className="text-lg">Buy</option>
                     <option className="text-lg">Rent</option>
                 </select>
-                <select className="bg-slate-800 text-white w-40 h-7 appearance-none">
+                <select className="py-1 px-2 w-40 h-7 bg-slate-800 text-white outline-none">
                     <option className="text-lg" disabled selected hidden>Price</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
-                <select className="bg-slate-800 text-white w-40 h-7 appearance-none">
+                <select className="py-1 px-2 w-40 h-7 bg-slate-800 text-white outline-none">
                     <option className="text-lg" disabled selected hidden>No. of rooms</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
-                <select className="bg-slate-800 text-white w-40 h-7 appearance-none">
+                <select className="py-1 px-2 w-40 h-7 bg-slate-800 text-white outline-none">
                     <option className="text-lg" disabled selected hidden>Square footage</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
-                <select className="bg-slate-800 text-white w-40 h-7 appearance-none">
+                <select className="py-1 px-2 w-40 h-7 bg-slate-800 text-white outline-none">
                     <option className="text-lg" disabled selected hidden>Building type</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
-                <select className="bg-slate-800 text-white w-40 h-7 appearance-none">
+                <select className="py-1 px-2 w-40 h-7 bg-slate-800 text-white outline-none">
                     <option className="text-lg" disabled selected hidden>More filters</option>
                     <option className="text-lg"></option>
                     <option className="text-lg"></option>
                 </select>
             </div> 
-            <div className='h-[8vh] w-[100%] p-4 pt-10 pb-10 flex items-center justify-between pl-24 pr-24'>  
+            <div className='h-[8vh] w-[100%] p-4 pt-10 pb-10 flex items-center justify-between pl-24 pr-24 '>  
                 <div>  
-                    <select className="bg-slate-800 text-white w-72 h-7 appearance-none">
+                    <select className="py-1 px-2 w-72 h-7 bg-slate-800 text-white outline-none">
                         <option className="text-lg" disabled selected hidden>Location</option>
                         <option className="text-lg"></option>
                         <option className="text-lg"></option>
                     </select>
                 </div>  
                 <div className="flex justify-between w-72">  
-                    <button className="bg-slate-800 text-white w-32 h-7 appearance-none rounded-md">
+                    <button className="bg-slate-800 text-white w-32 h-7 appearance-none rounded-lg">
                         Clear filters
                     </button>
-                    <button className="bg-slate-800 text-white w-32 h-7 appearance-none rounded-md">
+                    <button className="bg-slate-800 text-white w-32 h-7 appearance-none rounded-lg">
                         Search
                     </button>
                 </div>  
