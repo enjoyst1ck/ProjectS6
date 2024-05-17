@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RedHome.Database;
 using RedHome.Dtos;
+using RedHome.Services.IServices;
 
 namespace RedHome.Controllers
 {
@@ -13,23 +13,33 @@ namespace RedHome.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ITokenService _tokenService;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<IdentityUser> userManager, 
+                                SignInManager<IdentityUser> signInManager,
+                                ITokenService tokenService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _tokenService = tokenService;
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet("getuser")]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
+            //ta metoda nie działa!
             var user = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
+
+            if (user == null)
+            {
+                return null;
+            }
 
             return new UserDto
             {
                 Email = user.Email,
-                Token = "token"// _tokenService.CreateToken(user),
+                Token = _tokenService.CreateToken(user),
                 //DisplayName = user.DisplayName
             };
         }
@@ -44,7 +54,7 @@ namespace RedHome.Controllers
                 return Unauthorized();
             }
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, true);
 
             if (!result.Succeeded)
             {
@@ -54,7 +64,7 @@ namespace RedHome.Controllers
             return new UserDto
             {
                 Email = user.Email,
-                Token = "token"
+                Token = _tokenService.CreateToken(user),
             };
         }
 
@@ -84,7 +94,7 @@ namespace RedHome.Controllers
             return new UserDto
             {
                 Email = user.Email,
-                Token = "token"
+                Token = _tokenService.CreateToken(user),
             };
         }
 
@@ -93,6 +103,5 @@ namespace RedHome.Controllers
         {
             return await _userManager.FindByEmailAsync(email) != null;
         }
-
     }
 }

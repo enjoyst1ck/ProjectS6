@@ -84,6 +84,8 @@ namespace RedHome
             services.AddScoped<IAttachmentRepository, AttachmentRepository>();
             services.AddScoped<IAttachmentService, AttachmentService>();
 
+            services.AddScoped<ITokenService, TokenService>();
+
             services.AddCors(o =>
             {
                 o.AddPolicy("CorsPolicy", p =>
