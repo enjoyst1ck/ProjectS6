@@ -7,7 +7,7 @@ using RedHome.Services.IServices;
 
 namespace RedHome.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -28,11 +28,11 @@ namespace RedHome.Controllers
         [HttpGet("getuser")]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
-            //ta metoda nie działa!
             var user = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
 
             if (user == null)
             {
+                //ma byc ERROR - nie znaleziono uzytkownika
                 return null;
             }
 
@@ -76,7 +76,6 @@ namespace RedHome.Controllers
                 return new BadRequestObjectResult("Email has been already used");
             }
 
-
             var user = new IdentityUser
             {
                 Email = registerDto.Email,
@@ -102,6 +101,33 @@ namespace RedHome.Controllers
         public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
         {
             return await _userManager.FindByEmailAsync(email) != null;
+        }
+
+        [HttpPut("changePassword")]
+        public async Task<ActionResult<UserDto>> ChangePassword([FromBody] UserDto userDto, string currentPassword, string newPassword)
+        {
+            IdentityUser user = await _userManager.FindByEmailAsync(userDto.Email);
+            
+            if (user == null)
+            {
+                //ma byc ERROR - nie znaleziono uzytkownika
+                return null;
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+
+            if (!result.Succeeded)
+            {
+                //ma byc ERROR - nie udało sie zmienic hasla
+                return null;  
+            }
+
+            return new UserDto
+            {
+                Email = user.Email,
+                Token = _tokenService.CreateToken(user),
+            };
+
         }
     }
 }
