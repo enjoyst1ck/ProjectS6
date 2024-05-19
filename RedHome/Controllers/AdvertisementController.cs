@@ -17,12 +17,6 @@ namespace RedHome.Controllers
             _advertisementService = advertisementService;
         }
 
-        /*[HttpGet]
-        public IEnumerable<AdvertisementDto> GetAll()
-        {
-            return _advertisementService.GetAll();
-        }*/
-
         [HttpGet]
         public Pagination<AdvertisementDto> GetAll([FromQuery]AdvertisementParameters parameters)
         {
@@ -60,6 +54,18 @@ namespace RedHome.Controllers
         public IEnumerable<AdvertisementDto> Delete(int id)
         {
             return _advertisementService.Delete(id);
+        }
+
+        [HttpGet("city")]
+        public IEnumerable<string> GetUniqueCities()
+        {
+            return _advertisementService.GetUniqueCities();
+        }
+
+        [HttpGet("developmentType")]
+        public IEnumerable<string> GetUniqueDevelopmentType()
+        {
+            return _advertisementService.GetUniqueDevelopmentType();
         }
     }
 }
