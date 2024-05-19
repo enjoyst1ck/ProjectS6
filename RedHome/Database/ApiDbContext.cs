@@ -25,6 +25,10 @@ namespace RedHome.Database
                 .Property(p => p.Deposite)
                 .HasPrecision(18, 2);
 
+            modelBuilder.Entity<Advertisement>()
+                .Property(p => p.Area)
+                .HasPrecision(18, 2);
+
             base.OnModelCreating(modelBuilder);
         }
     }

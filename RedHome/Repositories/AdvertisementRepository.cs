@@ -29,5 +29,21 @@ namespace RedHome.Repositories
 
             throw new Exception("Advertisement not found.");
         }
+
+        public IEnumerable<string> GetUniqueCities()
+        {
+            return _context.Advertisements
+                    .Select(c => c.City)
+                    .Distinct()
+                    .ToList();
+        }
+
+        public IEnumerable<string> GetUniqueDevelopmentType()
+        {
+            return _context.Advertisements
+                    .Select(c => c.DevelopmentType)
+                    .Distinct()
+                    .ToList();
+        }
     }
 }

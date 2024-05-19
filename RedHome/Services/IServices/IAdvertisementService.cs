@@ -13,5 +13,7 @@ namespace RedHome.Services.IServices
         public IEnumerable<AdvertisementDto> Delete(int id);
         public int Count(AdvertisementCountSpecification specification);
         public IEnumerable<AdvertisementDto> List(AdvertisementSpecification specification);
+        public IEnumerable<string> GetUniqueCities();
+        public IEnumerable<string> GetUniqueDevelopmentType();
     }
 }

@@ -12,5 +12,7 @@ namespace RedHome.Repositories.IRepositories
         public void Delete(int advertisementId);
         public int Count(IBaseSpecification<Advertisement> specification);
         public IEnumerable<Advertisement> List(IBaseSpecification<Advertisement> specification);
+        public IEnumerable<string> GetUniqueCities();
+        public IEnumerable<string> GetUniqueDevelopmentType();
     }
 }
