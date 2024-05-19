@@ -180,5 +180,15 @@ namespace RedHome.Services
                 }).ToList()
             }).ToList();
         }
+
+        public IEnumerable<string> GetUniqueCities()
+        {
+            return _advertisementRepository.GetUniqueCities();
+        }
+
+        public IEnumerable<string> GetUniqueDevelopmentType()
+        {
+            return _advertisementRepository.GetUniqueDevelopmentType();
+        }
     }
 }
