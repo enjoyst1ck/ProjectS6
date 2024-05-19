@@ -1,4 +1,4 @@
-
+using RedHome.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RedHome.Database;
@@ -24,6 +24,8 @@ namespace RedHome
 
             ConfigureServices(builder.Services, builder.Configuration);
 
+            builder.Services.AddIdentityServices(builder.Configuration);
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -36,7 +38,8 @@ namespace RedHome
             app.UseHttpsRedirection();
 
             app.UseCors("CorsPolicy");
-
+            
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
@@ -68,11 +71,7 @@ namespace RedHome
             services.AddDbContext<ApiDbContext>(options => 
                 options.UseMySql(configuration.GetConnectionString("DefaultConnection"), serverVersion)
             );
-
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                    .AddEntityFrameworkStores<ApiDbContext>()
-                    .AddDefaultTokenProviders();
-
+            
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddScoped<IReviewRepository, ReviewRepository>();
