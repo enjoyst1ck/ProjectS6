@@ -12,17 +12,43 @@
             set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
         }
 
-        /*
-         miejsce na developmentTypeId itp...
-         */
-
         public string? Sort { get; set; }
-        private string? _search;
+        private string? _titleSearch;
+        private string? _developmentTypeSearch { get; set; }
+        private string? _citySearch { get; set; }
+        private string? _addressSearch { get; set; }
+        public decimal? MinPrice { get; set; }
+        public decimal? MaxPrice { get; set; }
+        public decimal? MinArea { get; set; }
+        public decimal? MaxArea { get; set; }
+        public decimal? MinRoomQuantity { get; set; }
+        public decimal? MaxRoomQuantity { get; set; }
+        public decimal? FloorQuantity { get; set; }
+        public decimal? Floor { get; set; }
+        public bool? IsForSell { get; set; }
 
-        public string? Search
+        public string? TitleSearch
         {
-            get => _search;
-            set => _search = value?.ToLower();
+            get => _titleSearch;
+            set => _titleSearch = value?.ToLower();
+        }
+
+        public string? DevelopmentTypeSearch
+        {
+            get => _developmentTypeSearch;
+            set => _developmentTypeSearch = value?.ToLower();
+        }
+
+        public string? CitySearch
+        {
+            get => _citySearch;
+            set => _citySearch = value?.ToLower();
+        }
+
+        public string? AddressSearch
+        {
+            get => _addressSearch;
+            set => _addressSearch = value?.ToLower();
         }
     }
 }
