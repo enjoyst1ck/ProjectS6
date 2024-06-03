@@ -1,5 +1,6 @@
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import UserAdvertisingPage from "./pages/UserAdvertisingPage";
 
 function App() {
   async function logAdvertisement() {
@@ -12,7 +13,7 @@ function App() {
   
   return (
     <>
-      <RegisterPage/>
+      <UserAdvertisingPage/>
     </>
   )
 }
