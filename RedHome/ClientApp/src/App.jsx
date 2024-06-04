@@ -1,4 +1,5 @@
 import TopSearchBar from './component/TopSearchBar'
+import TopBar from './component/TopBar'
 function App() {
   async function logAdvertisement() {
     const response = await fetch("http://localhost:5242/Advertisement");
@@ -10,7 +11,8 @@ function App() {
   
   return (
     <>
-     <TopSearchBar/>
+     <TopSearchBar></TopSearchBar>
+  
     </>
   )
 }
