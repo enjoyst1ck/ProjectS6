@@ -7,16 +7,14 @@ export default function UserSettings() {
     const { register, watch, handleSubmit } = useForm({});
     const [data, setData] = useState("");
     return (
-        <div className="mx-10">
+        <div className="mx-10 mt-16">
              <div className="h-64 bg-white mt-11 flex">
-                
                 <div className='h-60 w-60 relative'>
                     <Avatar className="rounded-2xl w-full" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=3280&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt='avatar'/>
                     <button className='absolute top-2 right-2 bg-red-600 hover:bg-red-700 h-10 w-10 rounded-full text-white'>+</button>
                 </div>
-
                  <form className='w-ful' onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}>
-                    <div className='grid grid-cols-2 gap-10 ml-4'>
+                    <div className='grid grid-cols-2 gap-6 ml-5'>
                         <div className="">
                             <label className='text-xl font-semibold text-black text-opacity-70'>Username:</label>
                             <input className='w-full border-red-600 border-2 py-1 px-2 h-10 rounded-xl border-opacity-50 focus:border-opacity-100 outline-none transition-all mb-6' type='text' {...register("username" , {required: false})} />
