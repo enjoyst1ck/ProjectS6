@@ -54,6 +54,7 @@ export default function MenuHomePage() {
                 </ul>
             </div>
             </nav>
+
             <div className='block'>
             <div className='h-[8vh] w-[100%] p-4 pt-12 flex items-center justify-between pl-24 pr-24'>      
                 <select className="py-1 px-2 w-40 h-7 bg-slate-800 text-white outline-none">
@@ -105,8 +106,7 @@ export default function MenuHomePage() {
                 </div>  
                 </div> 
                 </div>
-            </div>
-        <div className="w-100vh bg-amber-50 h-screen"></div>
+        </div>
     </div>
   )
 }
