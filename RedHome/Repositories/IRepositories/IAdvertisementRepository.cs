@@ -14,5 +14,9 @@ namespace RedHome.Repositories.IRepositories
         public IEnumerable<Advertisement> List(IBaseSpecification<Advertisement> specification);
         public IEnumerable<string> GetUniqueCities();
         public IEnumerable<string> GetUniqueDevelopmentType();
+        public IEnumerable<FavoriteAdvertisement> GetAllFavoriteAdvertisements(string userId);
+        public bool CheckLiked(int advertisementId, string? userId);
+        public bool AddToFavorite(FavoriteAdvertisement favoriteAdvertisement);
+        public bool DeleteFromFavorite(FavoriteAdvertisement favoriteAdvertisement);
     }
 }
