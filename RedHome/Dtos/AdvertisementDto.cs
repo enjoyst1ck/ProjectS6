@@ -17,6 +17,7 @@
         public string DevelopmentType { get; set; } = string.Empty;
         public decimal Deposite { get; set; }
         public bool IsForSell { get; set; }
+        public bool IsLiked { get; set; }
         public List<AttachmentDto> Attachments { get; set; }
     }
 }
