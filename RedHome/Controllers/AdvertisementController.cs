@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using RedHome.Database;
 using RedHome.Dtos;
 using RedHome.Helpers;
 using RedHome.Services.IServices;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RedHome.Controllers
 {
@@ -11,14 +13,16 @@ namespace RedHome.Controllers
     public class AdvertisementController : ControllerBase
     {
         private readonly IAdvertisementService _advertisementService;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public AdvertisementController(IAdvertisementService advertisementService)
+        public AdvertisementController(IAdvertisementService advertisementService, UserManager<IdentityUser> userManager)
         {
             _advertisementService = advertisementService;
+            _userManager = userManager;
         }
 
         [HttpGet]
-        public Pagination<AdvertisementDto> GetAll([FromQuery]AdvertisementParameters parameters)
+        public async Task<Pagination<AdvertisementDto>> GetAll([FromQuery] AdvertisementParameters parameters)
         {
 
             var specification = new AdvertisementSpecification(parameters);
@@ -27,27 +31,38 @@ namespace RedHome.Controllers
 
             var totalItems = _advertisementService.Count(specificationForCount);
 
-            var advertisementDto = _advertisementService.List(specification);
+            var loggedUser = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
+
+            var advertisementDto = _advertisementService.List(specification, loggedUser.Id);
 
             return new Pagination<AdvertisementDto>(parameters.PageIndex, parameters.PageSize, totalItems, advertisementDto);
         }
 
         [HttpGet("{id}")]
-        public AdvertisementDto GetById(int id)
+        public async Task<AdvertisementDto> GetById(int id)
         {
-            return _advertisementService.GetById(id);
+            var loggedUser = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
+
+            return _advertisementService.GetById(id, loggedUser.Id);
         }
 
-        [HttpPost]
-        public AdvertisementDto Insert(AdvertisementDto advertisementDto)
+        [Authorize]
+        [HttpPost("insert")]
+        public async Task<AdvertisementDto> Insert(AdvertisementDto advertisementDto)
         {
+            var loggedUser = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
+            advertisementDto.UserId = loggedUser.Id;
+
             return _advertisementService.Insert(advertisementDto);
         }
 
-        [HttpPut]
-        public AdvertisementDto Edit(AdvertisementDto advertisementDto)
+        [Authorize]
+        [HttpPut("edit")]
+        public async Task<AdvertisementDto> Edit(AdvertisementDto advertisementDto)
         {
-            return _advertisementService.Edit(advertisementDto);
+            var loggedUser = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
+
+            return _advertisementService.Edit(advertisementDto, loggedUser.Id);
         }
 
         [HttpDelete]
@@ -66,6 +81,24 @@ namespace RedHome.Controllers
         public IEnumerable<string> GetUniqueDevelopmentType()
         {
             return _advertisementService.GetUniqueDevelopmentType();
+        }
+
+        [Authorize]
+        [HttpPost("AddToFavorite")]
+        public async Task<bool> AddToFavorite(int advertisementId)
+        {
+            var loggedUser = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
+
+            return _advertisementService.AddToFavorite(advertisementId, loggedUser.Id);
+        }
+
+        [Authorize]
+        [HttpGet("GetAllFavoriteAdvertisements")]
+        public async Task<IEnumerable<FavoriteAdvertisementDto>> GetAllFavoriteAdvertisements()
+        {
+            var loggedUser = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
+
+            return _advertisementService.GetAllFavoriteAdvertisements(loggedUser.Id);
         }
     }
 }

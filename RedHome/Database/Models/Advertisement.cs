@@ -25,5 +25,6 @@ namespace RedHome.Database.Models
         public decimal Deposite { get; set; }
         public bool IsForSell { get; set; }
         public virtual List<Attachment> Attachments { get; set; } = new List<Attachment>();
+        public virtual List<FavoriteAdvertisement> LikedByUsers { get; set; } = new List<FavoriteAdvertisement>();
     }
 }
