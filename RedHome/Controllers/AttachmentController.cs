@@ -16,25 +16,46 @@ namespace RedHome.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<AttachmentDto> GetByAdvertisement(int id)
+        public ActionResult<IEnumerable<AttachmentDto>> GetByAdvertisement(int id)
         {
-            return _attachmentService.GetByAdvertisement(id);
+            try
+            {
+                return Ok(_attachmentService.GetByAdvertisement(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPost]
-        public IEnumerable<AttachmentDto> Insert(AttachmentDto attachmentDto)
+        public ActionResult<IEnumerable<AttachmentDto>> Insert(AttachmentDto attachmentDto)
         {
-            _attachmentService.Insert(attachmentDto);
+            try
+            {
+                _attachmentService.Insert(attachmentDto);
 
-            return _attachmentService.GetByAdvertisement(attachmentDto.AdvertisementId);
+                return Ok(_attachmentService.GetByAdvertisement(attachmentDto.AdvertisementId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            _attachmentService.Delete(id);
+            try
+            {
+                _attachmentService.Delete(id);
 
-            return Ok();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }
