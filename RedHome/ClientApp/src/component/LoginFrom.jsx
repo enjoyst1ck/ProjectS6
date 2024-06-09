@@ -1,6 +1,6 @@
-import { data } from 'autoprefixer';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 
 export default function LoginFrom() {
   const { register, handleSubmit } = useForm();
@@ -24,7 +24,7 @@ export default function LoginFrom() {
           <a href='#' className='text-sm font-semibold text-black text-opacity-50'>Forgot password? <span className='text-red-600 font-semibold text-opacity-75 underline'>Get them back</span></a>
 
           <input type="submit" value='Log in' className='mt-12 w-full bg-red-600 p-2 text-white text-xl font-bold rounded-xl hover:bg-red-700 transition-all cursor-pointer'/>
-          <a href='#' className='text-sm font-semibold text-black text-opacity-50'>You dont have an account yet? <span className='text-red-600 font-semibold text-opacity-75 underline'>Create account</span></a>
+          <Link to='/register' className='text-sm font-semibold text-black text-opacity-50'>You dont have an account yet? <span className='text-red-600 font-semibold text-opacity-75 underline'>Create account</span></Link>
         </form>
         {data}
       </div>
