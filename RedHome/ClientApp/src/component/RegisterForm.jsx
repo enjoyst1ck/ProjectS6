@@ -1,24 +1,25 @@
-import axios from 'axios';
-import React, { useRef, useState } from 'react'
+import React, { useRef, useContext, useEffect } from 'react'
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/authContext';
 
 export default function RegisterForm() {
   const { register, watch, handleSubmit } = useForm({});
-  const [data, setData] = useState("");
   const password = useRef({});
   password.current = watch("password", "");
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(localStorage.getItem("user") != null) {
+      console.log('Użytkownik zalogowany, przekierowanie do strony głównej');
+      navigate('/');
+    }
+  }, [navigate]);
   
   const onSubmit = async (formData) => {
-    console.log('Form data:', formData);
     try {
-      const response = await axios.post("http://localhost:7004/Account/register", {
-        "username": formData.username,
-        "email": formData.email,
-        "phoneNumber": formData.phoneNumber,
-        "password": formData.password
-      });
-      console.log('Registration successful:', response.data);
+      await userRegister(formData);
+      navigate('/');
     } catch (error) {
       console.error('Registration error:', error.response ? error.response.data : error.message);
     }

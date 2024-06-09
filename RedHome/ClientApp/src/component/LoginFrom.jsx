@@ -1,12 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/authContext';
 
 export default function LoginFrom() {
   const { register, handleSubmit } = useForm();
   const [data, setData] = useState("");
+  const navigate = useNavigate();
 
-  console.log(window.innerWidth);
+  useEffect(() => {
+    if(localStorage.getItem("user") != null) {
+      console.log('Użytkownik zalogowany, przekierowanie do strony głównej');
+      navigate('/');
+    }
+  }, [navigate]);
+
   return (
     <div className='w-[100%] xl:w-[40%] lg:w-[50%] sm:w-[100%] z-10 h-screen flex justify-center items-center'>
       <div className='w-[95%] xl:w-[65%] lg:w-[65%] sm:w-[65%] xl:p-0 lg:p-0 sm:p-5 p-5 bg-white rounded-2xl'>
@@ -23,7 +31,7 @@ export default function LoginFrom() {
             type='password' {...register("password", { required: true })} />
           <a href='#' className='text-sm font-semibold text-black text-opacity-50'>Forgot password? <span className='text-red-600 font-semibold text-opacity-75 underline'>Get them back</span></a>
 
-          <input type="submit" value='Log in' className='mt-12 w-full bg-red-600 p-2 text-white text-xl font-bold rounded-xl hover:bg-red-700 transition-all cursor-pointer'/>
+          <input type="submit" value='Log in' className='mt-12 w-full bg-red-600 p-2 text-white text-xl font-bold rounded-xl hover:bg-red-700 transition-all cursor-pointer' />
           <Link to='/register' className='text-sm font-semibold text-black text-opacity-50'>You dont have an account yet? <span className='text-red-600 font-semibold text-opacity-75 underline'>Create account</span></Link>
         </form>
         {data}
