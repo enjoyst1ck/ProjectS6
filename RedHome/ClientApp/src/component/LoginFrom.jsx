@@ -9,8 +9,8 @@ export default function LoginFrom() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(localStorage.getItem("user") != null) {
-      console.log('Użytkownik zalogowany, przekierowanie do strony głównej');
+    const user = JSON.parse(localStorage.getItem("user"));
+    if(user) {
       navigate('/');
     }
   }, [navigate]);

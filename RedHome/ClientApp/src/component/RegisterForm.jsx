@@ -7,11 +7,12 @@ export default function RegisterForm() {
   const { register, watch, handleSubmit } = useForm({});
   const password = useRef({});
   password.current = watch("password", "");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { userRegister } = useContext(AuthContext);
 
   useEffect(() => {
-    if(localStorage.getItem("user") != null) {
-      console.log('Użytkownik zalogowany, przekierowanie do strony głównej');
+    const user = JSON.parse(localStorage.getItem("user"));
+    if(user) {
       navigate('/');
     }
   }, [navigate]);
