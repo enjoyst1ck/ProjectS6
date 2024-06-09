@@ -8,8 +8,41 @@ import { useForm } from 'react-hook-form';
 
 export default function AddPage() {
    const { register, handleSubmit, formState: { errors } } = useForm();
-   const [data, setData] = useState("");
-   const onSubmit = data => console.log(data);
+   const [selectedFiles, setSelectedFiles] = useState([null, null, null, null, null]);
+
+   const handleFileChange = (event, index) => {
+      const file = event.target.files[0];
+      const extension = file.name.split('.').pop().toLowerCase();
+
+      if (extension === 'png' || extension === 'jpg' || extension === 'jpeg') {
+         const newSelectedFiles = [...selectedFiles];
+         newSelectedFiles[index] = file;
+         setSelectedFiles(newSelectedFiles);
+      } else {
+         alert('Please select a .png or .jpg/jpeg file.');
+      }
+   };
+
+
+   const onSubmit = data => {
+      console.log(
+         {
+            "price": data.price,
+            "title": data.title,
+            "description": data.description,
+            "city": data.city,
+            "address": data.address,
+            "area": data.area,
+            "roomQuantity": data.roomQuantity,
+            "floorQuantity": data.floorQuantity,
+            "floor": data.floor,
+            "developmentType": data.developmentType,
+            "deposite": data.deposite,
+            "isForSell": data.isForSell,
+            "attachments": selectedFiles
+          }
+      )
+   };
    console.log(errors);
 
    return (
@@ -19,7 +52,7 @@ export default function AddPage() {
                <span className='font-bold text-4xl'>Add advertisement</span>
             </div>
 
-            <form onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}>
+            <form onSubmit={handleSubmit((data) => onSubmit(data))}>
                <div className='flex flex-row justify-between mt-10'>
                   <div className='flex flex-col'>
                      <div className='text-2xl font-semibold mb-5'>
@@ -128,21 +161,24 @@ export default function AddPage() {
                      Select photos
                   </div>
                   <div className='w-full grid grid-cols-5 gap-4'>
-                     <div className='w-full h-[175px] rounded-2xl border-2 border-dashed cursor-pointer border-red-600 flex items-center justify-center'>
-                        <IoAdd size={64} color='#DC2626' />
-                     </div>
-                     <div className='w-full h-[175px] rounded-2xl border-2 border-dashed cursor-pointer border-red-600 flex items-center justify-center'>
-                        <IoAdd size={64} color='#DC2626' />
-                     </div>
-                     <div className='w-full h-[175px] rounded-2xl border-2 border-dashed cursor-pointer border-red-600 flex items-center justify-center'>
-                        <IoAdd size={64} color='#DC2626' />
-                     </div>
-                     <div className='w-full h-[175px] rounded-2xl border-2 border-dashed cursor-pointer border-red-600 flex items-center justify-center'>
-                        <IoAdd size={64} color='#DC2626' />
-                     </div>
-                     <div className='w-full h-[175px] rounded-2xl border-2 border-dashed cursor-pointer border-red-600 flex items-center justify-center'>
-                        <IoAdd size={64} color='#DC2626' />
-                     </div>
+                     {[...Array(5)].map((_, index) => (
+                        <div key={index} className='w-full h-[175px] rounded-2xl border-2 border-dashed cursor-pointer border-red-600 flex items-center justify-center'
+                           onClick={() => document.getElementById(`fileInput-${index}`).click()}>
+                           <input
+                              {...register("attachments")}
+                              type="file"
+                              id={`fileInput-${index}`}
+                              accept=".png,.jpg,.jpeg"
+                              style={{ display: 'none' }}
+                              onChange={(event) => handleFileChange(event, index)}
+                           />
+                           {selectedFiles[index] ? (
+                              <img src={URL.createObjectURL(selectedFiles[index])} alt={`Image ${index}`} className='rounded-2xl' style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                           ) : (
+                              <IoAdd size={64} color='#DC2626' />
+                           )}
+                        </div>
+                     ))}
                   </div>
                </div>
 
