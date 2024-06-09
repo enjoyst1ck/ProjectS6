@@ -2,7 +2,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import UserAdvertisingPage from "./pages/UserAdvertisingPage";
 import UserPanelTile from "./component/UserPanelTile";
-import TopBar from "./component/TopBarHelp";
+import TopBar from "./component/TopBarHelpToDelete";
 
 function App() {
   async function logAdvertisement() {
