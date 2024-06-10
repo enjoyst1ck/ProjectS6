@@ -8,7 +8,9 @@ export default function UserAdvertisingPage() {
     <div className='w-[75%] mx-auto'>
       <UserPanel/>
       <div >
-        <UserSettings></UserSettings>
+        <UserSettings> 
+          
+        </UserSettings>
       </div>
       <ListUserAdvertisng/>
     </div>
