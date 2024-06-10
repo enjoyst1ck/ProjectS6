@@ -9,6 +9,7 @@ namespace RedHome.Database
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<Advertisement> Advertisements { get; set; }
+        public DbSet<FavoriteAdvertisement> FavoriteAdvertisements { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -16,6 +17,8 @@ namespace RedHome.Database
             modelBuilder.Entity<Review>().HasKey(r => r.Id);
             modelBuilder.Entity<Attachment>().HasKey(a => a.Id);
             modelBuilder.Entity<Advertisement>().HasKey(a => a.Id);
+            modelBuilder.Entity<FavoriteAdvertisement>()
+                .HasKey(fa => new { fa.AdvertisementId, fa.UserId });
 
             modelBuilder.Entity<Advertisement>()
                .Property(p => p.Price)
@@ -23,6 +26,10 @@ namespace RedHome.Database
 
             modelBuilder.Entity<Advertisement>()
                 .Property(p => p.Deposite)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Advertisement>()
+                .Property(p => p.Area)
                 .HasPrecision(18, 2);
 
             base.OnModelCreating(modelBuilder);
