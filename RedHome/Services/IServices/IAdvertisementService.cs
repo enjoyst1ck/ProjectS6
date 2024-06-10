@@ -15,5 +15,6 @@ namespace RedHome.Services.IServices
         public IEnumerable<AdvertisementDto> List(AdvertisementSpecification specification);
         public IEnumerable<string> GetUniqueCities();
         public IEnumerable<string> GetUniqueDevelopmentType();
+        public IEnumerable<AdvertisementDto> GetByUserId(string userId);
     }
 }

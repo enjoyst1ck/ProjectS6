@@ -32,6 +32,12 @@ namespace RedHome.Controllers
             return new Pagination<AdvertisementDto>(parameters.PageIndex, parameters.PageSize, totalItems, advertisementDto);
         }
 
+        [HttpGet("getByUser/{userId}")]
+        public IEnumerable<AdvertisementDto> GetByUserId(string userId)
+        {
+            return _advertisementService.GetByUserId(userId);
+        }
+
         [HttpGet("{id}")]
         public AdvertisementDto GetById(int id)
         {

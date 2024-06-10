@@ -14,5 +14,6 @@ namespace RedHome.Repositories.IRepositories
         public IEnumerable<Advertisement> List(IBaseSpecification<Advertisement> specification);
         public IEnumerable<string> GetUniqueCities();
         public IEnumerable<string> GetUniqueDevelopmentType();
+        public IEnumerable<Advertisement> GetByUserId(string userId);
     }
 }
