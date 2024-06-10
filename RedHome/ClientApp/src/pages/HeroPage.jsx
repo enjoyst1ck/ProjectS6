@@ -1,23 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import MenuHomePage from '../component/MenuHomePage'
 import SearchBarHome from '../component/SearchBarHome'
 import PopularSearch from '../component/PopularSearch'
 
 export default function HeroPage() {
-  const [width, setWidth] = useState(window.innerWidth);
-
-  const windowHandler = () => {
-    setWidth(window.innerWidth);
-  }
-
-  useEffect(() => {
-    window.addEventListener("resize", windowHandler);
-    return () => { window.removeEventListener("resize", windowHandler) };
-  }, []);
   return (
     <>
       <MenuHomePage />
-      <p className='absolute bottom-0 left-0 z-50 text-2xl bg-white'>{width}</p>
 
       <div className="w-[100%] h-[95vh] p-3">
         <div className="h-full w-full object-contain rounded-3xl home-bg">

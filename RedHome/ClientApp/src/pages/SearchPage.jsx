@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import TopSearchBar from './../component/TopSearchBar'
+import SearchSection from './../component/SearchSection'
 
 export default function SearchPage() {
   return (
