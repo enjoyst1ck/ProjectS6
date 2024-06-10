@@ -5,3 +5,10 @@
 .test {
     border: 1px solid red;
 }
+
+.home-bg {
+    background-image: url('/src/assets/images/home-page-bg.jpg');
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: cover;
+}
