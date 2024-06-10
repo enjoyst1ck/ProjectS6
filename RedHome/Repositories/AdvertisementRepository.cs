@@ -19,11 +19,6 @@ namespace RedHome.Repositories
             return _context.Advertisements.Include(i => i.User).Include(i => i.Attachments).ToList();
         }
 
-        public IEnumerable<Advertisement> GetByUserId(string userId)
-        {
-            return _context.Advertisements.Include(i => i.User).Include(i => i.Attachments).Where(u => u.UserId == userId).ToList();
-        }
-
         public Advertisement GetById(int advertisementId)
         {
             Advertisement? advertisement = _context.Advertisements.Include(i => i.User).Include(i => i.Attachments).Where(w => w.Id == advertisementId).First();

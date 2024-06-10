@@ -49,7 +49,6 @@ namespace RedHome.Services
             }).ToList();
         }
 
-
         public AdvertisementDto GetById(int id, string? loggedUser)
         {
             var advertisement = _advertisementRepository.GetById(id);
