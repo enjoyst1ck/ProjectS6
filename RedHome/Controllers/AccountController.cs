@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RedHome.Database;
 using RedHome.Dtos;
+using RedHome.Helpers;
 using RedHome.Services.IServices;
 
 namespace RedHome.Controllers
@@ -28,106 +29,148 @@ namespace RedHome.Controllers
         [HttpGet("getuser")]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
-            var user = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
-
-            if (user == null)
+            try
             {
-                //ma byc ERROR - nie znaleziono uzytkownika
-                return null;
+                var user = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
+                
+                if (user == null)
+                {
+                    return NotFound(new ApiResponse(404));
+                }
+
+                return new UserDto
+                {
+                    UserId = user.Id,
+                    Username = user.UserName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    Token = _tokenService.CreateToken(user)
+                };
             }
-
-            return new UserDto
+            catch (Exception ex)
             {
-                Email = user.Email,
-                Token = _tokenService.CreateToken(user),
-                //DisplayName = user.DisplayName
-            };
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user = await _userManager.FindByEmailAsync(loginDto.Email);
-
-            if (user == null)
+            try
             {
-                return Unauthorized();
+                var user = await _userManager.FindByEmailAsync(loginDto.Email);
+
+                if (user == null)
+                {
+                    return NotFound(new ApiResponse(404));
+                }
+
+                var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, true);
+
+                if (!result.Succeeded)
+                {
+                    return Unauthorized(new ApiResponse(401));
+                }
+
+                return new UserDto
+                {
+                    UserId = user.Id,
+                    Username = user.UserName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    Token = _tokenService.CreateToken(user)
+                };
             }
-
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, true);
-
-            if (!result.Succeeded)
+            catch (Exception ex)
             {
-                return Unauthorized();
+                return StatusCode(500, ex.Message);
             }
-
-            return new UserDto
-            {
-                Email = user.Email,
-                Token = _tokenService.CreateToken(user),
-            };
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if (CheckEmailExistsAsync(registerDto.Email).Result.Value)
+            try
             {
-                return new BadRequestObjectResult("Email has been already used");
+                if (CheckEmailExistsAsync(registerDto.Email).Result.Value)
+                {
+                    return BadRequest("Email has been already used");
+                }
+
+                var user = new IdentityUser
+                {
+                    Email = registerDto.Email,
+                    UserName = registerDto.Username,
+                    PhoneNumber = registerDto.PhoneNumber
+                };
+
+                var result = await _userManager.CreateAsync(user, registerDto.Password);
+
+                if (!result.Succeeded)
+                {
+                    return BadRequest(new ApiResponse(400, "Invalid insert data"));
+                }
+
+                return new UserDto
+                {
+                    UserId = user.Id,
+                    Username = user.UserName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    Token = _tokenService.CreateToken(user)
+                };
             }
-
-            var user = new IdentityUser
+            catch (Exception ex)
             {
-                Email = registerDto.Email,
-                UserName = registerDto.Email
-                //pozostale pola usera
-            };
-
-            var result = await _userManager.CreateAsync(user, registerDto.Password);
-
-            if (!result.Succeeded)
-            {
-                return BadRequest(400);
+                return StatusCode(500, ex.Message);
             }
-
-            return new UserDto
-            {
-                Email = user.Email,
-                Token = _tokenService.CreateToken(user),
-            };
         }
 
         [HttpGet("emailexists")]
         public async Task<ActionResult<bool>> CheckEmailExistsAsync([FromQuery] string email)
         {
-            return await _userManager.FindByEmailAsync(email) != null;
+            try
+            {
+                return await _userManager.FindByEmailAsync(email) != null;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPut("changePassword")]
         public async Task<ActionResult<UserDto>> ChangePassword([FromBody] UserDto userDto, string currentPassword, string newPassword)
         {
-            IdentityUser user = await _userManager.FindByEmailAsync(userDto.Email);
+            try
+            {
+                IdentityUser user = await _userManager.FindByEmailAsync(userDto.Email);
             
-            if (user == null)
-            {
-                //ma byc ERROR - nie znaleziono uzytkownika
-                return null;
+                if (user == null)
+                {
+                    return NotFound(new ApiResponse(404));
+                }
+
+                var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+
+                if (!result.Succeeded)
+                {
+                    return BadRequest(new ApiResponse(400, "Invalid insert data"));
+                }
+
+                return new UserDto
+                {
+                    UserId = user.Id,
+                    Username = user.UserName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    Token = _tokenService.CreateToken(user)
+                };
             }
-
-            var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
-
-            if (!result.Succeeded)
+            catch (Exception ex)
             {
-                //ma byc ERROR - nie udało sie zmienic hasla
-                return null;  
+                return StatusCode(500, ex.Message);
             }
-
-            return new UserDto
-            {
-                Email = user.Email,
-                Token = _tokenService.CreateToken(user),
-            };
-
         }
     }
 }

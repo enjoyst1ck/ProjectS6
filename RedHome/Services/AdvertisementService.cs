@@ -9,8 +9,8 @@ namespace RedHome.Services
     public class AdvertisementService : IAdvertisementService
     {
         private readonly IAdvertisementRepository _advertisementRepository;
-        
-        public AdvertisementService(IAdvertisementRepository advertisementRepository, IAttachmentRepository attachmentRepository)
+
+        public AdvertisementService(IAdvertisementRepository advertisementRepository)
         {
             _advertisementRepository = advertisementRepository;
         }
@@ -49,36 +49,8 @@ namespace RedHome.Services
             }).ToList();
         }
 
-        public IEnumerable<AdvertisementDto> GetByUserId(string userId)
-        {
-            var advertisements = _advertisementRepository.GetByUserId(userId);
 
-            return advertisements.Select(s => new AdvertisementDto
-            {
-                Id = s.Id,
-                UserId = s.UserId,
-                UserEmail = s.User.Email ?? string.Empty,
-                Price = s.Price,
-                Title = s.Title,
-                Description = s.Description,
-                City = s.City,
-                Address = s.Address,
-                Area = s.Area,
-                RoomQuantity = s.RoomQuantity,
-                FloorQuantity = s.FloorQuantity,
-                Floor = s.Floor,
-                DevelopmentType = s.DevelopmentType,
-                Deposite = s.Deposite,
-                IsForSell = s.IsForSell,
-                Attachments = s.Attachments.Select(a => new AttachmentDto
-                {
-                    Id = a.Id,
-                    Title = a.Title,
-                    Image = a.Image,
-                }).ToList()
-            }).ToList();
-        }
-        public AdvertisementDto GetById(int id)
+        public AdvertisementDto GetById(int id, string? loggedUser)
         {
             var advertisement = _advertisementRepository.GetById(id);
 
@@ -99,6 +71,7 @@ namespace RedHome.Services
                 DevelopmentType = advertisement.DevelopmentType,
                 Deposite = advertisement.Deposite,
                 IsForSell = advertisement.IsForSell,
+                IsLiked = _advertisementRepository.CheckLiked(advertisement.Id, loggedUser),
                 Attachments = advertisement.Attachments.Select(a => new AttachmentDto
                 {
                     Id = a.Id,
@@ -137,13 +110,16 @@ namespace RedHome.Services
 
             _advertisementRepository.Insert(advertisement);
 
-            //tutaj wyciagnac z bazy danych advertisement!!!!!!!
-
-            return GetById(advertisement.Id);
+            return GetById(advertisement.Id, null);
         }
 
-        public AdvertisementDto Edit(AdvertisementDto advertisementDto)
+        public AdvertisementDto Edit(AdvertisementDto advertisementDto, string? loggedUser)
         {
+            if (string.IsNullOrEmpty(loggedUser) || advertisementDto.UserId != loggedUser)
+            {
+                return null;
+            }
+
             var advertisement = new Advertisement
             {
                 Id = advertisementDto.Id,
@@ -164,8 +140,7 @@ namespace RedHome.Services
 
             _advertisementRepository.Edit(advertisement);
 
-            //tutaj wyciagnac z bazy danych advertisement!!!!!!!
-            return GetById(advertisement.Id);
+            return GetById(advertisement.Id, loggedUser);
         }
 
         public IEnumerable<AdvertisementDto> Delete(int id)
@@ -180,10 +155,10 @@ namespace RedHome.Services
             return _advertisementRepository.Count(specification);
         }
 
-        public IEnumerable<AdvertisementDto> List(AdvertisementSpecification specification)
+        public IEnumerable<AdvertisementDto> List(AdvertisementSpecification specification, string? loggedUser)
         {
             var advertisements = _advertisementRepository.List(specification);
-            
+
             return advertisements.Select(s => new AdvertisementDto
             {
                 Id = s.Id,
@@ -201,6 +176,7 @@ namespace RedHome.Services
                 DevelopmentType = s.DevelopmentType,
                 Deposite = s.Deposite,
                 IsForSell = s.IsForSell,
+                IsLiked = _advertisementRepository.CheckLiked(s.Id, loggedUser),
                 Attachments = s.Attachments.Select(a => new AttachmentDto
                 {
                     Id = a.Id,
@@ -218,6 +194,51 @@ namespace RedHome.Services
         public IEnumerable<string> GetUniqueDevelopmentType()
         {
             return _advertisementRepository.GetUniqueDevelopmentType();
+        }
+
+        public IEnumerable<FavoriteAdvertisementDto> GetAllFavoriteAdvertisements(string userId)
+        {
+            var favoriteAdvertisement = _advertisementRepository.GetAllFavoriteAdvertisements(userId);
+
+            return favoriteAdvertisement.Select(s => new FavoriteAdvertisementDto
+            {
+                Advertisement = new AdvertisementDto
+                {
+                    Id = s.Advertisement.Id,
+                    UserId = s.Advertisement.UserId,
+                    UserEmail = s.Advertisement.User.Email ?? string.Empty,
+                    Price = s.Advertisement.Price,
+                    Title = s.Advertisement.Title,
+                    Description = s.Advertisement.Description,
+                    City = s.Advertisement.City,
+                    Address = s.Advertisement.Address,
+                    Area = s.Advertisement.Area,
+                    RoomQuantity = s.Advertisement.RoomQuantity,
+                    FloorQuantity = s.Advertisement.FloorQuantity,
+                    Floor = s.Advertisement.Floor,
+                    DevelopmentType = s.Advertisement.DevelopmentType,
+                    Deposite = s.Advertisement.Deposite,
+                    IsForSell = s.Advertisement.IsForSell,
+                    IsLiked = _advertisementRepository.CheckLiked(s.Advertisement.Id, userId),
+                    Attachments = s.Advertisement.Attachments.Select(a => new AttachmentDto
+                    {
+                        Id = a.Id,
+                        Title = a.Title,
+                        Image = a.Image,
+                    }).ToList()
+                }
+            }).ToList();
+        }
+
+        public bool AddToFavorite(int advertisementId, string userId)
+        {
+            FavoriteAdvertisement favoriteAdvertisement = new FavoriteAdvertisement
+            {
+                AdvertisementId = advertisementId,
+                UserId = userId
+            };
+
+            return _advertisementRepository.AddToFavorite(favoriteAdvertisement);
         }
     }
 }

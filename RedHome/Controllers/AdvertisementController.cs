@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using RedHome.Database;
 using RedHome.Dtos;
 using RedHome.Helpers;
 using RedHome.Services.IServices;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RedHome.Controllers
 {
@@ -11,25 +13,43 @@ namespace RedHome.Controllers
     public class AdvertisementController : ControllerBase
     {
         private readonly IAdvertisementService _advertisementService;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public AdvertisementController(IAdvertisementService advertisementService)
+        public AdvertisementController(IAdvertisementService advertisementService, UserManager<IdentityUser> userManager)
         {
             _advertisementService = advertisementService;
+            _userManager = userManager;
         }
 
         [HttpGet]
-        public Pagination<AdvertisementDto> GetAll([FromQuery]AdvertisementParameters parameters)
+        public async Task<ActionResult<Pagination<AdvertisementDto>>> GetAll([FromQuery] AdvertisementParameters parameters)
         {
+            try
+            {
+                var specification = new AdvertisementSpecification(parameters);
 
-            var specification = new AdvertisementSpecification(parameters);
+                var specificationForCount = new AdvertisementCountSpecification(parameters);
 
-            var specificationForCount = new AdvertisementCountSpecification(parameters);
+                var totalItems = _advertisementService.Count(specificationForCount);
 
-            var totalItems = _advertisementService.Count(specificationForCount);
+                var loggedUser = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
 
-            var advertisementDto = _advertisementService.List(specification);
+                if (loggedUser == null)
+                {
+                    var advertisementDto = _advertisementService.List(specification, null);
+                    return new Pagination<AdvertisementDto>(parameters.PageIndex, parameters.PageSize, totalItems, advertisementDto);
+                }
+                else
+                {
+                    var advertisementDto = _advertisementService.List(specification, loggedUser.Id);
+                    return new Pagination<AdvertisementDto>(parameters.PageIndex, parameters.PageSize, totalItems, advertisementDto);
+                }
 
-            return new Pagination<AdvertisementDto>(parameters.PageIndex, parameters.PageSize, totalItems, advertisementDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("getByUser/{userId}")]
@@ -39,39 +59,157 @@ namespace RedHome.Controllers
         }
 
         [HttpGet("{id}")]
-        public AdvertisementDto GetById(int id)
+        public async Task<ActionResult<AdvertisementDto>> GetById(int id)
         {
-            return _advertisementService.GetById(id);
+            try
+            {
+                var loggedUser = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
+
+                if (loggedUser == null)
+                {
+                    return _advertisementService.GetById(id, null);
+                }
+                else
+                {
+                    return _advertisementService.GetById(id, loggedUser.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
-        [HttpPost]
-        public AdvertisementDto Insert(AdvertisementDto advertisementDto)
+        [Authorize]
+        [HttpPost("insert")]
+        public async Task<ActionResult<AdvertisementDto>> Insert(AdvertisementDto advertisementDto)
         {
-            return _advertisementService.Insert(advertisementDto);
+            try
+            {
+                var loggedUser = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
+
+                if (loggedUser == null)
+                {
+                    return NotFound(new ApiResponse(404));
+                }
+
+                advertisementDto.UserId = loggedUser.Id;
+                return _advertisementService.Insert(advertisementDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
-        [HttpPut]
-        public AdvertisementDto Edit(AdvertisementDto advertisementDto)
+        [Authorize]
+        [HttpPut("edit")]
+        public async Task<ActionResult<AdvertisementDto>> Edit(AdvertisementDto advertisementDto)
         {
-            return _advertisementService.Edit(advertisementDto);
+            try
+            {
+                var loggedUser = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
+
+                if (loggedUser == null)
+                {
+                    return NotFound(new ApiResponse(404));
+                }
+
+                return _advertisementService.Edit(advertisementDto, loggedUser.Id);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
+        [Authorize]
         [HttpDelete]
-        public IEnumerable<AdvertisementDto> Delete(int id)
+        public async Task<ActionResult<IEnumerable<AdvertisementDto>>> Delete(int id)
         {
-            return _advertisementService.Delete(id);
+            try
+            {
+                var loggedUser = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
+
+                if (loggedUser == null)
+                {
+                    return NotFound(new ApiResponse(404));
+                }
+
+                return Ok(_advertisementService.Delete(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("city")]
-        public IEnumerable<string> GetUniqueCities()
+        public ActionResult<IEnumerable<string>> GetUniqueCities()
         {
-            return _advertisementService.GetUniqueCities();
+            try
+            {
+                return Ok(_advertisementService.GetUniqueCities());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("developmentType")]
-        public IEnumerable<string> GetUniqueDevelopmentType()
+        public ActionResult<IEnumerable<string>> GetUniqueDevelopmentType()
         {
-            return _advertisementService.GetUniqueDevelopmentType();
+            try
+            {
+                return Ok(_advertisementService.GetUniqueDevelopmentType());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPost("addToFavorite")]
+        public async Task<ActionResult<bool>> AddToFavorite(int advertisementId)
+        {
+            try
+            {
+                var loggedUser = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
+
+                if (loggedUser == null)
+                {
+                    return NotFound(new ApiResponse(404));
+                }
+
+                return _advertisementService.AddToFavorite(advertisementId, loggedUser.Id);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("getAllFavoriteAdvertisements")]
+        public async Task<ActionResult<IEnumerable<FavoriteAdvertisementDto>>> GetAllFavoriteAdvertisements()
+        {
+            try
+            {
+                var loggedUser = await _userManager.FindByEmailFromPrincipal(HttpContext.User);
+
+                if (loggedUser == null)
+                {
+                    return NotFound(new ApiResponse(404));
+                }
+
+                return Ok(_advertisementService.GetAllFavoriteAdvertisements(loggedUser.Id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }
