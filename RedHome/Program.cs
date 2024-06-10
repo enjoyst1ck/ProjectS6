@@ -89,7 +89,7 @@ namespace RedHome
             {
                 o.AddPolicy("CorsPolicy", p =>
                 {
-                    p.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173");
+                    p.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5174");
                 });
             });
         }
