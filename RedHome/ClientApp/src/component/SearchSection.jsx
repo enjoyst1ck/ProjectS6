@@ -5,26 +5,29 @@ import GridCard from './GridCard';
 import ListCard from './ListCard'
 
 export default function SearchSection() {
+  const [gridView, setGridView] = useState(false);
   const [data, setData] = useState([]);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
-  const [gridView, setGridView] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5242/Advertisement")
-      .then(async (res) => {
-        return res.json()
+    fetch("http://localhost:7004/Advertisement")
+      .then((res) => {
+        if (!res.ok) throw Error("Could not fetch");
+        return res.json();
       })
       .then((data) => {
-        setData(data);
+        setData(data.data);
         setIsPending(false);
         setError(null);
       })
       .catch((err) => {
         setIsPending(false);
         setError(err.message);
-      })
+      });
   }, []);
+
+  console.log(data)
 
   const handleView = (e) => {
     setGridView(e);
