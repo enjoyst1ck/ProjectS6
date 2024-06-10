@@ -5,11 +5,11 @@ using RedHome.Repositories.IRepositories;
 
 namespace RedHome.Repositories
 {
-    public class ReviewRepository : IReviewRepository
+    public class ReviewRepository : GenericRepository<Review>, IReviewRepository
     {
         private readonly ApiDbContext _context;
 
-        public ReviewRepository(ApiDbContext context)
+        public ReviewRepository(ApiDbContext context) : base(context)
         {
             _context = context;
         }
@@ -39,25 +39,6 @@ namespace RedHome.Repositories
                 .Include(t => t.UserTo)
                 .Where(w => w.UserIdBy == userId)
                 .ToList();
-        }
-
-        public void Insert(Review review)
-        {
-            _context.Reviews.Add(review);
-        }
-
-        public void Edit(Review review)
-        {
-            _context.Entry(review).State = EntityState.Modified;
-        }
-
-        public void Delete(int reviewId)
-        {
-            Review? review = _context.Reviews.Find(reviewId);
-            if (review != null)
-            {
-                _context.Remove(review);
-            }
         }
     }
 }

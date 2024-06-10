@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RedHome.Database;
 
@@ -11,9 +12,11 @@ using RedHome.Database;
 namespace RedHome.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240519190857_ChangeAreaVarType")]
+    partial class ChangeAreaVarType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -306,21 +309,6 @@ namespace RedHome.Migrations
                     b.ToTable("Attachments");
                 });
 
-            modelBuilder.Entity("RedHome.Database.Models.FavoriteAdvertisement", b =>
-                {
-                    b.Property<int>("AdvertisementId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("AdvertisementId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("FavoriteAdvertisements");
-                });
-
             modelBuilder.Entity("RedHome.Database.Models.Review", b =>
                 {
                     b.Property<int>("Id")
@@ -426,25 +414,6 @@ namespace RedHome.Migrations
                     b.Navigation("Advertisement");
                 });
 
-            modelBuilder.Entity("RedHome.Database.Models.FavoriteAdvertisement", b =>
-                {
-                    b.HasOne("RedHome.Database.Models.Advertisement", "Advertisement")
-                        .WithMany("LikedByUsers")
-                        .HasForeignKey("AdvertisementId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Advertisement");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("RedHome.Database.Models.Review", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UserBy")
@@ -467,8 +436,6 @@ namespace RedHome.Migrations
             modelBuilder.Entity("RedHome.Database.Models.Advertisement", b =>
                 {
                     b.Navigation("Attachments");
-
-                    b.Navigation("LikedByUsers");
                 });
 #pragma warning restore 612, 618
         }
