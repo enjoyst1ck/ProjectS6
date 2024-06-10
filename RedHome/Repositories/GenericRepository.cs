@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RedHome.Database;
 using RedHome.Database.Models;
+using RedHome.Helpers;
 using RedHome.Repositories.IRepositories;
 
 namespace RedHome.Repositories
@@ -54,6 +55,20 @@ namespace RedHome.Repositories
             _context.Set<M>().Remove(obj);
 
             _context.SaveChanges();
+        }
+
+        public int Count(IBaseSpecification<M> specification)
+        {
+            return ApplySpecification(specification).Count();
+        }
+        public IEnumerable<M> List(IBaseSpecification<M> specification)
+        {
+            return ApplySpecification(specification).ToList();
+        }
+
+        private IQueryable<M> ApplySpecification(IBaseSpecification<M> specification)
+        {
+            return SpecificationEvaluator<M>.GetQuery(_context.Set<M>().AsQueryable(), specification);
         }
     }
 }
