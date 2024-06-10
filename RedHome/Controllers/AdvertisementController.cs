@@ -52,6 +52,12 @@ namespace RedHome.Controllers
             }
         }
 
+        [HttpGet("getByUser/{userId}")]
+        public IEnumerable<AdvertisementDto> GetByUserId(string userId)
+        {
+            return _advertisementService.GetByUserId(userId);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<AdvertisementDto>> GetById(int id)
         {
