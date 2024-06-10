@@ -27,7 +27,6 @@ export default function SearchSection() {
       });
   }, []);
 
-  console.log(data)
 
   const handleView = (e) => {
     setGridView(e);
