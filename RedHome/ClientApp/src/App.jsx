@@ -29,10 +29,22 @@ function App() {
       path: '/search/advertising/:id',
       element: <AdvertisingPage/>
     },
-    // {
-    //   path: '/user-panel',
-    //   element: <UserAdvertisingPage/>
-    // },
+    {
+      path: '/user-panel/all-added',
+      element: <UserAdvertisingPage/>
+    },
+    {
+      path: '/user-panel/all-liked',
+      element: <UserAdvertisingPage/>
+    },
+    {
+      path: '/user-panel/settings',
+      element: <UserAdvertisingPage/>
+    },
+    {
+      path: '/add-advertisement',
+      element: <div>dodanie</div>
+    },
   ]); 
   
   return (
