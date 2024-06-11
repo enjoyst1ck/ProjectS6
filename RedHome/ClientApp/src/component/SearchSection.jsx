@@ -70,6 +70,7 @@ export default function SearchSection() {
           (<div className='grid grid-cols-1 gap-4'>
             {data.map((item, index) => (<ListCard item={item} key={index} />))}
           </div>)}
+          {data.length === 0 && <span className='text-center mt-20 text-2xl font-semibold'>Apparently there are no announcements yet</span>}
       </div>
 
     </div>

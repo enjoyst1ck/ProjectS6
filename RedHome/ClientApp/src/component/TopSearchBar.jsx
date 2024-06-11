@@ -54,8 +54,8 @@ export default function MenuHomePage() {
           </select>
           <select className="px-4 py-1 rounded-xl text-xl bg-slate-800 text-white outline-none text-start">
             <option className="text-lg" disabled selected hidden>Building type</option>
-            <option className="text-lg"></option>
-            <option className="text-lg"></option>
+            <option className="text-lg">House</option>
+            <option className="text-lg">Apartament</option>
           </select>
           <select className="px-4 py-1 rounded-xl text-xl bg-slate-800 text-white outline-none text-start">
             <option className="text-lg" disabled selected hidden>More filters</option>
