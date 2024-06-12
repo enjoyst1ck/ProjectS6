@@ -29,6 +29,10 @@ namespace RedHome.Repositories
 
             throw new Exception("Advertisement not found.");
         }
+        public IEnumerable<Advertisement> GetByUserId(string userId)
+        {
+            return _context.Advertisements.Include(i => i.User).Include(i => i.Attachments).Where(u => u.UserId == userId).ToList();
+        }
 
         public IEnumerable<string> GetUniqueCities()
         {

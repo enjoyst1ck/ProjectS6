@@ -20,7 +20,7 @@ namespace RedHome.Controllers
             _advertisementService = advertisementService;
             _userManager = userManager;
         }
-
+      
         [HttpGet]
         public async Task<ActionResult<Pagination<AdvertisementDto>>> GetAll([FromQuery] AdvertisementParameters parameters)
         {
@@ -67,6 +67,19 @@ namespace RedHome.Controllers
                 {
                     return _advertisementService.GetById(id, loggedUser.Id);
                 }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetByUserId(string userId)
+        {
+            try
+            {
+                return Ok(_advertisementService.GetByUserId(userId));
             }
             catch (Exception ex)
             {

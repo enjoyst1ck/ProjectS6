@@ -7,6 +7,7 @@ namespace RedHome.Repositories.IRepositories
     {
         public IEnumerable<Advertisement> GetAll();
         public Advertisement GetById(int advertisementId);
+        public IEnumerable<Advertisement> GetByUserId(string userId);
         public void Insert(Advertisement advertisement);
         public void Edit(Advertisement advertisement);
         public void Delete(int advertisementId);
@@ -17,6 +18,7 @@ namespace RedHome.Repositories.IRepositories
         public IEnumerable<FavoriteAdvertisement> GetAllFavoriteAdvertisements(string userId);
         public bool CheckLiked(int advertisementId, string? userId);
         public bool AddToFavorite(FavoriteAdvertisement favoriteAdvertisement);
-        public bool DeleteFromFavorite(FavoriteAdvertisement favoriteAdvertisement);
+        public bool DeleteFromFavorite(FavoriteAdvertisement favoriteAdvertisement); 
+
     }
 }

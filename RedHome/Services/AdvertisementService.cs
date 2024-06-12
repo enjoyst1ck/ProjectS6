@@ -84,6 +84,36 @@ namespace RedHome.Services
             };
         }
 
+        public IEnumerable<AdvertisementDto> GetByUserId(string userId)
+        {
+            var advertisements = _advertisementRepository.GetByUserId(userId);
+
+            return advertisements.Select(s => new AdvertisementDto
+            {
+                Id = s.Id,
+                UserId = s.UserId,
+                UserEmail = s.User.Email ?? string.Empty,
+                Price = s.Price,
+                Title = s.Title,
+                Description = s.Description,
+                City = s.City,
+                Address = s.Address,
+                Area = s.Area,
+                RoomQuantity = s.RoomQuantity,
+                FloorQuantity = s.FloorQuantity,
+                Floor = s.Floor,
+                DevelopmentType = s.DevelopmentType,
+                Deposite = s.Deposite,
+                IsForSell = s.IsForSell,
+                Attachments = s.Attachments.Select(a => new AttachmentDto
+                {
+                    Id = a.Id,
+                    Title = a.Title,
+                    Image = a.Image,
+                }).ToList()
+            }).ToList();
+        }
+
         public AdvertisementDto Insert(AdvertisementDto advertisementDto)
         {
             var advertisement = new Advertisement

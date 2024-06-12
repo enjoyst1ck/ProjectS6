@@ -6,7 +6,8 @@ namespace RedHome.Services.IServices
     public interface IAdvertisementService
     {
         public IEnumerable<AdvertisementDto> GetAll();
-        public AdvertisementDto GetById(int id, string? loggedUser);
+        public AdvertisementDto GetById(int id, string? loggedUser); 
+        public IEnumerable<AdvertisementDto> GetByUserId(string userId);
         public AdvertisementDto Insert(AdvertisementDto advertisementDto);
         public AdvertisementDto Edit(AdvertisementDto advertisementDto, string? loggedUser);
         public IEnumerable<AdvertisementDto> Delete(int id);
