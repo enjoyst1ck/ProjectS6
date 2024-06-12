@@ -45,6 +45,10 @@ function App() {
       path: '/add-advertisement',
       element: <div>dodanie</div>
     },
+    {
+      path: '/edit-advertisement/:id',
+      element: <div>Edycja</div>
+    }
   ]); 
   
   return (
