@@ -5,6 +5,7 @@ import RegisterPage from "./pages/RegisterPage";
 import SearchPage from "./pages/SearchPage";
 import AdvertisingPage from './pages/AdvertisingPage';
 import UserAdvertisingPage from './pages/UserAdvertisingPage';
+import AddPage from './pages/AddPage';
 
 
 function App() {
@@ -42,11 +43,11 @@ function App() {
       element: <UserAdvertisingPage/>
     },
     {
-      path: '/add-advertisement',
-      element: <div>dodanie</div>
+      path: '/user-panel/add-advertisement',
+      element: <AddPage/>
     },
     {
-      path: '/edit-advertisement/:id',
+      path: '/user-panel/edit-advertisement/:id',
       element: <div>Edycja</div>
     }
   ]); 

@@ -25,7 +25,7 @@ export default function MenuUserPanel() {
       icon: <IoIosAdd size={48} color='#BE3144' />,
       content: "Add advertisement",
       selected: currSite === 'add-advertisement' ? true : false,
-      href: "/add-advertisement"
+      href: "/user-panel/add-advertisement"
     }, {
       icon: <LuSettings size={48} color='#BE3144' />,
       content: "Your account",
