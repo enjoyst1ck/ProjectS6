@@ -8,8 +8,6 @@ import { AuthContext } from '../context/authContext';
 import ModalChangePassword from './ModalChangePassword';
 import RatingReview from './RatingReview';
 
-import { IoStar } from "react-icons/io5";
-import { IoStarOutline } from "react-icons/io5";
 
 
 
@@ -17,10 +15,11 @@ export default function ForeignUserRating() {
   const { register, watch, handleSubmit } = useForm({});
   const [data, setData] = useState("");
   const [openModal, setOpenModal] = useState(false);
-
   const { currentUser } = useContext(AuthContext);
 
-  const [rating, setRating] = useState(0)
+  const [reviewsQuantity] = useState(142);
+  const [rating, setRating] = useState(0); {/* uzywane do wystawiania ocen */}
+  const [avgRating] = useState(3); {/* Average rating usera - wyliczyc na podstawie ilosci ocen i wysokosci ocen - zaokraglac (nie ma polowek)*/}
 
 
   return (
@@ -46,16 +45,20 @@ export default function ForeignUserRating() {
             <div className='mt-7'>
                 <div className="">
                     <label className='text-xl font-semibold block text-center text-black text-opacity-70 '>Number of reviews:</label>
-                    <div className='text-xl w-[100%] mx-auto font-medium text-center text-black text-opacity-70 mt-1'>12</div>
+                    <div className='text-xl w-[100%] mx-auto font-medium text-center text-black text-opacity-70 mt-1'>{reviewsQuantity}</div>
                 </div>
                 <div className="mt-9">
                     <label className='text-xl font-semibold mt-4 block text-center text-black text-opacity-70'>Average rating:</label>
-                    <div className='text-xl flex justify-center opacity-70 mt-1'><RatingReview rating={rating} setRating={setRating}/></div>
+                    <div className='text-xl flex justify-center opacity-70 mt-1'><RatingReview rating={avgRating}/></div>
                 </div>
             </div>
-
+            <label>Info o wybranej ilosci gwiazdek: </label>{rating}
+            {/*<RatingReview rating={rating} setRating={setRating}/> */}
           </div>
         </div>
+      </div>
+      <div className='w-[75%] mx-auto'>
+        <div className="bg-black h-1 w-full rounded-3xl opacity-50"></div>
       </div>
     </div>
 
