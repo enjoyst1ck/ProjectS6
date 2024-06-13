@@ -9,7 +9,7 @@ export default function MenuHomePage() {
     <div>
       <div className='bg-white drop-shadow-xl'>
         <TopMenu/>
-        <div className='grid grid-cols-6 mt-5 p-3 w-full gap-10'>
+        <div className='grid grid-cols-5 mt-5 p-3 w-full gap-10'>
           <select className="px-4 py-1 rounded-xl text-xl bg-slate-800 text-white outline-none text-start">
 
             <option className="text-lg" disabled selected hidden>Buy</option>
