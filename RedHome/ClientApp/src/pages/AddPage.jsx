@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { MdOutlineSell } from "react-icons/md";
 import { CiCalendar } from "react-icons/ci";
 import { IoHomeOutline } from "react-icons/io5";
@@ -9,12 +9,18 @@ import MenuUserPanel from '../component/MenuUserPanel';
 import { AuthContext } from '../context/authContext';
 import axios from 'axios';
 import TopMenu from '../component/TopMenu';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function AddPage() {
   const { register, handleSubmit, formState: { errors, isValid } } = useForm();
   const [selectedFiles, setSelectedFiles] = useState([]);
   const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    if(!currentUser) return navigate('/login')
+  },[]);
 
   const handleFileChange = (event, index) => {
     const file = event.target.files[0];

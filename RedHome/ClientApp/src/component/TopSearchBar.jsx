@@ -1,36 +1,14 @@
 import React from 'react';
 import { IoIosSearch } from "react-icons/io";
 import { GrPowerReset } from "react-icons/gr";
-import { Link } from 'react-router-dom';
-import { RxAvatar } from "react-icons/rx";
 import TopMenu from './TopMenu';
 
 
 export default function MenuHomePage() {
-  const centerLinks = [
-    {
-      name: "Advertisements",
-      href: "#"
-    },
-    {
-      name: "Liked",
-      href: "#"
-    }
-  ];
-
-  const rigthLinks = [
-    {
-      name: "Add advertisement",
-      href: "#"
-    },
-  ];
-
-  return (
+    return (
     <div>
       <div className='bg-white drop-shadow-xl'>
         <TopMenu/>
-
-
         <div className='grid grid-cols-6 mt-5 p-3 w-full gap-10'>
           <select className="px-4 py-1 rounded-xl text-xl bg-slate-800 text-white outline-none text-start">
             <option className="text-lg" disabled selected hidden>Buy</option>
