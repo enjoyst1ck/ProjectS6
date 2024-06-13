@@ -12,7 +12,7 @@ import axios from 'axios';
 
 export default function AddPage() {
   const { register, handleSubmit, formState: { errors, isValid } } = useForm();
-  const [selectedFiles, setSelectedFiles] = useState([null, null, null, null, null]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const { currentUser } = useContext(AuthContext);
 
   const handleFileChange = (event, index) => {
@@ -20,21 +20,28 @@ export default function AddPage() {
     const extension = file.name.split('.').pop().toLowerCase();
 
     if (extension === 'png' || extension === 'jpg' || extension === 'jpeg') {
-      const newSelectedFiles = [...selectedFiles];
-      newSelectedFiles[index] = file;
-      setSelectedFiles(newSelectedFiles);
-      console.log(newSelectedFiles)
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = async () => {
+        const base64String = reader.result.split(',')[1]
+        console.log(base64String)
+        await setSelectedFiles(prevData => {
+          const newData = [...prevData];
+          newData[index] = {image: base64String};
+          return newData;
+        });
+      };
     } else {
       alert('Please select a .png or .jpg/jpeg file.');
     }
   };
 
-  const onSubmit = async(data) => {
+
+  const onSubmit = async (data) => {
     if (!isValid) {
       return;
     }
 
-    const selectedImg = selectedFiles.filter(item => item !== null)
     const dataToSend = {
       userId: currentUser.userId,
       userEmail: currentUser.email,
@@ -50,9 +57,8 @@ export default function AddPage() {
       developmentType: data.developmentType,
       deposite: 0,
       isForSell: data.isForSell === 'true' ? true : false,
-      attachments: selectedImg
+      attachments: selectedFiles
     };
-    console.log(dataToSend)
 
     try {
       const res = await axios.post('http://localhost:7004/Advertisement/insert', dataToSend, {
@@ -61,7 +67,7 @@ export default function AddPage() {
         }
       });
       console.log(res);
-    } catch(err) {
+    } catch (err) {
       if (err.response) {
         console.log('Error response data:', err.response.data);
         console.log('Error response status:', err.response.status);
@@ -201,8 +207,11 @@ export default function AddPage() {
             </div>
             <div className='w-full grid grid-cols-5 gap-4'>
               {[...Array(5)].map((_, index) => (
-                <div key={index} className='w-full h-[175px] rounded-2xl border-2 border-dashed cursor-pointer border-red-600 flex items-center justify-center'
-                  onClick={() => document.getElementById(`fileInput-${index}`).click()}>
+                <div
+                  key={index}
+                  className='w-full h-[175px] rounded-2xl border-2 border-dashed cursor-pointer border-red-600 flex items-center justify-center'
+                  onClick={() => document.getElementById(`fileInput-${index}`).click()}
+                >
                   <input
                     {...register("attachments")}
                     type="file"
@@ -212,12 +221,19 @@ export default function AddPage() {
                     onChange={(event) => handleFileChange(event, index)}
                   />
                   {selectedFiles[index] ? (
-                    <img src={URL.createObjectURL(selectedFiles[index])} alt={`Image ${index}`} className='rounded-2xl' style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img
+                      src={`data:image/jpeg;base64,${selectedFiles[index].image}`} // Re-add the prefix when using the base64 string
+                      alt={`Image ${index}`}
+                      className='rounded-2xl'
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
                   ) : (
                     <IoAdd size={64} color='#DC2626' />
                   )}
                 </div>
               ))}
+
+
             </div>
           </div>
           <div className='w-full mt-10 flex flex-col justify-center items-center'>
