@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import MenuUserPanel from '../component/MenuUserPanel';
 import { AuthContext } from '../context/authContext';
 import axios from 'axios';
+import TopMenu from '../component/TopMenu';
 
 
 export default function AddPage() {
@@ -81,6 +82,10 @@ export default function AddPage() {
   };
 
   return (
+    <>
+    <div className='bg-white drop-shadow-xl pb-4'>
+        <TopMenu/>
+      </div>
     <div className='w-[75%] mx-auto flex flex-col mb-20'>
       <MenuUserPanel />
 
@@ -242,5 +247,6 @@ export default function AddPage() {
         </form>
       </div>
     </div>
+    </>
   );
 }
