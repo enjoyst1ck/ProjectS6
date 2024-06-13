@@ -1,46 +1,17 @@
 import React from 'react';
 import { IoIosSearch } from "react-icons/io";
 import { GrPowerReset } from "react-icons/gr";
-import { Link } from 'react-router-dom';
-import { RxAvatar } from "react-icons/rx";
 import TopMenu from './TopMenu';
 
 
 export default function MenuHomePage() {
-  const centerLinks = [
-    {
-      name: "Advertisements",
-      href: "#"
-    },
-    {
-      name: "Liked",
-      href: "#"
-    }
-  ];
-
-  const rigthLinks = [
-    {
-      name: "Add advertisement",
-      href: "#"
-    },
-  ];
-
-  return (
+    return (
     <div>
       <div className='bg-white drop-shadow-xl'>
         <TopMenu/>
+        <div className='grid grid-cols-6 mt-5 p-3 w-full gap-10'>
+          <select className="px-4 py-1 rounded-xl text-xl bg-slate-800 text-white outline-none text-start">
 
-          {/*    <div className="flex gap-2">
-            <label className='absolute top-14 text-sm'>Price range</label>
-            <button className="w-[100%] text-center py-1 rounded-lg text-lg bg-slate-800 text-white outline-none" type='text'>1</button>
-            <button className="w-[100%] text-center py-1 rounded-lg text-lg bg-slate-800 text-white outline-none" type='text'>2</button>
-            <button className="w-[100%] text-center py-1 rounded-lg text-lg bg-slate-800 text-white outline-none" type='text'>3</button>
-            <button className="w-[100%] text-center py-1 rounded-lg text-lg bg-slate-800 text-white outline-none" type='text'>4</button>
-            <button className="w-[100%] text-center py-1 rounded-lg text-lg bg-slate-800 text-white outline-none" type='text'>5</button>
-            <button className="w-[100%] text-center py-1 rounded-lg text-lg bg-slate-800 text-white outline-none" type='text'>6+</button>
-          </div>*/}
-        <div className='grid grid-cols-5 mt-5 p-3 w-full gap-4'>
-          <select className="px-4 py-1 ounded-xl text-xl bg-slate-800 text-white outline-none text-start">
             <option className="text-lg" disabled selected hidden>Buy</option>
             <option className="text-lg">Buy</option>
             <option className="text-lg">Rent</option>

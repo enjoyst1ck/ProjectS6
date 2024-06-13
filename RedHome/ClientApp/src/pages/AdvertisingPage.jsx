@@ -38,7 +38,7 @@ export default function AdvertisingPage() {
       <div className='w-[75%] mx-auto p-2 m-10'>
         
         {data !== null ? (<div className='w-full'>
-          <SliderAdvertising images={data.attachments}/>
+          <SliderAdvertising images={data.attachments} isLiked={data.isLiked}/>
 
           <InfoAdvertising area={data.area} rooms={data.roomQuantity} floor={data.floor} developmentType={data.developmentType} floorQuantity={data.floorQuantity} />
 

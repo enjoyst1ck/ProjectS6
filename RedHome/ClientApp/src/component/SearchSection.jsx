@@ -1,31 +1,45 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CiGrid2H } from "react-icons/ci"
 import { IoGridOutline } from "react-icons/io5";
 import GridCard from './GridCard';
 import ListCard from './ListCard'
+import axios from 'axios';
+import { AuthContext } from '../context/authContext';
 
 export default function SearchSection() {
   const [gridView, setGridView] = useState(false);
   const [data, setData] = useState([]);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
+  const { currentUser } = useContext(AuthContext)
 
   useEffect(() => {
-    fetch("http://localhost:7004/Advertisement")
-      .then((res) => {
-        if (!res.ok) throw Error("Could not fetch");
-        return res.json();
-      })
-      .then((data) => {
-        setData(data.data);
-        setIsPending(false);
-        setError(null);
-      })
-      .catch((err) => {
+    const fetchData = async () => {
+      try {
+        if(currentUser != null) {
+          const res = await axios.get("http://localhost:7004/Advertisement", {
+            headers: {
+              'Authorization': `Bearer ${currentUser.token}`
+            }
+          });  
+          setData(res.data.data);
+          setIsPending(false);
+          setError(null);
+        } else {
+          const res = await axios.get("http://localhost:7004/Advertisement");          
+          setData(res.data.data);
+          setIsPending(false);
+          setError(null);
+        }
+      } catch (err) {
         setIsPending(false);
         setError(err.message);
-      });
-  }, []);
+      }
+    };
+  
+    fetchData();
+  }, [currentUser]);
+  
 
 
   const handleView = (e) => {

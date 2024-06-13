@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import imagePlaceholder from "./../assets/imageplaceholder.png"
 
-export default function SliderAdvertising({ images }) {
+export default function SliderAdvertising({ images, isLiked }) {
   const [currImg, setCurrImg] = useState(0);
 
   const handleChangeImg = (index) => {
@@ -12,7 +12,8 @@ export default function SliderAdvertising({ images }) {
       <div className='w-full h-[723px] bg-black rounded-2xl relative'>
         {images.length === 0 && <img alt='img' className='w-full h-full rounded-2xl object-cover' src={imagePlaceholder} />}
         {images.length > 0 && <img alt='img' className='w-full h-full rounded-2xl' src={`data:image/jpg;base64, ${images[currImg].image}`} />}
-        <div className='bg-white rounded-full size-12 absolute right-4 top-4'>
+        <div className='bg-white rounded-full size-12 absolute right-4 top-4 flex justify-center items-center'>
+          
         </div>
       </div>
       <div className='w-full grid grid-cols-6 mt-3 gap-3'>
