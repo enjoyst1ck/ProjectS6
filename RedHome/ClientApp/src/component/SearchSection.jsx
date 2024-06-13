@@ -5,26 +5,28 @@ import GridCard from './GridCard';
 import ListCard from './ListCard'
 
 export default function SearchSection() {
+  const [gridView, setGridView] = useState(false);
   const [data, setData] = useState([]);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
-  const [gridView, setGridView] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5242/Advertisement")
-      .then(async (res) => {
-        return res.json()
+    fetch("http://localhost:7004/Advertisement")
+      .then((res) => {
+        if (!res.ok) throw Error("Could not fetch");
+        return res.json();
       })
       .then((data) => {
-        setData(data);
+        setData(data.data);
         setIsPending(false);
         setError(null);
       })
       .catch((err) => {
         setIsPending(false);
         setError(err.message);
-      })
+      });
   }, []);
+
 
   const handleView = (e) => {
     setGridView(e);
@@ -68,6 +70,7 @@ export default function SearchSection() {
           (<div className='grid grid-cols-1 gap-4'>
             {data.map((item, index) => (<ListCard item={item} key={index} />))}
           </div>)}
+          {data.length === 0 && <span className='text-center mt-20 text-2xl font-semibold'>Apparently there are no announcements yet</span>}
       </div>
 
     </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function DeveloperInfoAdvertising() {
+export default function DeveloperInfoAdvertising({ userEmail }) {
   return (
     <div className='w-[25%]'>
       <div className='p-4 w-full h-full border-black border-opacity-50 border-2 rounded-2xl'>

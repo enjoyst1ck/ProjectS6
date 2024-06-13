@@ -1,12 +1,12 @@
 import React from 'react'
-import MenuHomePage from '../component/MenuHomePage'
 import SearchBarHome from '../component/SearchBarHome'
 import PopularSearch from '../component/PopularSearch'
+import TopMenu from '../component/TopMenu'
 
 export default function HeroPage() {
   return (
     <>
-      <MenuHomePage />
+      <TopMenu />
 
       <div className="w-[100%] h-[95vh] p-3">
         <div className="h-full w-full object-contain rounded-3xl home-bg">
