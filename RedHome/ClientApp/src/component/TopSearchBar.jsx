@@ -11,30 +11,26 @@ export default function MenuHomePage() {
         <TopMenu/>
         <div className='grid grid-cols-6 mt-5 p-3 w-full gap-10'>
           <select className="px-4 py-1 rounded-xl text-xl bg-slate-800 text-white outline-none text-start">
+
             <option className="text-lg" disabled selected hidden>Buy</option>
             <option className="text-lg">Buy</option>
             <option className="text-lg">Rent</option>
           </select>
-          <select className="px-4 py-1 rounded-xl text-xl bg-slate-800 text-white outline-none text-start">
-            <option className="text-lg" disabled selected hidden>Price</option>
-            <option className="text-lg"></option>
-            <option className="text-lg"></option>
-          </select>
-          <select className="px-4 py-1 rounded-xl text-xl bg-slate-800 text-white outline-none text-start">
-            <option className="text-lg" disabled selected hidden>No. of rooms</option>
-            <option className="text-lg"></option>
-            <option className="text-lg"></option>
-          </select>
-          <select className="px-4 py-1 rounded-xl text-xl bg-slate-800 text-white outline-none text-start">
-            <option className="text-lg" disabled selected hidden>Square footage</option>
-            <option className="text-lg"></option>
-            <option className="text-lg"></option>
-          </select>
+          <div className="flex gap-2">
+            <label className='absolute top-14 text-sm'>Price range</label>
+            <input className="w-[50%] px-4 py-1 rounded-lg text-lg bg-slate-800 text-white outline-none text-start" placeholder='From' type='text'></input>
+            <input className="w-[50%] px-4 py-1 rounded-lg text-lg bg-slate-800 text-white outline-none text-start" placeholder='To' type='text'></input>
+          </div>
           <select className="px-4 py-1 rounded-xl text-xl bg-slate-800 text-white outline-none text-start">
             <option className="text-lg" disabled selected hidden>Building type</option>
             <option className="text-lg">House</option>
             <option className="text-lg">Apartament</option>
           </select>
+          <div className="flex gap-2">
+            <label className='absolute top-14 text-sm'>Square footage</label>
+            <input className="w-[50%] px-4 py-1 rounded-lg text-lg bg-slate-800 text-white outline-none text-start" placeholder='From' type='text'></input>
+            <input className="w-[50%] px-4 py-1 rounded-lg text-lg bg-slate-800 text-white outline-none text-start" placeholder='To' type='text'></input>
+          </div>
           <select className="px-4 py-1 rounded-xl text-xl bg-slate-800 text-white outline-none text-start">
             <option className="text-lg" disabled selected hidden>More filters</option>
             <option className="text-lg"></option>
