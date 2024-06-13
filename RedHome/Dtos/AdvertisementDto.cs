@@ -7,6 +7,7 @@
         public string UserEmail { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public string Title { get; set; } = string.Empty;
+        public DateTime CreatedDate { get; set; }
         public string Description { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
