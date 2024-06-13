@@ -5,6 +5,7 @@ import RegisterPage from "./pages/RegisterPage";
 import SearchPage from "./pages/SearchPage";
 import AdvertisingPage from './pages/AdvertisingPage';
 import UserAdvertisingPage from './pages/UserAdvertisingPage';
+import AddPage from './pages/AddPage';
 
 
 function App() {
@@ -29,10 +30,26 @@ function App() {
       path: '/search/advertising/:id',
       element: <AdvertisingPage/>
     },
-    // {
-    //   path: '/user-panel',
-    //   element: <UserAdvertisingPage/>
-    // },
+    {
+      path: '/user-panel/all-added',
+      element: <UserAdvertisingPage/>
+    },
+    {
+      path: '/user-panel/all-liked',
+      element: <UserAdvertisingPage/>
+    },
+    {
+      path: '/user-panel/settings',
+      element: <UserAdvertisingPage/>
+    },
+    {
+      path: '/user-panel/add-advertisement',
+      element: <AddPage/>
+    },
+    {
+      path: '/user-panel/edit-advertisement/:id',
+      element: <div>Edycja</div>
+    }
   ]); 
   
   return (
