@@ -22,8 +22,8 @@ export default function ForeignUserRating() {
 
 
   return (
-    <div className="mt-28 h-80 w-full">
-      <div className="mt-11 flex h-80 justify-center rounded-md mx-auto">
+    <div className="h-80 w-full mt-24">
+      <div className="mt-11 flex h-64 justify-center rounded-md mx-auto">
         <div className='h-60 w-60 relative'>
           <img className="absolute z-0 h-full rounded-2xl w-full bg-gray-400 flex items-center" src={avatar != null ? avatar : <div className='mx-auto'><FiCameraOff /></div>} alt='avatar'/>
         </div>
@@ -59,9 +59,28 @@ export default function ForeignUserRating() {
         <div className="bg-black h-1 w-full rounded-3xl opacity-50"></div>
       </div>
 
-      <div className='w-[75%] h-full mx-auto bg-amber-100'>
-
+      {/* sekcja add review */}
+      <div className='w-[75%] h-full mx-auto bg-amber-100 mt-3'>
+        <div className='w-[75%] h-80 mx-auto bg-white text-center rounded-xl'>
+          <div>
+            <h1 className='text-2xl'>Have you dealt with this user?</h1>
+            <p>Please, rate him to help others.</p>
+              <form>
+                <div className='mt-4 mb-4'><RatingReview rating={rating} setRating={setRating}/></div>
+                <label className='text-s'>What do you think about this user? <div className='text-red-600 text-xs'>(Remember, your review should only concern how the transaction or conversation with the user went)</div></label>
+                <textarea className='border border-red-600 rounded-xl w-[75%] h-24 text-left py-2 px-2 text-s mt-2 resize-none'></textarea>
+                <br/>
+                <input className='bg-red-600 text-white text-l font-bold border rounded-xl w-28'type="submit" value="Submit"></input>
+              </form>
+          </div>
+        </div>
       </div>
+
+
+      {/* sekcja reviews */}
+
+
+
     </div>
 
   )
