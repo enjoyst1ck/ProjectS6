@@ -1,4 +1,3 @@
-
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import avatar from '../assets/avatar.jpg';
@@ -26,8 +25,7 @@ export default function ForeignUserRating() {
     <div className="mt-28 h-80 w-full">
       <div className="mt-11 flex h-80 justify-center rounded-md mx-auto">
         <div className='h-60 w-60 relative'>
-          <div className='absolute z-0 h-full rounded-2xl w-full bg-gray-400 flex items-center'><div className='mx-auto'><FiCameraOff /></div></div>
-          <img className="rounded-2xl w-full" src={avatar} alt='avatar'/>
+          <img className="absolute z-0 h-full rounded-2xl w-full bg-gray-400 flex items-center" src={avatar != null ? avatar : <div className='mx-auto'><FiCameraOff /></div>} alt='avatar'/>
         </div>
         <div>
           <div className='flex ml-14 h-[75%]'>
@@ -59,6 +57,10 @@ export default function ForeignUserRating() {
       </div>
       <div className='w-[75%] mx-auto'>
         <div className="bg-black h-1 w-full rounded-3xl opacity-50"></div>
+      </div>
+
+      <div className='w-[75%] h-full mx-auto bg-amber-100'>
+
       </div>
     </div>
 

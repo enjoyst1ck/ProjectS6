@@ -25,8 +25,7 @@ export default function UserSettings() {
       <ModalChangePassword openModal={openModal} setOpenModal={setOpenModal} userData={currentUser} />
       <div className="mt-11 flex h-80 justify-center rounded-md mx-auto">
         <div className='h-60 w-60 relative'>
-          <div className='absolute z-0 h-full rounded-2xl w-full bg-gray-400 flex items-center'><div className='mx-auto'><FiCameraOff /></div></div>
-          <img className="rounded-2xl w-full" src={avatar} alt='avatar' />
+          <img className="absolute z-0 h-full rounded-2xl w-full bg-gray-400 flex items-center" src={avatar != null ? avatar : <div className='mx-auto'><FiCameraOff /></div>} alt='avatar'/>
           <button className='absolute top-2 right-2 bg-red-600 hover:bg-red-700 h-10 w-10 rounded-full text-white flex items-center'><div className='mx-auto'><FaCamera /></div></button>
         </div>
         <div>
