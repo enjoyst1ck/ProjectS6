@@ -21,8 +21,7 @@
         public decimal? MaxPrice { get; set; }
         public decimal? MinArea { get; set; }
         public decimal? MaxArea { get; set; }
-        public decimal? MinRoomQuantity { get; set; }
-        public decimal? MaxRoomQuantity { get; set; }
+        public List<int>? RoomQuantity { get; set; } = new List<int>();
         public decimal? FloorQuantity { get; set; }
         public decimal? Floor { get; set; }
         public bool? IsForSell { get; set; }

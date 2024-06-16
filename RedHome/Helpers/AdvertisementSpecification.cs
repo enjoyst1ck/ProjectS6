@@ -18,11 +18,11 @@ namespace RedHome.Helpers
             (!parameters.MaxPrice.HasValue || b.Price <= parameters.MaxPrice.Value) &&
             (!parameters.MinArea.HasValue || b.Area >= parameters.MinArea.Value) &&
             (!parameters.MaxArea.HasValue || b.Area <= parameters.MaxArea.Value) &&
-            (!parameters.MinRoomQuantity.HasValue || b.RoomQuantity >= parameters.MinRoomQuantity.Value) &&
-            (!parameters.MaxRoomQuantity.HasValue || b.RoomQuantity <= parameters.MaxRoomQuantity.Value) &&
             (!parameters.FloorQuantity.HasValue || b.FloorQuantity == parameters.FloorQuantity.Value) &&
             (!parameters.Floor.HasValue || b.Floor == parameters.Floor.Value) &&
-            (!parameters.IsForSell.HasValue || b.IsForSell == parameters.IsForSell))
+            (!parameters.IsForSell.HasValue || b.IsForSell == parameters.IsForSell) &&
+            (parameters.RoomQuantity == null || parameters.RoomQuantity.Count == 0 || parameters.RoomQuantity.Contains(b.RoomQuantity) || 
+            (parameters.RoomQuantity.Contains(6) && b.RoomQuantity >= 6)))
         {
             AddInclude(i => i.User);
             AddInclude(i => i.Attachments);

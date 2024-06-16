@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { AuthContext } from '../context/authContext'
 
-export default function GridCard({ item }) {
+export default function UserLikedTile({ item }) {
   const { currentUser } = useContext(AuthContext);
   const [currStatus, setCurrStatus] = useState(item.isLiked);
 
@@ -29,7 +29,7 @@ export default function GridCard({ item }) {
   }
 
   return (
-    <div className='w-[358px] h-[441px] rounded-2xl relative'>
+    <div className='w-full h-[441px] rounded-2xl relative'>
       <div onClick={handleToLiked} className='absolute top-3 right-3 rounded-full bg-red-700 p-2 hover:scale-110 transition-all cursor-pointer'>
         {currStatus === true ? (<FaHeart color='white' size={22} />) : (<FaRegHeart color='white' size={22} />)}
       </div>

@@ -7,7 +7,6 @@ export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
 
   const userRegister = async(formData) => {
-    console.log(formData)
     const res = await axios.post("http://localhost:7004/Account/register", {
       "username": formData.username,
       "email": formData.email,
