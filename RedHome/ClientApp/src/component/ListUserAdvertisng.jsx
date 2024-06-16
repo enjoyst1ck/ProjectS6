@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import GridCard from './GridCard';
+import UserLikedTile from './UserLikedTile';
 import { AuthContext } from '../context/authContext';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
@@ -61,10 +61,10 @@ export default function ListUserAdvertisng({currSite}) {
             {currSite === 'all-added' && <span className='text-2xl'>All added advertisement {data.length}:</span>}
             {currSite === 'all-liked' && <span className='text-2xl'>All liked advertisement {data.length}:</span>}
          </div>
-         <div className={data.length === 0 ? "flex justify-center" : 'min-h-36 grid grid-cols-3 gap-5 mt-10'}>
+         <div className={data.length === 0 ? "flex justify-center" : 'min-h-36 grid grid-cols-4 gap-5 mt-10'}>
             {data.length === 0 && <span className='w-full mt-20 text-xl font-semibold flex justify-center'>You don't have any advertisement yet</span>}
             {data.map((item, index) => (
-               <GridCard item={item} key={index}/>
+               <UserLikedTile item={item} key={index}/>
             ))}
          </div>
       </div>

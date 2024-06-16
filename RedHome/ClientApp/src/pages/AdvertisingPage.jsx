@@ -14,7 +14,7 @@ export default function AdvertisingPage() {
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
   const [isLiked, setIsLiked] = useState(null);
-  const {currentUser} = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     fetch(`http://localhost:7004/Advertisement/${id}`, {
@@ -40,7 +40,6 @@ export default function AdvertisingPage() {
       });
   }, [id]);
 
-  console.log(data)
 
   return (
     <div>
@@ -48,8 +47,7 @@ export default function AdvertisingPage() {
         <TopMenu />
       </div>
       <div className='w-[75%] mx-auto p-2 m-10'>
-
-        {data !== null ? (<div className='w-full'>
+        {data && <div className='w-full'>
           <SliderAdvertising images={data.attachments} isLiked={isLiked} setIsLiked={setIsLiked} id={data.id} />
 
           <InfoAdvertising area={data.area} rooms={data.roomQuantity} floor={data.floor} developmentType={data.developmentType} floorQuantity={data.floorQuantity} />
@@ -58,7 +56,9 @@ export default function AdvertisingPage() {
             <ContentAdvertising title={data.title} description={data.description} price={data.price} isForSell={data.isForSell} city={data.city} address={data.address} />
             <DeveloperInfoAdvertising />
           </div>
-        </div>) : (<div className='w-full h-[90vh]'>
+        </div>}
+
+        {error && <div className='w-full h-[90vh]'>
           <div className='w-full h-full flex justify-center items-center'>
             <div className='w-[75%]'>
               <h1 className='text-9xl font-semibold'>Oops, I think we have a problem</h1>
@@ -70,7 +70,7 @@ export default function AdvertisingPage() {
 
 
           </div>
-        </div>)}
+        </div>}
       </div>
     </div>
   )
