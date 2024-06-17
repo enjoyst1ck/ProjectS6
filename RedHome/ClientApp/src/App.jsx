@@ -6,6 +6,7 @@ import SearchPage from "./pages/SearchPage";
 import AdvertisingPage from './pages/AdvertisingPage';
 import UserAdvertisingPage from './pages/UserAdvertisingPage';
 import AddPage from './pages/AddPage';
+import EditPage from './pages/EditPage';
 
 
 function App() {
@@ -48,7 +49,7 @@ function App() {
     },
     {
       path: '/user-panel/edit-advertisement/:id',
-      element: <div>Edycja</div>
+      element: <EditPage/>
     }
   ]); 
   

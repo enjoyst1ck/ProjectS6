@@ -5,10 +5,13 @@ import { FaArrowRightLong } from "react-icons/fa6"
 import imagePlaceholder from "./../assets/imageplaceholder.png"
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../context/authContext';
+import { format } from 'date-fns';
 
 export default function ListCard({ item }) {
   const { currentUser } = useContext(AuthContext);
   const [currStatus, setCurrStatus] = useState(item.isLiked);
+  const rawDate = new Date(item.createdDate);
+  const result = format(rawDate, "dd.MM.yyyy"); 
 
   const handleToLiked = () => {
     try {
@@ -61,7 +64,7 @@ export default function ListCard({ item }) {
           </div>
 
           <div className='absolute bottom-4 left-4'>
-            <span className='text-black text-opacity-75'>Added 16.04.2024 by</span> <span className='text-red-700 font-semibold'>{item.userEmail}</span>
+            <span className='text-black text-opacity-75'>Added {result} by</span> <span className='text-red-700 font-semibold'>{item.userEmail}</span>
           </div>
 
           <div className='flex justify-center p-2 absolute right-2 bottom-2 rounded-full bg-red-700'>

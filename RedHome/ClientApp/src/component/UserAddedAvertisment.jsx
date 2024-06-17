@@ -22,7 +22,7 @@ export default function UserAddedAvertisment({item}) {
   return (
     <div className='w-full h-[441px] rounded-2xl relative'>
       <div className='absolute top-3 right-3 flex'>
-        <div className='rounded-full bg-red-700 p-2 hover:scale-110 transition-all cursor-pointer'><MdEdit size={20} color='white'/></div>
+        <div className='rounded-full bg-red-700 p-2 hover:scale-110 transition-all cursor-pointer'><Link to={`/user-panel/edit-advertisement/${item.id}`}><MdEdit size={20} color='white'/></Link></div>
         <div className='rounded-full bg-red-700 p-2 hover:scale-110 transition-all cursor-pointer ml-2' onClick={handleDelete}><MdDelete size={20} color='white'/></div>
       </div>
       <img className='w-full h-full bg-red-400 rounded-2xl object-cover' alt={item.title} src={item.attachments.length > 0 ? `data:image/jpg;base64, ${item.attachments[0].image}` : imagePlaceholder} />

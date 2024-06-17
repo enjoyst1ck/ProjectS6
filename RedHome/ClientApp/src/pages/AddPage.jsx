@@ -73,7 +73,8 @@ export default function AddPage() {
           'Authorization': `Bearer ${currentUser.token}`
         }
       });
-      console.log(res);
+      alert('Your advertisement has been successfully added. You will be redirected to the user panel');
+      navigate('/user-panel/all-added')
     } catch (err) {
       if (err.response) {
         console.log('Error response data:', err.response.data);
