@@ -53,8 +53,8 @@ export default function AdvertisingPage() {
           <InfoAdvertising area={data.area} rooms={data.roomQuantity} floor={data.floor} developmentType={data.developmentType} floorQuantity={data.floorQuantity} />
 
           <div className='flex cursor-default mb-10'>
-            <ContentAdvertising title={data.title} description={data.description} price={data.price} isForSell={data.isForSell} city={data.city} address={data.address} />
-            <DeveloperInfoAdvertising />
+            <ContentAdvertising title={data.title} description={data.description} price={data.price} isForSell={data.isForSell} city={data.city} address={data.address} createdDate={data.createdDate} />
+            <DeveloperInfoAdvertising username={data.usetName} phoneNumber={data.phoneNumber} userEmail={data.userEmail} />
           </div>
         </div>}
 

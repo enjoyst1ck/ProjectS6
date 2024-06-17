@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function InfoAdvertising({ area, rooms, floor, developmentType, floorQuantity }) {
   return (
-    <div className='grid grid-cols-5 my-8'>
+    <div className='grid grid-cols-5 my-16 relative'>
       <div className='text-center flex flex-col'>
         <span className='font-bold text-3xl'>{area}</span>
         <span className='font-semibold text-xl text-black text-opacity-65'>Square m2</span>

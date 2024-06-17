@@ -1,12 +1,16 @@
-import React from 'react'
+import React from 'react';
+import { format } from "date-fns";
 
-export default function ContentAdvertising({ title, description, price, isForSell, city, address }) {
+export default function ContentAdvertising({ title, description, price, isForSell, city, address, createdDate }) {
+  const rawDate = new Date(createdDate);
+  const result = format(rawDate, "dd  MMMM  yyyy HH:mm");
+
   return (
     <div className='w-[75%] pr-8'>
       <div className='flex flex-col'>
         <div className='flex items-center'>
           <span className='py-1 px-3 bg-red-800 text-white rounded-xl mr-2'>{isForSell === true ? "For sell" : "For rent"}</span>
-          <span className='text-black text-opacity-75'>Published 1 May 2024 21:20</span>
+          <span className='text-black text-opacity-75'>Published {result}</span>
         </div>
         <div className='mt-2'>
           <h1 className='text-5xl font-bold'>{title}</h1>
