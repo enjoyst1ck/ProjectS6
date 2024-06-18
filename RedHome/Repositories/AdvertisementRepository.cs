@@ -21,7 +21,7 @@ namespace RedHome.Repositories
 
         public Advertisement GetById(int advertisementId)
         {
-            Advertisement? advertisement = _context.Advertisements.Include(i => i.User).Include(i => i.Attachments).Where(w => w.Id == advertisementId).First();
+            Advertisement? advertisement = _context.Advertisements.Include(i => i.User).Include(i => i.Attachments).Where(w => w.Id == advertisementId).AsNoTracking().First();
             if (advertisement != null)
             {
                 return advertisement;
