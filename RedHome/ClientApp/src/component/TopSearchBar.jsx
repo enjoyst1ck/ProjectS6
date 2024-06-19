@@ -99,7 +99,7 @@ export default function MenuHomePage({ setQueryUrl }) {
 
     let queryStr = '';
 
-    query.map((item, index) => {
+    query.map((item) => {
       queryStr += '&' + item;
     });
     queryStr = queryStr.substring(1, queryStr.length);

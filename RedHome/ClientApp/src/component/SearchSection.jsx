@@ -17,16 +17,16 @@ export default function SearchSection({queryUrl}) {
   const [error, setError] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const [url, setUrl] = useState({ currUrl: 'http://localhost:7004/Advertisement', defaultUrl: 'http://localhost:7004/Advertisement' });
-
+  const [page, setPage] = useState('PageIndex=1');
 
   useEffect(() => {
     const fetchData = async () => {
       let q = '';
       if(queryUrl.length > 0) {
-        q = 'http://localhost:7004/Advertisement?' + queryUrl;
+        q = 'http://localhost:7004/Advertisement?PageSize=9&' + queryUrl + '&' + page;
         console.log(q)
       } else {
-        q = 'http://localhost:7004/Advertisement';
+        q = 'http://localhost:7004/Advertisement?PageSize=9' + '&' + page;
         console.log(q)
       }
       try {
@@ -37,13 +37,13 @@ export default function SearchSection({queryUrl}) {
             }
           });
           setData(res.data.data);
-          setCurrPageInfo({count: res.data.count, pageIndex: res.data.pageIndex, pageSize: res.data.pageSize, countPages: Math.round(res.data.count/res.data.pageSize)});
+          setCurrPageInfo({count: res.data.count, pageIndex: res.data.pageIndex, pageSize: res.data.pageSize, countPages: Math.ceil(res.data.count/res.data.pageSize)});
           setIsPending(false);
           setError(null);
         } else {
           const res = await axios.get(q);
           setData(res.data.data);
-          setCurrPageInfo({count: res.data.count, pageIndex: res.data.pageIndex, pageSize: res.data.pageSize, countPages: Math.round(res.data.count/res.data.pageSize)});
+          setCurrPageInfo({count: res.data.count, pageIndex: res.data.pageIndex, pageSize: res.data.pageSize, countPages: Math.ceil(res.data.count/res.data.pageSize)});
           setIsPending(false);
           setError(null);
         }
@@ -52,9 +52,8 @@ export default function SearchSection({queryUrl}) {
         setError(err.message);
       }
     };
-
     fetchData();
-  }, [queryUrl]);
+  }, [queryUrl, page]);
 
 
   const handleView = (e) => {
@@ -64,29 +63,20 @@ export default function SearchSection({queryUrl}) {
 
   const handlerchangePage = (index) => {
     const newIndex = index;
-      setUrl(prev => ({
-        ...prev,
-        currUrl: prev.defaultUrl + '?PageIndex=' + newIndex
-      }));
+    setPage(`PageIndex=${newIndex}`)
   }
 
   const handleNext = () => {
     if(currPageInfo.pageIndex < currPageInfo.countPages) {
       const newIndex = currPageInfo.pageIndex + 1;
-      setUrl(prev => ({
-        ...prev,
-        currUrl: prev.defaultUrl + '?PageIndex=' + newIndex
-      }));
+      setPage(`PageIndex=${newIndex}`)
     }
   }
 
   const handlePrev = () => {
     if (currPageInfo.pageIndex > 1) {
       const newIndex = currPageInfo.pageIndex - 1;
-      setUrl(prev => ({
-        ...prev,
-        currUrl: prev.defaultUrl + '?PageIndex=' + newIndex
-      }));
+      setPage(`PageIndex=${newIndex}`)
     }
   }
 
