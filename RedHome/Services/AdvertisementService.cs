@@ -156,13 +156,15 @@ namespace RedHome.Services
                 return null;
             }
 
+            var adFromDb = _advertisementRepository.GetById(advertisementDto.Id);
+
             var advertisement = new Advertisement
             {
                 Id = advertisementDto.Id,
                 UserId = advertisementDto.UserId,
                 Price = advertisementDto.Price,
                 Title = advertisementDto.Title,
-                CreatedDate = advertisementDto.CreatedDate,
+                CreatedDate = adFromDb.CreatedDate,
                 Description = advertisementDto.Description,
                 City = advertisementDto.City,
                 Address = advertisementDto.Address,
