@@ -23,7 +23,7 @@ function App() {
       element: <RegisterPage/>
     },
     {
-      path: '/search',
+      path: '/search/:id',
       element: <SearchPage/>
     },
     {

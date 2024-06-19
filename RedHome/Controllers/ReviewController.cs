@@ -21,7 +21,7 @@ namespace RedHome.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet]
+        [HttpGet("{userId}")]
         public ActionResult<IEnumerable<ReviewDto>> GetUserReview(string userId)
         {
             try

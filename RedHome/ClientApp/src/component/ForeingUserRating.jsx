@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import avatar from '../assets/avatar.jpg';
 import { FiCameraOff } from "react-icons/fi";
 import { AuthContext } from '../context/authContext';
 import ModalChangePassword from './ModalChangePassword';
 import RatingReview from './RatingReview';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 
@@ -12,19 +13,21 @@ export default function ForeignUserRating() {
   const { register, watch, handleSubmit } = useForm({});
   const [openModal, setOpenModal] = useState(false);
   const { currentUser } = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const [reviewsQuantity] = useState(142);
   const [avgRating] = useState(3); {/* Average rating usera - wyliczyc na podstawie ilosci ocen i wysokosci ocen - zaokraglac (nie ma polowek)*/}
   const [rating, setRating] = useState(0); {/* uzywane do wystawiania ocen */}
 
   
-  const { id } = useParams(); 
+  let { id } = useParams(); 
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:7004/Review/${id}`)
+    if (!currentUser) return navigate('/login');
+    try {
+      fetch(`http://localhost:7004/Review/${id}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error('Could not fetch the data for that resource');
@@ -40,14 +43,10 @@ export default function ForeignUserRating() {
         setIsPending(false);
         setError(err.message);
       });
-  }, [id]);
-
-  
-
-  
-
-
-
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   const rateDescription = [
     {
@@ -160,12 +159,13 @@ export default function ForeignUserRating() {
       </div>
 
         {/* sekcja reviews */}
+      {data !== null ? (
       <div className='w-[75%] mx-auto mt-8 bg-white h-fit'>
         <ul className='w-[75%] mx-auto bg-white text-center rounded-xl h-fit'>
-        {rateDescription.map((item, index) => ( 
+        {data.map((item, index) => ( 
                 <li className='list-none h-fit bg-white m-10'>
                   <div className='bg-white my-auto mx-auto w-[75%] px-5 py-3 h-fit text-left'>
-                    <label className='my-auto text-xl font-semibold'>{item.userBy}</label>
+                    <label className='my-auto text-xl font-semibold'>{item.userEmailBy}</label>
                     <div className='my-auto'><RatingReview rating={item.rate}/></div>
                     <p className='my-auto' key={index}>{item.comment}</p>
                   </div>
@@ -177,7 +177,7 @@ export default function ForeignUserRating() {
               ))}
         </ul>
       </div>
-
+      ) : <div></div>}
 
     </div>
 
