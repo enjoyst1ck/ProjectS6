@@ -19,6 +19,8 @@ export default function EditPage() {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
+  const date = new Date().toString();
+
 
   useEffect(() => {
     if (!currentUser) return navigate('/login');
@@ -74,10 +76,13 @@ export default function EditPage() {
       return;
     }
 
+    console.log(data)
+
     const dataToSend = {
-      id: data.id,
+      id: id,
       userId: currentUser.userId,
       userEmail: currentUser.email,
+      userName: currentUser.username,
       price: data.price,
       title: data.title,
       description: data.description,
@@ -90,8 +95,11 @@ export default function EditPage() {
       developmentType: data.developmentType,
       deposite: 0,
       isForSell: data.isForSell === 'true' ? true : false,
+      isLiked: data.isLiked,
       attachments: selectedFiles
     };
+
+    console.log(dataToSend);
 
     try {
       const res = await axios.put('http://localhost:7004/Advertisement/edit', dataToSend, {
