@@ -16,16 +16,21 @@ export default function ForeignUserRating() {
   const navigate = useNavigate();
   const [reviewsQuantity] = useState(142);
   const [avgRating] = useState(3); {/* Average rating usera - wyliczyc na podstawie ilosci ocen i wysokosci ocen - zaokraglac (nie ma polowek)*/}
-  const [rating, setRating] = useState(0); {/* uzywane do wystawiania ocen */}
-
-  
+  const [rating, setRating] = useState(1); {/* uzywane do wystawiania ocen */}
   let { id } = useParams(); 
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 
+  {/* TODO - funkcja pobierajaca ilosc ocen danego uzytkownika, funkcja pobierajaca dane uzytkownika w ktorego weszlismy, funkcja dodawania review, wyswietlanie ilosci i średniej ocen */}
+  const onSubmit = async (formData) => {
+ 
+  };
+  const imie = "Michałek";
+  const nazwisko =  "123456789";
+
   useEffect(() => {
-    if (!currentUser) return navigate('/login');
+    {/*if (!currentUser) return navigate('/login');*/}
     try {
       fetch(`http://localhost:7004/Review/${id}`)
       .then((res) => {
@@ -46,61 +51,10 @@ export default function ForeignUserRating() {
     } catch (err) {
       console.log(err);
     }
-  }, []);
-
-  const rateDescription = [
-    {
-      userBy: "Majorek",
-      userTo: "CurrentUser",
-      rate: 5,
-      comment: "Użytkownik nieźle sie spisał przy sprzedaży. Wielkie pozdro!!!"
-    },
-    {
-      userBy: "Majorek",
-      userTo: "CurrentUser",
-      rate: 4,
-      comment: "Użytkownik nieźle sieedażyźle sieedażyźle sieedażyźieedażyźieedażyźieedażyźle sieedażyźle sieedaży. Wielkie pozdro!sssssssdro!sssssssdro!sssssssdro!sssssssssssssssssssssssssssssssssssssssssssssssssssssfdijawiojfosfsfwfw@@@!!"
-    },
-    {
-      userBy: "Majorek",
-      userTo: "CurrentUser",
-      rate: 2,
-      comment: "Użytkownik nieźle sie spisał przy sprzedaży. Wielkie pozdro!!!"
-    },
-    {
-      userBy: "Majorek",
-      userTo: "CurrentUser",
-      rate: 3,
-      comment: "Użytkownik nieźle sie spisał przy sprzedaży. Wielkie pozdro!!!"
-    },
-    {
-      userBy: "Majorek",
-      userTo: "CurrentUser",
-      rate: 4,
-      comment: "Użytkownik nieźle sieedażyźle sieedażyźle sieedażyźieedażyźieedażyźieedażyźle sieedażyźle sieedaży. Wielkie pozdro!sssssssdro!sssssssdro!sssssssdro!sssssssssssssssssssssssssssssssssssssssssssssssssssssfdijawiojfosfsfwfw@@@!!"
-    },
-    {
-      userBy: "Majorek",
-      userTo: "CurrentUser",
-      rate: 4,
-      comment: "Użytkownik nieźle sieedażyźle sieedażyźle sieedażyźieedażyźieedażyźieedażyźle sieedażyźle sieedaży. Wielkie pozdro!sssssssdro!sssssssdro!sssssssdro!sssssssssssssssssssssssssssssssssssssssssssssssssssssfdijawiojfosfsfwfw@@@!!"
-    },
-    {
-      userBy: "Majorek",
-      userTo: "CurrentUser",
-      rate: 4,
-      comment: "Użytkownik nieźle sieedażyźle sieedażyźle sieedażyźieedażyźieedażyźieedażyźle sieedażyźle sieedaży. Wielkie pozdro!sssssssdro!sssssssdro!sssssssdro!sssssssssssssssssssssssssssssssssssssssssssssssssssssfdijawiojfosfsfwfw@@@!!"
-    },
-    {
-      userBy: "Majorek",
-      userTo: "CurrentUser",
-      rate: 4,
-      comment: "Użytkownik nieźle sieedażyźle sieedażyźle sieedażyźieedażyźieedażyźieedażyźle sieedażyźle sieedaży. Wielkie pozdro!sssssssdro!sssssssdro!sssssssdro!sssssssssssssssssssssssssssssssssssssssssssssssssssssfdijawiojfosfsfwfw@@@!!"
-    },]
-  
-
+  }, []);  
 
   return (
+    
     <div className="h-80 w-full mt-24">
       <div className="mt-11 flex h-64 justify-center rounded-md mx-auto">
         <div className='h-60 w-60 relative'>
@@ -110,19 +64,19 @@ export default function ForeignUserRating() {
           <div className='flex ml-14 h-[75%]'>
             <div className='mt-7'>
                 <div className="w-[75%]">
-                    <label className='text-xl font-semibold text-black text-opacity-70'>Username:</label>
-                    <input className='w-full py-1 px-2 h-10 rounded-xl border-opacity-50 focus:border-opacity-100 outline-none transition-all mb-6' value={currentUser && currentUser.username ? currentUser.username : ''} type='text' disabled />
+                    <label className='text-xl font-semibold text-black text-opacity-70'>Username:</label>                                               {/* rating zmienic na foreign user username */}
+                    <input className='w-full h-10 rounded-xl border-opacity-50 focus:border-opacity-100 outline-none transition-all mb-6 text-xl font-semibold text-black text-opacity-80' value={imie} type='text' disabled />
                 </div>
-                <div className="w-[75%]">
-                    <label className='text-xl font-semibold text-black text-opacity-70'>Phone number:</label>
-                    <input className='w-full py-1 px-2 h-10 rounded-xl border-opacity-50 focus:border-opacity-100 outline-none transition-all mb-6' value={currentUser && currentUser.phoneNumber ? currentUser.phoneNumber : ''}phoneNumber type="tel" disabled/>
+                <div className="w-[75%]"> 
+                    <label className='text-xl font-semibold text-black text-opacity-70'>Phone number:</label>                                           {/* rating zmienic na foreign user phone number */}
+                    <input className='w-full h-10 rounded-xl border-opacity-50 focus:border-opacity-100 outline-none transition-all mb-6 text-xl font-semibold text-black text-opacity-80' value={nazwisko}  type="tel" disabled/>
                 </div>
             </div>
 
             <div className='mt-7'>
                 <div className="">
                     <label className='text-xl font-semibold block text-center text-black text-opacity-70 '>Number of reviews:</label>
-                    <div className='text-xl w-[100%] mx-auto font-medium text-center text-black text-opacity-70 mt-1'>{reviewsQuantity}</div>
+                    <div className='text-xl w-[100%] mx-auto font-semibold text-center text-black text-opacity-80 mt-1'>{reviewsQuantity}</div>
                 </div>
                 <div className="mt-9">
                     <label className='text-xl font-semibold mt-4 block text-center text-black text-opacity-70'>Average rating:</label>
@@ -135,30 +89,31 @@ export default function ForeignUserRating() {
       <div className='w-[75%] mx-auto'>
         <div className="bg-black h-1 w-full rounded-3xl opacity-30"></div>
       </div>
+      {/* sekcja user info ^^^ */}
 
-      {/* sekcja add review */}
+      {/* sekcja add review - TODO */}
       <div className='w-[75%] h-full mx-auto mt-4'>
         <div className='w-[75%] h-80 mx-auto bg-white text-center rounded-xl'>
           <div>
             <h1 className='text-2xl'>Have you dealt with this user?</h1>
             <p>Please, rate him to help others.</p>
-              <form>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='mt-4 mb-4'><RatingReview rating={rating} setRating={setRating}/></div>
                 <label className='text-s'>What do you think about this user? <div className='text-red-600 text-xs'>(Remember, your review should only concern how the transaction or conversation with the user went)</div></label>
                 <textarea className='border border-red-600 rounded-xl w-[75%] h-24 text-left py-2 px-2 text-s mt-2 resize-none'></textarea>
                 <br/>
-                <input className='bg-red-600 text-white text-l font-bold border rounded-xl w-28'type="submit" value="Submit"></input>
+                <input className='bg-red-600 hover:bg-red-500 text-white text-l font-bold border rounded-xl w-28' type="submit" value="Submit"></input>
+                
               </form>
           </div>
         </div>
       </div>
 
-     
       <div className='w-[75%] mx-auto mt-6'>
         <div className="bg-black h-1 w-full rounded-3xl opacity-30"></div>
       </div>
 
-        {/* sekcja reviews */}
+        {/* sekcja reviews - skończone */}
       {data !== null ? (
       <div className='w-[75%] mx-auto mt-8 bg-white h-fit'>
         <ul className='w-[75%] mx-auto bg-white text-center rounded-xl h-fit'>
@@ -169,7 +124,6 @@ export default function ForeignUserRating() {
                     <div className='my-auto'><RatingReview rating={item.rate}/></div>
                     <p className='my-auto' key={index}>{item.comment}</p>
                   </div>
-
                   <div className='w-[100%] mx-auto mt-6'>
                     <div className="bg-black h-1 w-full rounded-3xl opacity-30"></div>
                   </div>
@@ -177,7 +131,7 @@ export default function ForeignUserRating() {
               ))}
         </ul>
       </div>
-      ) : <div></div>}
+      ) : <div className='mx-auto w-[50%] h-64 text-center mt-20 text-xl font-bold'>Sorry, this user has no ratings yet.</div>}
 
     </div>
 

@@ -7,9 +7,9 @@ export default function SearchPage() {
   return (
     <div>
       <TopSearchBar/>
-      {/* usunac foreign user*/}
+      {/* usunac foreign user, podmienic topmenu*/}
       <ForeignUserRating></ForeignUserRating>
-      
+      <SearchPage></SearchPage>
     </div>
   )
 }
