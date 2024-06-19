@@ -31,6 +31,9 @@ export default function AdvertisingPage() {
       });
   }, [id]);
 
+  
+
+
 
   return (
     <div>

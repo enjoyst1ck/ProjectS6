@@ -9,7 +9,7 @@ export default function SearchPage() {
       <TopSearchBar/>
       {/* usunac foreign user*/}
       <ForeignUserRating></ForeignUserRating>
-      <SearchSection/>
+      
     </div>
   )
 }

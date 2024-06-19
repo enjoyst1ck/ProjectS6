@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import avatar from '../assets/avatar.jpg';
-import { FaCamera } from "react-icons/fa6";
 import { FiCameraOff } from "react-icons/fi";
 import { AuthContext } from '../context/authContext';
 import ModalChangePassword from './ModalChangePassword';
@@ -9,16 +8,97 @@ import RatingReview from './RatingReview';
 
 
 
-
 export default function ForeignUserRating() {
   const { register, watch, handleSubmit } = useForm({});
-  const [data, setData] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const { currentUser } = useContext(AuthContext);
 
   const [reviewsQuantity] = useState(142);
-  const [rating, setRating] = useState(0); {/* uzywane do wystawiania ocen */}
   const [avgRating] = useState(3); {/* Average rating usera - wyliczyc na podstawie ilosci ocen i wysokosci ocen - zaokraglac (nie ma polowek)*/}
+  const [rating, setRating] = useState(0); {/* uzywane do wystawiania ocen */}
+
+  
+  const { id } = useParams(); 
+  const [data, setData] = useState(null);
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch(`http://localhost:7004/Review/${id}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Could not fetch the data for that resource');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setData(data);
+        setIsPending(false);
+        setError(null);
+      })
+      .catch((err) => {
+        setIsPending(false);
+        setError(err.message);
+      });
+  }, [id]);
+
+  
+
+  
+
+
+
+
+  const rateDescription = [
+    {
+      userBy: "Majorek",
+      userTo: "CurrentUser",
+      rate: 5,
+      comment: "Użytkownik nieźle sie spisał przy sprzedaży. Wielkie pozdro!!!"
+    },
+    {
+      userBy: "Majorek",
+      userTo: "CurrentUser",
+      rate: 4,
+      comment: "Użytkownik nieźle sieedażyźle sieedażyźle sieedażyźieedażyźieedażyźieedażyźle sieedażyźle sieedaży. Wielkie pozdro!sssssssdro!sssssssdro!sssssssdro!sssssssssssssssssssssssssssssssssssssssssssssssssssssfdijawiojfosfsfwfw@@@!!"
+    },
+    {
+      userBy: "Majorek",
+      userTo: "CurrentUser",
+      rate: 2,
+      comment: "Użytkownik nieźle sie spisał przy sprzedaży. Wielkie pozdro!!!"
+    },
+    {
+      userBy: "Majorek",
+      userTo: "CurrentUser",
+      rate: 3,
+      comment: "Użytkownik nieźle sie spisał przy sprzedaży. Wielkie pozdro!!!"
+    },
+    {
+      userBy: "Majorek",
+      userTo: "CurrentUser",
+      rate: 4,
+      comment: "Użytkownik nieźle sieedażyźle sieedażyźle sieedażyźieedażyźieedażyźieedażyźle sieedażyźle sieedaży. Wielkie pozdro!sssssssdro!sssssssdro!sssssssdro!sssssssssssssssssssssssssssssssssssssssssssssssssssssfdijawiojfosfsfwfw@@@!!"
+    },
+    {
+      userBy: "Majorek",
+      userTo: "CurrentUser",
+      rate: 4,
+      comment: "Użytkownik nieźle sieedażyźle sieedażyźle sieedażyźieedażyźieedażyźieedażyźle sieedażyźle sieedaży. Wielkie pozdro!sssssssdro!sssssssdro!sssssssdro!sssssssssssssssssssssssssssssssssssssssssssssssssssssfdijawiojfosfsfwfw@@@!!"
+    },
+    {
+      userBy: "Majorek",
+      userTo: "CurrentUser",
+      rate: 4,
+      comment: "Użytkownik nieźle sieedażyźle sieedażyźle sieedażyźieedażyźieedażyźieedażyźle sieedażyźle sieedaży. Wielkie pozdro!sssssssdro!sssssssdro!sssssssdro!sssssssssssssssssssssssssssssssssssssssssssssssssssssfdijawiojfosfsfwfw@@@!!"
+    },
+    {
+      userBy: "Majorek",
+      userTo: "CurrentUser",
+      rate: 4,
+      comment: "Użytkownik nieźle sieedażyźle sieedażyźle sieedażyźieedażyźieedażyźieedażyźle sieedażyźle sieedaży. Wielkie pozdro!sssssssdro!sssssssdro!sssssssdro!sssssssssssssssssssssssssssssssssssssssssssssssssssssfdijawiojfosfsfwfw@@@!!"
+    },]
+  
 
 
   return (
@@ -50,17 +130,15 @@ export default function ForeignUserRating() {
                     <div className='text-xl flex justify-center opacity-70 mt-1'><RatingReview rating={avgRating}/></div>
                 </div>
             </div>
-            <label>Info o wybranej ilosci gwiazdek: </label>{rating}
-            {/*<RatingReview rating={rating} setRating={setRating}/> */}
           </div>
         </div>
       </div>
       <div className='w-[75%] mx-auto'>
-        <div className="bg-black h-1 w-full rounded-3xl opacity-50"></div>
+        <div className="bg-black h-1 w-full rounded-3xl opacity-30"></div>
       </div>
 
       {/* sekcja add review */}
-      <div className='w-[75%] h-full mx-auto bg-amber-100 mt-3'>
+      <div className='w-[75%] h-full mx-auto mt-4'>
         <div className='w-[75%] h-80 mx-auto bg-white text-center rounded-xl'>
           <div>
             <h1 className='text-2xl'>Have you dealt with this user?</h1>
@@ -76,9 +154,29 @@ export default function ForeignUserRating() {
         </div>
       </div>
 
+     
+      <div className='w-[75%] mx-auto mt-6'>
+        <div className="bg-black h-1 w-full rounded-3xl opacity-30"></div>
+      </div>
 
-      {/* sekcja reviews */}
+        {/* sekcja reviews */}
+      <div className='w-[75%] mx-auto mt-8 bg-white h-fit'>
+        <ul className='w-[75%] mx-auto bg-white text-center rounded-xl h-fit'>
+        {rateDescription.map((item, index) => ( 
+                <li className='list-none h-fit bg-white m-10'>
+                  <div className='bg-white my-auto mx-auto w-[75%] px-5 py-3 h-fit text-left'>
+                    <label className='my-auto text-xl font-semibold'>{item.userBy}</label>
+                    <div className='my-auto'><RatingReview rating={item.rate}/></div>
+                    <p className='my-auto' key={index}>{item.comment}</p>
+                  </div>
 
+                  <div className='w-[100%] mx-auto mt-6'>
+                    <div className="bg-black h-1 w-full rounded-3xl opacity-30"></div>
+                  </div>
+                </li>
+              ))}
+        </ul>
+      </div>
 
 
     </div>
