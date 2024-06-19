@@ -9,7 +9,7 @@ import ModalMoreFiltres from './ModalMoreFiltres';
 import { GrFormNext } from "react-icons/gr";
 import { GrFormPrevious } from "react-icons/gr";
 
-export default function SearchSection({isOpen, setIsOpen}) {
+export default function SearchSection({queryUrl}) {
   const [gridView, setGridView] = useState(false);
   const [data, setData] = useState([]);
   const [currPageInfo, setCurrPageInfo] = useState(null);
@@ -18,24 +18,31 @@ export default function SearchSection({isOpen, setIsOpen}) {
   const { currentUser } = useContext(AuthContext);
   const [url, setUrl] = useState({ currUrl: 'http://localhost:7004/Advertisement', defaultUrl: 'http://localhost:7004/Advertisement' });
 
+
   useEffect(() => {
     const fetchData = async () => {
+      let q = '';
+      if(queryUrl.length > 0) {
+        q = 'http://localhost:7004/Advertisement?' + queryUrl;
+        console.log(q)
+      } else {
+        q = 'http://localhost:7004/Advertisement';
+        console.log(q)
+      }
       try {
         if (currentUser != null) {
-          const res = await axios.get(url.currUrl, {
+          const res = await axios.get(q, {
             headers: {
               'Authorization': `Bearer ${currentUser.token}`
             }
           });
-          console.log(res)
           setData(res.data.data);
           setCurrPageInfo({count: res.data.count, pageIndex: res.data.pageIndex, pageSize: res.data.pageSize, countPages: Math.round(res.data.count/res.data.pageSize)});
           setIsPending(false);
           setError(null);
         } else {
-          const res = await axios.get(url.currUrl);
+          const res = await axios.get(q);
           setData(res.data.data);
-          console.log(res)
           setCurrPageInfo({count: res.data.count, pageIndex: res.data.pageIndex, pageSize: res.data.pageSize, countPages: Math.round(res.data.count/res.data.pageSize)});
           setIsPending(false);
           setError(null);
@@ -47,7 +54,7 @@ export default function SearchSection({isOpen, setIsOpen}) {
     };
 
     fetchData();
-  }, [currentUser, url]);
+  }, [queryUrl]);
 
 
   const handleView = (e) => {
@@ -85,8 +92,6 @@ export default function SearchSection({isOpen, setIsOpen}) {
 
   return (
     <>
-      <ModalMoreFiltres isOpen={isOpen} setIsOpen={setIsOpen}/>
-
       <div className='w-[75%] mx-auto mt-24 relative z-0'>
         <div className='flex items-center justify-between'>
           <div>
@@ -109,9 +114,10 @@ export default function SearchSection({isOpen, setIsOpen}) {
           <div className='bg-black h-1 w-full rounded-3xl opacity-50'></div>
           <span className='text-lg mr-2 p-2'>Sort:</span>
           <select className='py-1 px-2 w-36 bg-red-700 text-white rounded-lg outline-none'>
-            <option>default</option>
-            <option>default</option>
-            <option>default</option>
+            <option>Price ascending</option>
+            <option>Price descending</option>
+            <option>Area ascending</option>
+            <option>Area descending</option>
           </select>
         </div>
 

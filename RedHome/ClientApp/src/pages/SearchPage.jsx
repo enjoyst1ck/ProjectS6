@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TopSearchBar from './../component/TopSearchBar'
 import SearchSection from './../component/SearchSection'
-import { useState } from 'react';
 
 export default function SearchPage() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [queryUrl, setQueryUrl] = useState('');
   return (
     <div>
-      <TopSearchBar setIsOpen={setIsOpen}/>
-      <SearchSection isOpen={isOpen} setIsOpen={setIsOpen}/>
+      <TopSearchBar setQueryUrl={setQueryUrl} />
+      <SearchSection queryUrl={queryUrl}/>
     </div>
   )
 }
