@@ -9,10 +9,13 @@ namespace RedHome.Services
     public class AdvertisementService : IAdvertisementService
     {
         private readonly IAdvertisementRepository _advertisementRepository;
+        private readonly IAttachmentRepository _attachmentRepository;
 
-        public AdvertisementService(IAdvertisementRepository advertisementRepository)
+        public AdvertisementService(IAdvertisementRepository advertisementRepository,
+                                    IAttachmentRepository attachmentRepository)
         {
             _advertisementRepository = advertisementRepository;
+            _attachmentRepository = attachmentRepository;
         }
         public IEnumerable<AdvertisementDto> GetAll()
         {
@@ -178,6 +181,21 @@ namespace RedHome.Services
             };
 
             _advertisementRepository.Edit(advertisement);
+
+            var attachmentsDtoWithoutId = advertisementDto.Attachments.Where(w => w.Id == 0).ToList();
+            if (attachmentsDtoWithoutId.Any())
+            {
+                var attachments = attachmentsDtoWithoutId.Select(a => new RedHome.Database.Models.Attachment
+                {
+                    AdvertisementId = advertisementDto.Id,
+                    Image = a.Image,
+                }).ToList();
+
+                foreach (var attachment in attachments)
+                {
+                    _attachmentRepository.Insert(attachment);
+                }
+            }
 
             return GetById(advertisement.Id, loggedUser);
         }
