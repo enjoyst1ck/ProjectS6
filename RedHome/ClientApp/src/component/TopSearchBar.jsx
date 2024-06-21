@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 
 export default function MenuHomePage({ setQueryUrl }) {
   const { register, handleSubmit } = useForm();
-  const [moreFilters, setMoreFilters] = useState(true);
+  const [moreFilters, setMoreFilters] = useState(false);
   const [query, setQuery] = useState([]);
 
   const handleMoreFiltres = () => {
