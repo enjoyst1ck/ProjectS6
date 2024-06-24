@@ -22,7 +22,7 @@ namespace RedHome.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ReviewDto>> GetUserReview(string userId)
+        public ActionResult<ReviewsUserDto> GetUserReview(string userId)
         {
             try
             {
