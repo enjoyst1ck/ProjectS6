@@ -9,7 +9,7 @@ import ModalMoreFiltres from './ModalMoreFiltres';
 import { GrFormNext } from "react-icons/gr";
 import { GrFormPrevious } from "react-icons/gr";
 
-export default function SearchSection({isOpen, setIsOpen}) {
+export default function SearchSection({queryUrl, searchText}) {
   const [gridView, setGridView] = useState(false);
   const [data, setData] = useState([]);
   const [currPageInfo, setCurrPageInfo] = useState(null);
@@ -17,26 +17,32 @@ export default function SearchSection({isOpen, setIsOpen}) {
   const [error, setError] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const [url, setUrl] = useState({ currUrl: 'http://localhost:7004/Advertisement', defaultUrl: 'http://localhost:7004/Advertisement' });
+  const [page, setPage] = useState('PageIndex=1');
+  const [sortQuery, setSortQuery] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
+      let q = '';
+      if(queryUrl.length > 0) {
+        q = 'http://localhost:7004/Advertisement?PageSize=9&' + queryUrl + '&' + page + sortQuery;
+      } else {
+        q = 'http://localhost:7004/Advertisement?PageSize=9' + '&' + page + sortQuery;
+      }
       try {
         if (currentUser != null) {
-          const res = await axios.get(url.currUrl, {
+          const res = await axios.get(q, {
             headers: {
               'Authorization': `Bearer ${currentUser.token}`
             }
           });
-          console.log(res)
           setData(res.data.data);
-          setCurrPageInfo({count: res.data.count, pageIndex: res.data.pageIndex, pageSize: res.data.pageSize, countPages: Math.round(res.data.count/res.data.pageSize)});
+          setCurrPageInfo({count: res.data.count, pageIndex: res.data.pageIndex, pageSize: res.data.pageSize, countPages: Math.ceil(res.data.count/res.data.pageSize)});
           setIsPending(false);
           setError(null);
         } else {
-          const res = await axios.get(url.currUrl);
+          const res = await axios.get(q);
           setData(res.data.data);
-          console.log(res)
-          setCurrPageInfo({count: res.data.count, pageIndex: res.data.pageIndex, pageSize: res.data.pageSize, countPages: Math.round(res.data.count/res.data.pageSize)});
+          setCurrPageInfo({count: res.data.count, pageIndex: res.data.pageIndex, pageSize: res.data.pageSize, countPages: Math.ceil(res.data.count/res.data.pageSize)});
           setIsPending(false);
           setError(null);
         }
@@ -45,9 +51,8 @@ export default function SearchSection({isOpen, setIsOpen}) {
         setError(err.message);
       }
     };
-
     fetchData();
-  }, [currentUser, url]);
+  }, [queryUrl, page, sortQuery]);
 
 
   const handleView = (e) => {
@@ -57,40 +62,40 @@ export default function SearchSection({isOpen, setIsOpen}) {
 
   const handlerchangePage = (index) => {
     const newIndex = index;
-      setUrl(prev => ({
-        ...prev,
-        currUrl: prev.defaultUrl + '?PageIndex=' + newIndex
-      }));
+    setPage(`PageIndex=${newIndex}`)
   }
 
   const handleNext = () => {
     if(currPageInfo.pageIndex < currPageInfo.countPages) {
       const newIndex = currPageInfo.pageIndex + 1;
-      setUrl(prev => ({
-        ...prev,
-        currUrl: prev.defaultUrl + '?PageIndex=' + newIndex
-      }));
+      setPage(`PageIndex=${newIndex}`)
     }
   }
 
   const handlePrev = () => {
     if (currPageInfo.pageIndex > 1) {
       const newIndex = currPageInfo.pageIndex - 1;
-      setUrl(prev => ({
-        ...prev,
-        currUrl: prev.defaultUrl + '?PageIndex=' + newIndex
-      }));
+      setPage(`PageIndex=${newIndex}`)
     }
+  }
+
+  const handleSort = (e) => {
+    const sortOption = e.target.value
+
+    if (sortOption === "Default") {
+    setSortQuery("");
+    return;
+    }
+
+    setSortQuery(`&Sort=${sortOption}`);
   }
 
   return (
     <>
-      <ModalMoreFiltres isOpen={isOpen} setIsOpen={setIsOpen}/>
-
       <div className='w-[75%] mx-auto mt-24 relative z-0'>
         <div className='flex items-center justify-between'>
           <div>
-            <h1 className='text-3xl font-semibold'>Flats for sale: Opole</h1>
+            <h1 className='text-3xl font-semibold'>{searchText.developmentType ? searchText.developmentType : "All advertisements"}{searchText.isForSell === true && " for sale" || searchText.isForSell === false && " for rent" || !searchText.isForSell && ""}{searchText.city ? `: ${searchText.city}` : ""}</h1>
             <p className='text-xl font-semibold text-black text-opacity-75'>{currPageInfo && currPageInfo.count} advertisements</p>
           </div>
           <div className='flex'>
@@ -107,27 +112,29 @@ export default function SearchSection({isOpen, setIsOpen}) {
 
         <div className='w-full flex items-center mt-4'>
           <div className='bg-black h-1 w-full rounded-3xl opacity-50'></div>
-          <span className='text-lg mr-2 p-2'>Sort:</span>
-          <select className='py-1 px-2 w-36 bg-red-700 text-white rounded-lg outline-none'>
-            <option>default</option>
-            <option>default</option>
-            <option>default</option>
+          <span className='text-lg mr-1 p-2'>Sort:</span>
+          <select onChange={handleSort} className='py-1 px-2 w-44 bg-red-700 text-white rounded-lg outline-none'>
+            <option>Default</option>
+            <option value={"priceAsc"}>Price ascending</option>
+            <option value={"priceDesc"}>Price descending</option>
+            <option value={"areaAsc"}>Area ascending</option>
+            <option value={"areaDesc"}>Area descending</option>
           </select>
         </div>
 
-        <div className={gridView === true ? 'flex ' : 'flex flex-col'}>
+        <div className={gridView === true ? 'flex justify-center' : 'flex flex-col'}>
           {gridView === true ?
-            (<div className='grid grid-cols-3 gap-4'>
+            (<div className='grid grid-cols-3 gap-4 mt-5'>
               {data.map((item, index) => (<GridCard key={index} item={item} />))}
             </div>)
             :
-            (<div className='grid grid-cols-1 gap-4'>
+            (<div className='flex flex-col justify-center items-center mt-5'>
               {data.map((item, index) => (<ListCard item={item} key={index} />))}
             </div>)}
           {data.length === 0 && <span className='text-center mt-20 text-2xl font-semibold'>Apparently there are no announcements yet</span>}
         </div>
         
-        <div className='w-full my-10 flex justify-center items-center'>
+        {data.length > 0 && <div className='w-full my-10 flex justify-center items-center'>
           <div><GrFormPrevious className='cursor-pointer' size={32} onClick={handlePrev}/></div>
           <div className=''>
           <div className='flex'>{[...Array(currPageInfo && currPageInfo.countPages)].map((_, index) => (
@@ -140,7 +147,7 @@ export default function SearchSection({isOpen, setIsOpen}) {
           </div>
           </div>
           <div><GrFormNext className='cursor-pointer' size={32} onClick={handleNext}/></div>
-        </div>
+        </div>}
       </div>
     </>
   )
