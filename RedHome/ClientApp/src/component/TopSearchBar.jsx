@@ -5,10 +5,9 @@ import TopMenu from './TopMenu';
 import { useForm } from 'react-hook-form';
 
 
-export default function MenuHomePage({ setQueryUrl }) {
+export default function MenuHomePage({ setQueryUrl, setSearchText }) {
   const { register, handleSubmit } = useForm();
   const [moreFilters, setMoreFilters] = useState(false);
-  const [query, setQuery] = useState([]);
 
   const handleMoreFiltres = () => {
     setMoreFilters(prev => !prev)
@@ -19,92 +18,81 @@ export default function MenuHomePage({ setQueryUrl }) {
           FloorQuantity, IsForSell, MaxArea, MaxPrice, MinArea, MinPrice, 
           TitleSearch } = data;
                
-    setQuery(prev => ([]));
     setQueryUrl(prev => '');
-    let counter = 0;
+
+    const newQuery = [];
 
     if(AddressSearch.length > 0) {
-      setQuery(prev => ([...prev, `AddressSearch=${AddressSearch}`]));
-      counter++;
+      newQuery.push(`AddressSearch=${AddressSearch}`);
     }
     
     if(CitySearch.length > 0) {
-      setQuery(prev => ([...prev, `CitySearch=${CitySearch}`]));
-      counter++;
+      newQuery.push(`CitySearch=${CitySearch}`);
+      setSearchText(prev => ({...prev, city:`${CitySearch}`}));
     }
 
     if(Floor.length > 0) {
-      setQuery(prev => ([...prev, `Floor=${Floor}`]));
-      counter++;
+      newQuery.push(`Floor=${Floor}`);
     }
 
     if(FloorQuantity.length > 0) {
-      setQuery(prev => ([...prev, `FloorQuantity=${FloorQuantity}`]));
-      counter++;
+      newQuery.push(`FloorQuantity=${FloorQuantity}`);
     }
 
     if(DevelopmentTypeSearch !== 'Building type') {
       if (DevelopmentTypeSearch === 'House') {
-        setQuery(prev => ([...prev, 'DevelopmentTypeSearch=House']));
-        counter++;
+        newQuery.push(`DevelopmentTypeSearch=House`);
+        setSearchText(prev => ({...prev, developmentType:`House`}));
       } else {
-        setQuery(prev => ([...prev, 'DevelopmentTypeSearch=Apartment']));
-        counter++;
+        newQuery.push(`DevelopmentTypeSearch=Apartment`);
+        setSearchText(prev => ({...prev, developmentType:`Apartment`}));
       }
     }
 
     if(IsForSell !== 'Type') {
       if (IsForSell === 'true') {
-        setQuery(prev => ([...prev, 'IsForSell=true']));
-        counter++;
+        newQuery.push(`IsForSell=true`);
+        setSearchText(prev => ({...prev, isForSell: true}));
       } else {
-        setQuery(prev => ([...prev, 'IsForSell=false']));
-        counter++;
+        newQuery.push(`IsForSell=false`);
+        setSearchText(prev => ({...prev, isForSell: false}));
       }
     }
 
     if ((MinArea.length > 0) && (MaxArea.length > 0)) {
-      setQuery(prev => ([...prev, `MinArea=${MinArea}&MaxArea=${MaxArea}`]));
-      counter++;
+      newQuery.push(`MinArea=${MinArea}&MaxArea=${MaxArea}`);
     } else {
       if(MinArea.length > 0) {
-        setQuery(prev => ([...prev, `MinArea=${MinArea}`]));
-        counter++;
+        newQuery.push(`MinArea=${MinArea}`);
       }
       if(MaxArea.length > 0) {
-        setQuery(prev => ([...prev, `MaxArea=${MaxArea}`]));
-        counter++;
+        newQuery.push(`MaxArea=${MaxArea}`);
       }
     }
 
     
     if ((MaxPrice.length > 0) && (MinPrice.length > 0)) {
-      setQuery(prev => ([...prev, `MinPrice=${MinPrice}&MaxPrice=${MaxPrice}`]));
-      counter++;
+      newQuery.push(`MinPrice=${MinPrice}&MaxPrice=${MaxPrice}`);
     } else {
       if(MaxPrice.length > 0) {
-        setQuery(prev => ([...prev, `MaxPrice=${MaxPrice}`]));
-        counter++;
+        newQuery.push(`MinPrice=${MinPrice}`);
       }
       if(MinPrice.length > 0) {
-        setQuery(prev => ([...prev, `MinPrice=${MinPrice}`]));
-        counter++;
+        newQuery.push(`MaxPrice=${MaxPrice}`);
       }
     }
 
     if(TitleSearch.length > 0) {
-      setQuery(prev => ([...prev, `TitleSearch=${TitleSearch}`]));
-      counter++;
+      newQuery.push(`TitleSearch=${TitleSearch}`);
     }
 
-    let queryStr = '';
-
-    query.map((item) => {
-      queryStr += '&' + item;
-    });
-    queryStr = queryStr.substring(1, queryStr.length);
+    const queryStr = newQuery.join('&');
     
     setQueryUrl(queryStr);
+  }
+
+  const handleRefreshPage = () => {
+    location.reload();
   }
 
   return (
@@ -143,7 +131,7 @@ export default function MenuHomePage({ setQueryUrl }) {
               <input {...register("CitySearch")} className="px-4 py-1 rounded-xl text-lg bg-slate-800 text-white outline-none text-start w-full" placeholder='Enter city' type='text' />
             </div>
             <div className="grid grid-cols-2 gap-5">
-              <button className="px-4 py-1 rounded-xl text-xl bg-slate-800 text-white outline-none text-start flex items-center">
+              <button className="px-4 py-1 rounded-xl text-xl bg-slate-800 text-white outline-none text-start flex items-center" onClick={handleRefreshPage}>
                 <GrPowerReset className='mr-3' /><span>Clear filters</span>
               </button>
               <input type='submit' className="px-4 py-1 rounded-xl text-xl bg-slate-800 text-white outline-none text-start flex items-center cursor-pointer" value='Search' />

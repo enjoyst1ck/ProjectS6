@@ -38,9 +38,9 @@ export default function ListCard({ item }) {
   }
 
   return (
-    <div className='w-[75%] rounded-2xl flex border border-black border-opacity-25'>
+    <div className='w-[80%] rounded-2xl flex border border-black border-opacity-25 mb-5'>
       <Link className='flex relative w-full' to={`/search/advertising/${item.id}`}>
-        <div className='h-[270px] w-[35%] bg-black rounded-2xl -z-10'>
+        <div className='h-[300px] w-[35%] bg-black rounded-2xl -z-10'>
           <img className='w-full h-full bg-red-400 rounded-2xl object-cover' src={item.attachments.length > 0 ? `data:image/jpg;base64, ${item.attachments[0].image}` : imagePlaceholder} alt={item.title} />
         </div>
 
@@ -49,13 +49,14 @@ export default function ListCard({ item }) {
             {currStatus === true ? (<FaHeart color='white' size={22} />) : (<FaRegHeart color='white' size={22} />)}
           </div>
 
-          <h2 className='text-2xl font-bold'>{item.price} zł</h2>
+          <h2 className='text-2xl font-bold'>{cuteDesc(item.title, 70)}</h2>
+          <h2 className='text-xl font-bold'>{item.price} zł</h2>
           <p className='text-xl'>{item.address}, {item.city}</p>
 
           <div className='grid grid-cols-4 w-[50%] mt-1'>
             <div className=' text-lg font-semibold'>{item.roomQuantity} rooms</div>
             <div className='border-l-2 border-black text-center text-lg font-semibold'>{item.area}m&#178;</div>
-            <div className='border-l-2 border-black text-center text-lg font-semibold'>{item.floor} floor</div>
+            <div className='border-l-2 border-black text-center text-lg font-semibold'>{(item.floor > 0 || item.floor < 0) && `${item.floor} floor` || item.floor === 0 && "Parterre"}</div>
             <div className='border-l-2 border-black text-center text-lg font-semibold'>{item.isForSell === true ? "Sell" : "Rent"}</div>
           </div>
 

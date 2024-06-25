@@ -28,8 +28,15 @@ export default function GridCard({ item }) {
     }
   }
 
+  const handleCutText = (desc, max) => {
+    if (desc.length > max) {
+      return desc.slice(0, max) + "...";  
+    } 
+    return desc;
+  }
+
   return (
-    <div className='w-[358px] h-[441px] rounded-2xl relative'>
+    <div className='w-[400px] h-[500px] rounded-2xl relative'>
       <div onClick={handleToLiked} className='absolute top-3 right-3 rounded-full bg-red-700 p-2 hover:scale-110 transition-all cursor-pointer'>
         {currStatus === true ? (<FaHeart color='white' size={22} />) : (<FaRegHeart color='white' size={22} />)}
       </div>
@@ -39,8 +46,8 @@ export default function GridCard({ item }) {
         <Link to={`/search/advertising/${item.id}`}>
           <div className='flex items-center justify-between'>
             <div>
-              <p className=''>Price</p>
-              <h2 className='text-xl font-semibold'>{item.price} zł</h2>
+              <p className='text-xl'>{handleCutText(item.title, 30)}</p>
+              <h2 className='text-lg font-semibold'>{item.price} zł</h2>
             </div>
             <div className='bg-red-700 rounded-full p-2 rotate-[-45deg]'>
               <FaArrowRightLong color='white' size={22} />

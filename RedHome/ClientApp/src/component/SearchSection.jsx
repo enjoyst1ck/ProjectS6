@@ -9,7 +9,7 @@ import ModalMoreFiltres from './ModalMoreFiltres';
 import { GrFormNext } from "react-icons/gr";
 import { GrFormPrevious } from "react-icons/gr";
 
-export default function SearchSection({queryUrl}) {
+export default function SearchSection({queryUrl, searchText}) {
   const [gridView, setGridView] = useState(false);
   const [data, setData] = useState([]);
   const [currPageInfo, setCurrPageInfo] = useState(null);
@@ -18,16 +18,15 @@ export default function SearchSection({queryUrl}) {
   const { currentUser } = useContext(AuthContext);
   const [url, setUrl] = useState({ currUrl: 'http://localhost:7004/Advertisement', defaultUrl: 'http://localhost:7004/Advertisement' });
   const [page, setPage] = useState('PageIndex=1');
+  const [sortQuery, setSortQuery] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       let q = '';
       if(queryUrl.length > 0) {
-        q = 'http://localhost:7004/Advertisement?PageSize=9&' + queryUrl + '&' + page;
-        console.log(q)
+        q = 'http://localhost:7004/Advertisement?PageSize=9&' + queryUrl + '&' + page + sortQuery;
       } else {
-        q = 'http://localhost:7004/Advertisement?PageSize=9' + '&' + page;
-        console.log(q)
+        q = 'http://localhost:7004/Advertisement?PageSize=9' + '&' + page + sortQuery;
       }
       try {
         if (currentUser != null) {
@@ -53,7 +52,7 @@ export default function SearchSection({queryUrl}) {
       }
     };
     fetchData();
-  }, [queryUrl, page]);
+  }, [queryUrl, page, sortQuery]);
 
 
   const handleView = (e) => {
@@ -80,12 +79,23 @@ export default function SearchSection({queryUrl}) {
     }
   }
 
+  const handleSort = (e) => {
+    const sortOption = e.target.value
+
+    if (sortOption === "Default") {
+    setSortQuery("");
+    return;
+    }
+
+    setSortQuery(`&Sort=${sortOption}`);
+  }
+
   return (
     <>
       <div className='w-[75%] mx-auto mt-24 relative z-0'>
         <div className='flex items-center justify-between'>
           <div>
-            <h1 className='text-3xl font-semibold'>Flats for sale: Opole</h1>
+            <h1 className='text-3xl font-semibold'>{searchText.developmentType ? searchText.developmentType : "All advertisements"}{searchText.isForSell === true && " for sale" || searchText.isForSell === false && " for rent" || !searchText.isForSell && ""}{searchText.city ? `: ${searchText.city}` : ""}</h1>
             <p className='text-xl font-semibold text-black text-opacity-75'>{currPageInfo && currPageInfo.count} advertisements</p>
           </div>
           <div className='flex'>
@@ -102,22 +112,23 @@ export default function SearchSection({queryUrl}) {
 
         <div className='w-full flex items-center mt-4'>
           <div className='bg-black h-1 w-full rounded-3xl opacity-50'></div>
-          <span className='text-lg mr-2 p-2'>Sort:</span>
-          <select className='py-1 px-2 w-36 bg-red-700 text-white rounded-lg outline-none'>
-            <option>Price ascending</option>
-            <option>Price descending</option>
-            <option>Area ascending</option>
-            <option>Area descending</option>
+          <span className='text-lg mr-1 p-2'>Sort:</span>
+          <select onChange={handleSort} className='py-1 px-2 w-44 bg-red-700 text-white rounded-lg outline-none'>
+            <option>Default</option>
+            <option value={"priceAsc"}>Price ascending</option>
+            <option value={"priceDesc"}>Price descending</option>
+            <option value={"areaAsc"}>Area ascending</option>
+            <option value={"areaDesc"}>Area descending</option>
           </select>
         </div>
 
-        <div className={gridView === true ? 'flex ' : 'flex flex-col'}>
+        <div className={gridView === true ? 'flex justify-center' : 'flex flex-col'}>
           {gridView === true ?
-            (<div className='grid grid-cols-3 gap-4'>
+            (<div className='grid grid-cols-3 gap-4 mt-5'>
               {data.map((item, index) => (<GridCard key={index} item={item} />))}
             </div>)
             :
-            (<div className='grid grid-cols-1 gap-4'>
+            (<div className='flex flex-col justify-center items-center mt-5'>
               {data.map((item, index) => (<ListCard item={item} key={index} />))}
             </div>)}
           {data.length === 0 && <span className='text-center mt-20 text-2xl font-semibold'>Apparently there are no announcements yet</span>}
