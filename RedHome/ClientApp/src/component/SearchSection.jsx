@@ -134,7 +134,7 @@ export default function SearchSection({queryUrl, searchText}) {
           {data.length === 0 && <span className='text-center mt-20 text-2xl font-semibold'>Apparently there are no announcements yet</span>}
         </div>
         
-        <div className='w-full my-10 flex justify-center items-center'>
+        {data.length > 0 && <div className='w-full my-10 flex justify-center items-center'>
           <div><GrFormPrevious className='cursor-pointer' size={32} onClick={handlePrev}/></div>
           <div className=''>
           <div className='flex'>{[...Array(currPageInfo && currPageInfo.countPages)].map((_, index) => (
@@ -147,7 +147,7 @@ export default function SearchSection({queryUrl, searchText}) {
           </div>
           </div>
           <div><GrFormNext className='cursor-pointer' size={32} onClick={handleNext}/></div>
-        </div>
+        </div>}
       </div>
     </>
   )

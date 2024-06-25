@@ -165,9 +165,9 @@ export default function MenuHomePage({ setQueryUrl, setSearchText }) {
                     />
                     <label
                       htmlFor={`roomQuantity-${value}`}
-                      className="flex justify-center flex-col w-full h-full border-[3px] border-[#FFD7DC] cursor-pointer peer-checked:border-[#BE3144] peer-checked:text-[#BE3144] hover:text-gray-600 transition-all rounded-xl"
+                      className="flex justify-center flex-col w-full h-full border-[3px] border-[#8f8f8f] cursor-pointer peer-checked:border-[#1e293b] peer-checked:text-[#1e293b] hover:text-gray-600 transition-all rounded-xl"
                     >
-                      <div className='text-center text-xl'>{value}</div>
+                      <div className='text-center text-xl'>{value === 6 ? `${value}+` : value}</div>
                     </label>
                   </div>
                 ))}
