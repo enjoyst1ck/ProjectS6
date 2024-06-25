@@ -19,7 +19,6 @@ export default function MenuHomePage({ setQueryUrl, setSearchText }) {
           TitleSearch } = data;
                
     setQueryUrl(prev => '');
-
     const newQuery = [];
 
     if(AddressSearch.length > 0) {
@@ -84,6 +83,10 @@ export default function MenuHomePage({ setQueryUrl, setSearchText }) {
 
     if(TitleSearch.length > 0) {
       newQuery.push(`TitleSearch=${TitleSearch}`);
+    }
+
+    for(let i = 0; i < data.roomQuantity.length; i++) {
+      newQuery.push(`RoomQuantity=${data.roomQuantity[i]}`);
     }
 
     const queryStr = newQuery.join('&');
@@ -154,6 +157,7 @@ export default function MenuHomePage({ setQueryUrl, setSearchText }) {
                   <div key={value} className='mr-2 size-10 items-center flex justify-center'>
                     <input
                       type="checkbox"
+                      {...register(`roomQuantity`)}
                       id={`roomQuantity-${value}`}
                       name="roomQuantity"
                       value={value}
