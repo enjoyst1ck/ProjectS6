@@ -121,6 +121,8 @@ namespace RedHome.Services
 
         public AdvertisementDto Insert(AdvertisementDto advertisementDto)
         {
+            advertisementDto.Attachments = advertisementDto.Attachments.Where(w => w != null).ToList();
+
             var advertisement = new Advertisement
             {
                 Id = advertisementDto.Id,

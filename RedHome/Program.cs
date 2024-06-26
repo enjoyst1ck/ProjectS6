@@ -51,10 +51,10 @@ namespace RedHome
             var logger = services.GetRequiredService<ILogger<Program>>();
             try
             {
-                await context.Database.MigrateAsync();
+                //await context.Database.MigrateAsync();
 
-                var dbContextSeed = new DbContextSeed(context, userManager);
-                await dbContextSeed.SeedAsync();
+                //var dbContextSeed = new DbContextSeed(context, userManager);
+                //await dbContextSeed.SeedAsync();
             }
             catch (Exception ex)
             {
