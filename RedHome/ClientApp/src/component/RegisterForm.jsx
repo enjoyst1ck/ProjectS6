@@ -21,7 +21,7 @@ export default function RegisterForm() {
 
   const onSubmit = async (formData) => {
     if (!isValid) {
-      return; // If there are validation errors, do not proceed
+      return; 
     }
 
     try {
@@ -29,6 +29,11 @@ export default function RegisterForm() {
       navigate('/');
     } catch (error) {
       console.error('Registration error:', error.response ? error.response.data : error.message);
+      if (error.response.data === "Email has been already used") {
+        alert(error.response.data);
+      } else {
+        alert("Username has been already used");
+      }
     }
   };
 
@@ -40,15 +45,15 @@ export default function RegisterForm() {
 
         <form className='mt-10' onSubmit={handleSubmit(onSubmit)}>
 
-          <label className='text-xl font-semibold text-black text-opacity-50'>Username:</label>
-          <input className='w-full border-red-600 border-2 py-1 px-2 h-10 rounded-xl border-opacity-50 focus:border-opacity-100 outline-none transition-all mb-1'
-            type='text' {...register("username", { required: "Username is required" })} />
-          {errors.username && <p className='text-red-600 text-sm'>{errors.username.message}</p>}
-
           <label className='text-xl font-semibold text-black text-opacity-50'>E-mail:</label>
           <input className='w-full border-red-600 border-2 py-1 px-2 h-10 rounded-xl border-opacity-50 focus:border-opacity-100 outline-none transition-all mb-1'
             type="email" {...register("email", { required: "E-mail is required" })} />
           {errors.email && <p className='text-red-600 text-sm'>{errors.email.message}</p>}
+
+          <label className='text-xl font-semibold text-black text-opacity-50'>Username:</label>
+          <input className='w-full border-red-600 border-2 py-1 px-2 h-10 rounded-xl border-opacity-50 focus:border-opacity-100 outline-none transition-all mb-1'
+            type='text' {...register("username", { required: "Username is required" })} />
+          {errors.username && <p className='text-red-600 text-sm'>{errors.username.message}</p>}
 
           <label className='text-xl font-semibold text-black text-opacity-50'>Phone number:</label>
           <input className='w-full border-red-600 border-2 py-1 px-2 h-10 rounded-xl border-opacity-50 focus:border-opacity-100 outline-none transition-all mb-1'

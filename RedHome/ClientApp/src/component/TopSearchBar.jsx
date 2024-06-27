@@ -73,10 +73,10 @@ export default function MenuHomePage({ setQueryUrl, setSearchText }) {
     if ((MaxPrice.length > 0) && (MinPrice.length > 0)) {
       newQuery.push(`MinPrice=${MinPrice}&MaxPrice=${MaxPrice}`);
     } else {
-      if(MaxPrice.length > 0) {
+      if(MinPrice.length > 0) {
         newQuery.push(`MinPrice=${MinPrice}`);
       }
-      if(MinPrice.length > 0) {
+      if(MaxPrice.length > 0) {
         newQuery.push(`MaxPrice=${MaxPrice}`);
       }
     }
