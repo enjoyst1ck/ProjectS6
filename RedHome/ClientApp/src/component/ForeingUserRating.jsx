@@ -19,12 +19,18 @@ export default function ForeignUserRating() {
   const [rating, setRating] = useState(1); {/* uzywane do wystawiania ocen */}
   let { id } = useParams(); 
   const [data, setData] = useState(null);
+  const [userData, setUserData] = useState();
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 
   {/* TODO - funkcja pobierajaca ilosc ocen danego uzytkownika, funkcja pobierajaca dane uzytkownika w ktorego weszlismy, funkcja dodawania review, wyswietlanie ilosci i średniej ocen */}
   const onSubmit = async (formData) => {
- 
+    if(!currentUser){
+  
+      // return alert("Musisz być zalogowany");
+    }
+    console.log(formData.comment);
+    console.log(rating)
   };
   const imie = "Michałek";
   const nazwisko =  "123456789";
@@ -52,6 +58,32 @@ export default function ForeignUserRating() {
       console.log(err);
     }
   }, []);  
+
+  useEffect(() => {
+    {/*if (!currentUser) return navigate('/login');*/}
+    try {
+      fetch(`http://localhost:7004/Review/${id}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Could not fetch the data for that resource');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setUserData(data);
+        setIsPending(false);
+        setError(null);
+      })
+      .catch((err) => {
+        setIsPending(false);
+        setError(err.message);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);  
+
+
 
   return (
     
@@ -98,9 +130,9 @@ export default function ForeignUserRating() {
             <h1 className='text-2xl'>Have you dealt with this user?</h1>
             <p>Please, rate him to help others.</p>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='mt-4 mb-4'><RatingReview rating={rating} setRating={setRating}/></div>
-                <label className='text-s'>What do you think about this user? <div className='text-red-600 text-xs'>(Remember, your review should only concern how the transaction or conversation with the user went)</div></label>
-                <textarea className='border border-red-600 rounded-xl w-[75%] h-24 text-left py-2 px-2 text-s mt-2 resize-none'></textarea>
+                <div className='mt-4 mb-4'><RatingReview rating={rating} setRating={setRating} {...register("rate")} /></div>
+                <label className='text-s'>What do you think about this user? <div className='text-black font-semibold text-xs'>(Remember, your review should only concern how the transaction or conversation with the user went)</div></label>
+                <textarea {...register("comment")} className='border border-red-600 rounded-xl w-[75%] h-24 text-left py-2 px-2 text-s mt-2 resize-none' ></textarea>
                 <br/>
                 <input className='bg-red-600 hover:bg-red-500 text-white text-l font-bold border rounded-xl w-28' type="submit" value="Submit"></input>
                 
