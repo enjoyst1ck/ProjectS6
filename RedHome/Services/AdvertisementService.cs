@@ -161,6 +161,8 @@ namespace RedHome.Services
                 return null;
             }
 
+            advertisementDto.Attachments = advertisementDto.Attachments.Where(w => w != null).ToList();
+
             var adFromDb = _advertisementRepository.GetById(advertisementDto.Id);
 
             var advertisement = new Advertisement
