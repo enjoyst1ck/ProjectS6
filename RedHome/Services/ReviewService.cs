@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using RedHome.Database.Models;
 using RedHome.Dtos;
 using RedHome.Repositories.IRepositories;
@@ -53,6 +55,8 @@ namespace RedHome.Services
             };
         }
 
+        [Authorize]
+        [HttpPost("add")]
         public Task<ReviewsUserDto> InsertReview(ReviewDto reviewDto)
         {
             var review = new Review

@@ -54,7 +54,7 @@ export default function AdvertisingPage() {
 
           <div className='flex cursor-default mb-10'>
             <ContentAdvertising title={data.title} description={data.description} price={data.price} isForSell={data.isForSell} city={data.city} address={data.address} createdDate={data.createdDate} />
-            <DeveloperInfoAdvertising username={data.usetName} phoneNumber={data.phoneNumber} userEmail={data.userEmail} />
+            <DeveloperInfoAdvertising username={data.usetName} phoneNumber={data.phoneNumber} userEmail={data.userEmail} userId={data.userId} />
           </div>
         </div>}
 

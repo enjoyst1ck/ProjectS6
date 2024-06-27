@@ -7,14 +7,15 @@ import AdvertisingPage from './pages/AdvertisingPage';
 import UserAdvertisingPage from './pages/UserAdvertisingPage';
 import AddPage from './pages/AddPage';
 import EditPage from './pages/EditPage';
-
+import ForeignUserPage from './pages/ForeignUserPage';
+ 
 
 function App() {
   const router = createBrowserRouter([
     {
       path: '/',
       element: <HeroPage/>
-    },
+    }, 
     {
       path: '/login',
       element: <LoginPage/>
@@ -50,6 +51,10 @@ function App() {
     {
       path: '/user-panel/edit-advertisement/:id',
       element: <EditPage/>
+    },
+    {
+      path: '/rating/:id',
+      element: <ForeignUserPage/>
     }
   ]); 
   

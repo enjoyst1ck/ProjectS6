@@ -1,7 +1,8 @@
 import React from 'react';
 import avatar from '../assets/avatar.jpg';
+import { Link } from 'react-router-dom';
 
-export default function DeveloperInfoAdvertising({ username, phoneNumber, userEmail }) {
+export default function DeveloperInfoAdvertising({ username, phoneNumber, userEmail, userId }) {
   return (
     <div className='w-[25%]'>
       <div className='p-4 w-full h-96 border-black border-opacity-50 border-2 rounded-2xl'>
@@ -9,7 +10,7 @@ export default function DeveloperInfoAdvertising({ username, phoneNumber, userEm
           <div className='size-12 bg-red-100 rounded-full'>
             <img src={avatar} />
           </div>
-          <span className='text-xl font-bold ml-3'>{username || userEmail}</span>
+          <Link to={`/rating/${userId}`} className='text-xl font-bold ml-3'>{username || userEmail}</Link>
         </div>
 
         <div className='my-12 flex flex-col'>
