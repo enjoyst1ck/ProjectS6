@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FaRegHeart } from "react-icons/fa"
 import { FaHeart } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6"
@@ -10,6 +10,10 @@ import { AuthContext } from '../context/authContext'
 export default function GridCard({ item }) {
   const { currentUser } = useContext(AuthContext);
   const [currStatus, setCurrStatus] = useState(item.isLiked);
+
+  useEffect(() => {
+    setCurrStatus(item.isLiked);
+  }, [item.isLiked]);
 
   const handleToLiked = () => {
     try {

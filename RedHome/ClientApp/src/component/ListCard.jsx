@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FaRegHeart } from "react-icons/fa"
 import { FaHeart } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6"
@@ -12,6 +12,10 @@ export default function ListCard({ item }) {
   const [currStatus, setCurrStatus] = useState(item.isLiked);
   const rawDate = new Date(item.createdDate);
   const result = format(rawDate, "dd.MM.yyyy"); 
+
+  useEffect(() => {
+    setCurrStatus(item.isLiked);
+  }, [item.isLiked]);
 
   const handleToLiked = () => {
     try {

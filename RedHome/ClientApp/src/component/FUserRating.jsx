@@ -67,7 +67,7 @@ export default function FUserRating() {
   
 
   useEffect(() => {
-    {if (!currentUser) return navigate('/login');}
+    // {if (!currentUser) return navigate('/login');}
     try {
       fetch(`http://localhost:7004/Review?userId=${id}`)
       .then((res) => {
@@ -139,7 +139,7 @@ export default function FUserRating() {
       {/* sekcja user info ^^^ */}
 
       {/* sekcja add review - TODO */}
-      <div className='w-[75%] h-full mx-auto mt-4'>
+      {currentUser && <div className='w-[75%] h-full mx-auto mt-4'>
         <div className='w-[75%] h-80 mx-auto bg-white text-center rounded-xl'>
           <div>
             <h1 className='text-2xl'>Have you dealt with this user?</h1>
@@ -154,11 +154,11 @@ export default function FUserRating() {
               </form>
           </div>
         </div>
-      </div>
+      </div>}
 
-      <div className='w-[75%] mx-auto mt-6'>
+      {currentUser && <div className='w-[75%] mx-auto mt-6'>
         <div className="bg-black h-1 w-full rounded-3xl opacity-30"></div>
-      </div>
+      </div>}
 
         {/* sekcja reviews - skończone */}
       {data !== null ? (
