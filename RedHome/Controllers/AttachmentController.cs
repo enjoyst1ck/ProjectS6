@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RedHome.Dtos;
-using RedHome.Services;
 using RedHome.Services.IServices;
 
 namespace RedHome.Controllers
@@ -18,9 +16,46 @@ namespace RedHome.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<AttachmentDto> GetByAdvertisement(int id)
+        public ActionResult<IEnumerable<AttachmentDto>> GetByAdvertisement(int id)
         {
-            return _attachmentService.GetByAdvertisement(id);
+            try
+            {
+                return Ok(_attachmentService.GetByAdvertisement(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult<IEnumerable<AttachmentDto>> Insert(AttachmentDto attachmentDto)
+        {
+            try
+            {
+                _attachmentService.Insert(attachmentDto);
+
+                return Ok(_attachmentService.GetByAdvertisement(attachmentDto.AdvertisementId));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                _attachmentService.Delete(id);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

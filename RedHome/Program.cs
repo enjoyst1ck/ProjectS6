@@ -1,4 +1,4 @@
-
+using RedHome.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RedHome.Database;
@@ -24,6 +24,8 @@ namespace RedHome
 
             ConfigureServices(builder.Services, builder.Configuration);
 
+            builder.Services.AddIdentityServices(builder.Configuration);
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -35,8 +37,10 @@ namespace RedHome
 
             app.UseHttpsRedirection();
 
+            app.UseCors("CorsPolicy");
+            
+            app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.MapControllers();
 
@@ -47,10 +51,10 @@ namespace RedHome
             var logger = services.GetRequiredService<ILogger<Program>>();
             try
             {
-                await context.Database.MigrateAsync();
+                //await context.Database.MigrateAsync();
 
-                var dbContextSeed = new DbContextSeed(context, userManager);
-                await dbContextSeed.SeedAsync();
+                //var dbContextSeed = new DbContextSeed(context, userManager);
+                //await dbContextSeed.SeedAsync();
             }
             catch (Exception ex)
             {
@@ -67,10 +71,8 @@ namespace RedHome
             services.AddDbContext<ApiDbContext>(options => 
                 options.UseMySql(configuration.GetConnectionString("DefaultConnection"), serverVersion)
             );
-
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                    .AddEntityFrameworkStores<ApiDbContext>()
-                    .AddDefaultTokenProviders();
+            
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<IReviewService, ReviewService>();
@@ -79,7 +81,17 @@ namespace RedHome
             services.AddScoped<IAdvertisementService, AdvertisementService>();
 
             services.AddScoped<IAttachmentRepository, AttachmentRepository>();
-            services.AddScoped<IAttachmentService, AttachmentService>();        
+            services.AddScoped<IAttachmentService, AttachmentService>();
+
+            services.AddScoped<ITokenService, TokenService>();
+
+            services.AddCors(o =>
+            {
+                o.AddPolicy("CorsPolicy", p =>
+                {
+                    p.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173");
+                });
+            });
         }
     }
 }

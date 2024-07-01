@@ -5,6 +5,9 @@ namespace RedHome.Services.IServices
 {
     public interface IReviewService
     {
-        public IEnumerable<ReviewDto> GetUserReview(string userId);
+        public Task<ReviewsUserDto> GetUserReview(string userId);
+        public Task<ReviewsUserDto> InsertReview(ReviewDto reviewDto);
+        public Task<ReviewsUserDto> EditReview(ReviewDto reviewDto);
+        public Task<ReviewsUserDto> DeleteReview(int id);
     }
 }

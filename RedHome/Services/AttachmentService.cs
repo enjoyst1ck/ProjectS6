@@ -1,4 +1,5 @@
-﻿using RedHome.Dtos;
+﻿using RedHome.Database.Models;
+using RedHome.Dtos;
 using RedHome.Repositories.IRepositories;
 using RedHome.Services.IServices;
 
@@ -24,6 +25,24 @@ namespace RedHome.Services
                 AdvertisementId = s.AdvertisementId,
                 Image = s.Image
             }).ToList();
+        }
+
+        public void Insert(AttachmentDto attachmentDto)
+        {
+            var attachment = new Attachment
+            {
+                Id = attachmentDto.Id,
+                Title = attachmentDto.Title,
+                AdvertisementId = attachmentDto.AdvertisementId,
+                Image = attachmentDto.Image
+            };
+
+            _attachmentRepository.Insert(attachment);
+        }
+
+        public void Delete(int id)
+        {
+            _attachmentRepository.Delete(id);
         }
     }
 }
